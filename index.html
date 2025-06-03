@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      width: 400px;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
+    
+    #extractButton {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    
+    #extractButton:hover {
+      background-color: #45a049;
+    }
+    
+    #extractButton:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+
+    #copyButton {
+      background-color: #2196F3;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    #copyButton:hover {
+      background-color: #1976D2;
+    }
+
+    #copyButton span {
+      position: relative;
+      width: 16px;
+      height: 20px;
+    }
+
+    /* First paper */
+    #copyButton span span:first-child {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 14px;
+      height: 18px;
+      background: white;
+      border-radius: 2px;
+      display: block;
+    }
+
+    /* Second paper */
+    #copyButton span span:last-child {
+      position: absolute;
+      left: 0;
+      top: 2px;
+      width: 14px;
+      height: 18px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 2px;
+      display: block;
+    }
+    
+    output {
+      display: block;
+      background-color: #f5f5f5;
+      padding: 10px;
+      border-radius: 4px;
+      white-space: pre-wrap;
+      max-height: 300px;
+      overflow-y: auto;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    .success-message {
+      color: #4CAF50;
+      font-size: 12px;
+      text-align: center;
+      margin-top: 5px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .success-message.show {
+      opacity: 1;
+    }
+
+    #cancelButton {
+      background-color: #f44336;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+      margin-bottom: 10px;
+      display: none; /* Hidden by default */
+    }
+
+    #cancelButton:hover {
+      background-color: #d32f2f;
+    }
+
+    .progress-info {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    /* Format Selection Section */
+    .format-section {
+      margin: 15px 0;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: #f9f9f9;
+      display: none; /* Hidden until extraction is complete */
+    }
+
+    .format-section h3 {
+      margin: 0 0 10px 0;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .format-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .format-btn {
+      background-color: #e0e0e0;
+      color: #333;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .format-btn:hover {
+      background-color: #d0d0d0;
+    }
+
+    .format-btn.active {
+      background-color: #2196F3;
+      color: white;
+    }
+
+    .format-btn.active:hover {
+      background-color: #1976D2;
+    }
+
+    /* Filter Section Styles */
+    .filter-section {
+      margin: 15px 0;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: #f0f8ff;
+    }
+
+    .filter-input-group {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    #pathInput {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    #addFilterButton {
+      background-color: #2196F3;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    #addFilterButton:hover {
+      background-color: #1976D2;
+    }
+
+    #addFilterButton:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .active-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0;
+      min-height: 30px;
+    }
+
+    .filter-tag {
+      background-color: #2196F3;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .filter-tag .remove-btn {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 0 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .filter-tag .remove-btn:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+    }
+
+    #clearFiltersButton {
+      background-color: #f44336;
+      color: white;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      display: none;
+      margin-top: 8px;
+    }
+
+    #clearFiltersButton:hover {
+      background-color: #d32f2f;
+    }
+
+    .filter-info {
+      font-size: 12px;
+      color: #666;
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .filter-section.disabled {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    #pathInput:disabled,
+    #addFilterButton:disabled,
+    #clearFiltersButton:disabled,
+    .filter-tag .remove-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .filter-tag.disabled {
+      opacity: 0.7;
+    }
+
+    /* CSS Selector Section Styles */
+    .selector-section {
+      margin: 15px 0;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: #f0fff0; /* Light green background to differentiate from filters */
+    }
+
+    .selector-input-group {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    #selectorInput {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    #addSelectorButton {
+      background-color: #4CAF50;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    #addSelectorButton:hover {
+      background-color: #45a049;
+    }
+
+    #addSelectorButton:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .selector-tag {
+      background-color: #4CAF50;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .selector-tag .remove-btn {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 0 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .selector-tag .remove-btn:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+    }
+
+    #clearSelectorsButton {
+      background-color: #f44336;
+      color: white;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      display: none;
+      margin-top: 8px;
+    }
+
+    #clearSelectorsButton:hover {
+      background-color: #d32f2f;
+    }
+
+    .selector-info {
+      font-size: 12px;
+      color: #666;
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .selector-section.disabled {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    #selectorInput:disabled,
+    #addSelectorButton:disabled,
+    #clearSelectorsButton:disabled,
+    .selector-tag .remove-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .selector-tag.disabled {
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <h1>Web Crawler Extension</h1>
+  <p>Extract heading tags and internal links from the current website and its subpages.</p>
+  
+  <button id="extractButton">Start Extraction</button>
+  <button id="cancelButton">Cancel Extraction</button>
+  <div id="progressInfo" class="progress-info"></div>
+
+  <!-- Path Filter Section -->
+  <div id="filterSection" class="filter-section">
+    <h3>Path Filters (Optional):</h3>
+    <div class="filter-input-group">
+      <input 
+        type="text" 
+        id="pathInput" 
+        placeholder="Enter path keyword (e.g., 'products', 'blog')" 
+      />
+      <button id="addFilterButton">Add Filter</button>
+    </div>
+    <div id="activeFilters" class="active-filters"></div>
+    <button id="clearFiltersButton">Clear All Filters</button>
+    <div class="filter-info">
+      Only pages containing these keywords in their URLs will be crawled.
+      Leave empty to crawl all pages.
+    </div>
+  </div>
+  
+  <!-- CSS Selector Section -->
+  <div id="selectorSection" class="selector-section">
+    <h3>CSS Selectors (Optional):</h3>
+    <div class="selector-input-group">
+      <input 
+        type="text" 
+        id="selectorInput" 
+        placeholder="Enter CSS selector (e.g., .class-name, #id, div > p)" 
+      />
+      <button id="addSelectorButton">Add Selector</button>
+    </div>
+    <div id="activeSelectors" class="tags-container"></div>
+    <button id="clearSelectorsButton">Clear All Selectors</button>
+    <div class="selector-info">
+      Add CSS selectors to target specific elements during crawling.
+      Leave empty to use default selectors.
+    </div>
+  </div>
+  
+  <!-- Format Selection Section -->
+  <div id="formatSection" class="format-section">
+    <h3>Select Output Format:</h3>
+    <div class="format-buttons">
+      <button class="format-btn active" data-format="summary">Summary</button>
+      <button class="format-btn" data-format="headings">Headings CSV</button>
+      <button class="format-btn" data-format="meta">Meta CSV</button>
+      <button class="format-btn" data-format="links">Links CSV</button>
+    </div>
+  </div>
+  
+  <button id="copyButton">
+    Copy
+    <span>
+      <span></span>
+      <span></span>
+    </span>
+  </button>
+
+  <div id="copySuccess" class="success-message">Copied to clipboard!</div>
+  
+  <output id="output">
+    Ready to extract data
+  </output>
+
+  <script defer src="scripts/extract-data.js"></script>
+</body>
+</html>

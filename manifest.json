@@ -1,0 +1,12 @@
+{
+  "name": "Extract data from website",
+  "description": "Extract data from website",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "icon.png"
+  },
+  "permissions": ["activeTab", "tabs", "scripting"],
+  "host_permissions": ["http://*/*", "https://*/*"]
+}
