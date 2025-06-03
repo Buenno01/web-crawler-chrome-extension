@@ -44,7 +44,8 @@ function formatAsSummary(data) {
       url,
       title: pageData.title,
       headingsCount: pageData.headings.length,
-      internalLinksCount: pageData.links.length
+      internalLinksCount: pageData.links.length,
+      customSelectors: pageData.customSelectors
     }))
   };
   
@@ -281,7 +282,7 @@ async function extractDataFromTab(tabId) {
   try {
     const results = await chrome.scripting.executeScript({
       target: { tabId: tabId },
-      func: () => {
+      func: (customSelectors) => {
         function getHeadingStructure() {
           const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
           return Array.from(headings).map((heading) => ({
@@ -322,11 +323,39 @@ async function extractDataFromTab(tabId) {
           }
         }
 
+        // NEW: Function to extract custom selector content
+        function getCustomSelectorContent(selectors) {
+          const customData = {};
+          
+          selectors.forEach(selector => {
+            try {
+              const elements = document.querySelectorAll(selector);
+              if (elements.length > 0) {
+                // Store all matching elements' text content
+                const textContents = Array.from(elements)
+                  .map(el => el.textContent?.trim())
+                  .filter(text => text && text.length > 0);
+                
+                if (textContents.length > 0) {
+                  customData[selector] = textContents;
+                }
+              }
+            } catch (error) {
+              console.error(`Error with selector "${selector}":`, error);
+              // Store error info instead of failing silently
+              customData[selector] = { error: error.message };
+            }
+          });
+          
+          return customData;
+        }
+
         const currentUrl = window.location.href;
         const title = document.querySelector('title')?.textContent || '';
         const description = document.querySelector('meta[name="description"]')?.content || '';
         const headings = getHeadingStructure();
         const links = getSubLinks(currentUrl);
+        const customSelectorsContent = getCustomSelectorContent(customSelectors); // NEW
 
         return {
           url: currentUrl,
@@ -334,8 +363,10 @@ async function extractDataFromTab(tabId) {
           description,
           headings,
           links,
+          customSelectors: customSelectorsContent // NEW: Add custom selector results
         };
-      }
+      },
+      args: [Array.from(cssSelectors)] // Pass the selectors as argument
     });
 
     return results[0]?.result;
@@ -409,8 +440,9 @@ async function startExtraction() {
     isCrawling = true;
     extractedData = null;
 
-    // Disable filter controls
+    // Disable filter and selector controls
     toggleFilterControls(true);
+    toggleSelectorControls(true); // NEW: Disable selector controls
 
     const results = {};
     
@@ -446,8 +478,9 @@ async function startExtraction() {
   } catch (error) {
     isCrawling = false;
     console.error('Error during extraction:', error);
-    // Re-enable filter controls on error
+    // Re-enable filter and selector controls on error
     toggleFilterControls(false);
+    toggleSelectorControls(false); // NEW: Re-enable selector controls
     throw error;
   }
 }
@@ -491,6 +524,29 @@ document.addEventListener('DOMContentLoaded', function() {
   // Clear filters button handling
   clearFiltersButton.addEventListener('click', clearAllFilters);
 
+  // CSS Selector input handling
+  const selectorInput = document.getElementById('selectorInput');
+  const addSelectorButton = document.getElementById('addSelectorButton');
+  const clearSelectorsButton = document.getElementById('clearSelectorsButton');
+
+  selectorInput.addEventListener('keypress', (event) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      addSelectorButton.click();
+    }
+  });
+
+  // Add selector button handling
+  addSelectorButton.addEventListener('click', () => {
+    const selector = selectorInput.value.trim();
+    if (addCssSelector(selector)) {
+      selectorInput.value = '';
+    }
+  });
+
+  // Clear selectors button handling
+  clearSelectorsButton.addEventListener('click', clearAllSelectors);
+
   // Format button functionality
   formatButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -533,8 +589,9 @@ document.addEventListener('DOMContentLoaded', function() {
       progressInfo.style.display = 'block';
       formatSection.style.display = 'none';
       
-      // Disable filter controls
+      // Disable filter and selector controls
       toggleFilterControls(true);
+      toggleSelectorControls(true); // NEW: Disable selector controls
       
       const data = await startExtraction();
       console.log('Extracted Data:', data);
@@ -562,8 +619,9 @@ document.addEventListener('DOMContentLoaded', function() {
       isCrawling = false;
       shouldCancel = false;
       
-      // Re-enable filter controls
+      // Re-enable filter and selector controls
       toggleFilterControls(false);
+      toggleSelectorControls(false); // NEW: Re-enable selector controls
     }
   });
 });
