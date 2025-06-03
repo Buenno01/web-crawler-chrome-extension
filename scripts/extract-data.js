@@ -173,7 +173,7 @@ function updateFilterDisplay() {
   
   pathFilters.forEach(filter => {
     const tag = document.createElement('div');
-    tag.className = 'filter-tag';
+    tag.className = 'filter-tag tag';
     
     // Create text node for the filter
     const filterText = document.createTextNode(filter);
@@ -228,7 +228,7 @@ function updateSelectorDisplay() {
   
   cssSelectors.forEach(selector => {
     const tag = document.createElement('div');
-    tag.className = 'selector-tag';
+    tag.className = 'selector-tag tag';
     
     const selectorText = document.createTextNode(selector);
     tag.appendChild(selectorText);
