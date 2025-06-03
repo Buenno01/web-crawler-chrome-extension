@@ -28,12 +28,14 @@
   --color-box-text: var(--dark-gray);
 }
 
+/* Base Styles */
 body {
   width: 400px;
   padding: 20px;
   font-family: Arial, sans-serif;
 }
 
+/* Button Base and Variants */
 .btn {
   background-color: var(--color-button-background);
   color: var(--color-button-text);
@@ -42,6 +44,10 @@ body {
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 
   &.full {
     width: 100%;
@@ -51,9 +57,68 @@ body {
     width: fit-content;
   }
 
-  &:hover {
-    background-color: var(--color-button-background-hover);
+  &.primary {
+    background-color: var(--primary-green);
+    
+    &:hover {
+      background-color: var(--dark-green);
+    }
   }
+
+  &.secondary {
+    background-color: var(--primary-blue);
+    
+    &:hover {
+      background-color: var(--dark-blue);
+    }
+  }
+
+  &.danger {
+    background-color: var(--primary-red);
+    
+    &:hover {
+      background-color: var(--dark-red);
+    }
+  }
+
+  &.small {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+/* Form Elements */
+.form-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid var(--color-box-border);
+  border-radius: 4px;
+  font-size: 14px;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+/* Info Text */
+.info-text {
+  font-size: 12px;
+  color: var(--primary-gray);
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* Utility Classes */
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .box {
@@ -240,11 +305,6 @@ output {
   --color-button-text: white;
   --color-box-background: var(--off-white-gray);
 
-  margin: 15px 0;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #f9f9f9;
   display: none; /* Hidden until extraction is complete */
 }
 
@@ -419,4 +479,16 @@ output {
 #clearSelectorsButton:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+/* Update input styles */
+#pathInput,
+#selectorInput {
+  @extend .form-input;
+}
+
+/* Update info text styles */
+.filter-info,
+.selector-info {
+  @extend .info-text;
 }

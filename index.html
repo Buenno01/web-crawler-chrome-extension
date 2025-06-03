@@ -7,8 +7,8 @@
   <h1>Web Crawler Extension</h1>
   <p>Extract heading tags and internal links from the current website and its subpages.</p>
   
-  <button id="extractButton">Start Extraction</button>
-  <button id="cancelButton">Cancel Extraction</button>
+  <button id="extractButton" class="btn primary full">Start Extraction</button>
+  <button id="cancelButton" class="btn danger full">Cancel Extraction</button>
   <div id="progressInfo" class="progress-info"></div>
 
   <!-- Path Filter Section -->
@@ -18,13 +18,14 @@
       <input 
         type="text" 
         id="pathInput" 
+        class="form-input"
         placeholder="Enter path keyword (e.g., 'products', 'blog')" 
       />
       <button class="btn fit" id="addFilterButton">Add Filter</button>
     </div>
     <div id="activeFilters" class="tags-container"></div>
-    <button id="clearFiltersButton">Clear All Filters</button>
-    <div class="filter-info">
+    <button id="clearFiltersButton" class="btn small danger">Clear All Filters</button>
+    <div class="filter-info info-text">
       Only pages containing these keywords in their URLs will be crawled.
       Leave empty to crawl all pages.
     </div>
@@ -37,13 +38,14 @@
       <input 
         type="text" 
         id="selectorInput" 
+        class="form-input"
         placeholder="Enter CSS selector (e.g., .class-name, #id, div > p)" 
       />
       <button class="btn fit" id="addSelectorButton">Add Selector</button>
     </div>
     <div id="activeSelectors" class="tags-container"></div>
-    <button id="clearSelectorsButton">Clear All Selectors</button>
-    <div class="selector-info">
+    <button id="clearSelectorsButton" class="btn small danger">Clear All Selectors</button>
+    <div class="selector-info info-text">
       Add CSS selectors to target specific elements during crawling.
       Leave empty to use default selectors.
     </div>
@@ -60,7 +62,7 @@
     </div>
   </div>
   
-  <button id="copyButton">
+  <button id="copyButton" class="btn secondary full">
     Copy
     <span>
       <span></span>
