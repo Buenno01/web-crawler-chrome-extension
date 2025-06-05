@@ -479,3 +479,19 @@ output {
 .selector-info {
   @extend .info-text;
 }
+
+/* Button Group */
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0;
+  width: 100%;
+}
+
+.button-group .btn {
+  flex: 1;
+}
+
+#downloadButton {
+  display: none; /* Hidden by default, shown only for CSV formats */
+}

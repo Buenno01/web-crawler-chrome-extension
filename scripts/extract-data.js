@@ -184,6 +184,53 @@ function formatAsSelectorsCSV(data) {
   return csv;
 }
 
+// Download functionality
+function downloadCSV(content, filename) {
+  const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  const url = URL.createObjectURL(blob);
+  
+  link.setAttribute('href', url);
+  link.setAttribute('download', filename);
+  link.style.visibility = 'hidden';
+  
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  
+  URL.revokeObjectURL(url);
+}
+
+function generateFileName() {
+  const now = new Date();
+  const timestamp = now.toISOString().slice(0, 19).replace(/[:T]/g, '-');
+  
+  // Extract domain from first URL in extracted data
+  let domain = 'website';
+  if (extractedData && Object.keys(extractedData).length > 0) {
+    try {
+      const firstUrl = Object.keys(extractedData)[0];
+      domain = new URL(firstUrl).hostname.replace(/^www\./, '');
+    } catch (e) {
+      domain = 'website';
+    }
+  }
+  
+  const formatName = currentFormat === 'summary' ? 'summary' : currentFormat;
+  return `${domain}-${formatName}-${timestamp}.csv`;
+}
+
+function isCSVFormat() {
+  return ['headings', 'meta', 'links', 'selectors'].includes(currentFormat);
+}
+
+function updateDownloadButtonVisibility() {
+  const downloadButton = document.getElementById('downloadButton');
+  if (downloadButton) {
+    downloadButton.style.display = isCSVFormat() && extractedData ? 'block' : 'none';
+  }
+}
+
 function updateOutput() {
   if (!extractedData) return;
   
@@ -208,6 +255,7 @@ function updateOutput() {
   }
   
   changeOutput(formattedOutput);
+  updateDownloadButtonVisibility();
 }
 
 function updateProgress() {
@@ -689,8 +737,9 @@ document.addEventListener('DOMContentLoaded', async function() {
       formatButtons.forEach(btn => btn.classList.remove('active'));
       button.classList.add('active');
       currentFormat = button.dataset.format;
-      await saveCurrentFormat(currentFormat); // Save format change
+      await saveCurrentFormat(currentFormat);
       updateOutput();
+      updateDownloadButtonVisibility();
     });
   });
   
@@ -703,6 +752,18 @@ document.addEventListener('DOMContentLoaded', async function() {
     } catch (err) {
       console.error('Failed to copy text:', err);
     }
+  });
+
+  // Download button functionality
+  const downloadButton = document.getElementById('downloadButton');
+  downloadButton.addEventListener('click', () => {
+    if (!extractedData || !isCSVFormat()) {
+      return;
+    }
+    
+    const content = output.textContent;
+    const filename = generateFileName();
+    downloadCSV(content, filename);
   });
 
   // Cancel button functionality
