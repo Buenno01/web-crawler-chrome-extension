@@ -67,14 +67,15 @@ function sanitizeForCSV(text) {
 }
 
 function formatAsHeadingsCSV(data) {
-  let csv = 'page,headingTag,headingLevel,content\n';
-  
+  let csv = 'page,index,headingTag,headingLevel,content\n';
   Object.entries(data).forEach(([url, pageData]) => {
+    let index = 0;
     pageData.headings.forEach(heading => {
+      index++;
       const level = heading.tag.substring(1); // Extract number from h1, h2, etc.
       const escapedContent = sanitizeForCSV(heading.text);
       const escapedUrl = sanitizeForCSV(url);
-      csv += `${escapedUrl},${heading.tag},${level},${escapedContent}\n`;
+      csv += `${escapedUrl},${index},${heading.tag},${level},${escapedContent}\n`;
     });
   });
   
@@ -401,7 +402,11 @@ async function processUrl(url, results) {
       chrome.tabs.onUpdated.addListener(listener);
     });
 
+    const baseURL = url.replace(/.*?:\/\//, '').split('/')[0];
+    const pathName = url.replace(baseURL, '').replace(/.*?:\/\//, '');
+
     // Extract data
+    changeOutput(`Extracting data from ${pathName}...`);
     const pageData = await extractDataFromTab(tab.id);
     
     // Close the tab
