@@ -495,3 +495,30 @@ output {
 #downloadButton {
   display: none; /* Hidden by default, shown only for CSV formats */
 }
+
+/* Storage Section */
+.storage-section {
+  border-color: var(--light-red);
+  background-color: var(--off-white-red);
+  margin-top: 15px;
+}
+
+.storage-section h3 {
+  color: var(--dark-red);
+  margin: 0 0 10px 0;
+  font-size: 14px;
+}
+
+.storage-status {
+  font-size: 12px;
+  margin-top: 8px;
+  min-height: 16px;
+}
+
+.storage-status.success {
+  color: var(--primary-green);
+}
+
+.storage-status.info {
+  color: var(--primary-blue);
+}

@@ -642,6 +642,67 @@ async function startExtraction() {
   }
 }
 
+// Storage management functions
+async function clearAllStorage() {
+  await chrome.storage.local.clear();
+  
+  // Reset in-memory state
+  extractedData = null;
+  currentFormat = 'summary';
+  pathFilters.clear();
+  cssSelectors.clear();
+  
+  // Reset UI
+  updateFilterDisplay();
+  updateSelectorDisplay();
+  updateDownloadButtonVisibility();
+  
+  // Hide format section and reset format buttons
+  document.getElementById('formatSection').style.display = 'none';
+  document.querySelectorAll('.format-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelector('[data-format="summary"]').classList.add('active');
+  
+  changeOutput('Storage cleared. Ready to extract data');
+}
+
+async function getStorageSize() {
+  return new Promise((resolve) => {
+    chrome.storage.local.getBytesInUse(null, (bytes) => {
+      resolve(bytes);
+    });
+  });
+}
+
+function formatBytes(bytes) {
+  if (bytes === 0) return '0 Bytes';
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+async function updateStorageStatus() {
+  const storageStatus = document.getElementById('storageStatus');
+  try {
+    const size = await getStorageSize();
+    storageStatus.textContent = `Current storage usage: ${formatBytes(size)}`;
+    storageStatus.className = 'storage-status info';
+  } catch (error) {
+    storageStatus.textContent = 'Unable to calculate storage size';
+    storageStatus.className = 'storage-status';
+  }
+}
+
+function showClearSuccess() {
+  const storageStatus = document.getElementById('storageStatus');
+  storageStatus.textContent = 'All stored data has been cleared!';
+  storageStatus.className = 'storage-status success';
+  
+  setTimeout(() => {
+    updateStorageStatus();
+  }, 3000);
+}
+
 // DOM event handling
 document.addEventListener('DOMContentLoaded', async function() {
   const extractButton = document.getElementById('extractButton');
@@ -774,6 +835,33 @@ document.addEventListener('DOMContentLoaded', async function() {
       cancelButton.disabled = true;
     }
   });
+
+  // Storage management
+  const clearStorageButton = document.getElementById('clearStorageButton');
+  clearStorageButton.addEventListener('click', () => {
+    const confirmed = confirm(
+      'Are you sure you want to clear all stored data?\n\n' +
+      'This will permanently delete:\n' +
+      '• All crawled website data\n' +
+      '• Your saved filters and selectors\n' +
+      '• Format preferences\n\n' +
+      'This action cannot be undone.'
+    );
+    
+    if (confirmed) {
+      clearAllStorage().then(() => {
+        showClearSuccess();
+      }).catch((error) => {
+        console.error('Error clearing storage:', error);
+        const storageStatus = document.getElementById('storageStatus');
+        storageStatus.textContent = 'Error clearing storage. Please try again.';
+        storageStatus.className = 'storage-status';
+      });
+    }
+  });
+
+  // Update storage status on load
+  updateStorageStatus();
 
   extractButton.addEventListener('click', async function(event) {
     event.preventDefault();
