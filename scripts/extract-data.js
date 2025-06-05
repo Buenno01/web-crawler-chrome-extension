@@ -9,6 +9,48 @@ let currentFormat = 'summary'; // Track current format
 let pathFilters = new Set(); // Store active filters
 let cssSelectors = new Set(); // Store active CSS selectors
 
+// Storage helper functions
+async function saveExtractedData(data) {
+  await chrome.storage.local.set({ 'extractedData': data });
+}
+
+async function loadExtractedData() {
+  const result = await chrome.storage.local.get(['extractedData']);
+  return result.extractedData || null;
+}
+
+async function saveCurrentFormat(format) {
+  await chrome.storage.local.set({ 'currentFormat': format });
+}
+
+async function loadCurrentFormat() {
+  const result = await chrome.storage.local.get(['currentFormat']);
+  return result.currentFormat || 'summary';
+}
+
+async function saveFiltersAndSelectors() {
+  await chrome.storage.local.set({
+    'pathFilters': Array.from(pathFilters),
+    'cssSelectors': Array.from(cssSelectors)
+  });
+}
+
+async function loadFiltersAndSelectors() {
+  const result = await chrome.storage.local.get(['pathFilters', 'cssSelectors']);
+  if (result.pathFilters) {
+    pathFilters = new Set(result.pathFilters);
+    updateFilterDisplay();
+  }
+  if (result.cssSelectors) {
+    cssSelectors = new Set(result.cssSelectors);
+    updateSelectorDisplay();
+  }
+}
+
+async function clearStoredData() {
+  await chrome.storage.local.remove(['extractedData', 'currentFormat']);
+}
+
 // Function to toggle filter controls
 function toggleFilterControls(disabled) {
   const filterSection = document.getElementById('filterSection');
@@ -109,6 +151,39 @@ function formatAsLinksCSV(data) {
   return csv;
 }
 
+function formatAsSelectorsCSV(data) {
+  let csv = 'page,selector,instance,html_content,markdown_content\n';
+  
+  Object.entries(data).forEach(([url, pageData]) => {
+    // Check if page has custom selectors data
+    if (pageData.customSelectors && Object.keys(pageData.customSelectors).length > 0) {
+      Object.entries(pageData.customSelectors).forEach(([selector, elements]) => {
+        // Skip if there's an error with this selector
+        if (elements.error) {
+          const escapedUrl = sanitizeForCSV(url);
+          const escapedSelector = sanitizeForCSV(selector);
+          const errorMsg = sanitizeForCSV(`Error: ${elements.error}`);
+          csv += `${escapedUrl},${escapedSelector},0,${errorMsg},${errorMsg}\n`;
+          return;
+        }
+        
+        // Process each element instance
+        elements.forEach((element, index) => {
+          const escapedUrl = sanitizeForCSV(url);
+          const escapedSelector = sanitizeForCSV(selector);
+          const instance = index + 1; // 1-based indexing
+          const escapedHtml = sanitizeForCSV(element.html || '');
+          const escapedMarkdown = sanitizeForCSV(element.text || '');
+          
+          csv += `${escapedUrl},${escapedSelector},${instance},${escapedHtml},${escapedMarkdown}\n`;
+        });
+      });
+    }
+  });
+  
+  return csv;
+}
+
 function updateOutput() {
   if (!extractedData) return;
   
@@ -122,6 +197,9 @@ function updateOutput() {
       break;
     case 'links':
       formattedOutput = formatAsLinksCSV(extractedData);
+      break;
+    case 'selectors':
+      formattedOutput = formatAsSelectorsCSV(extractedData);
       break;
     case 'summary':
     default:
@@ -152,6 +230,7 @@ function addPathFilter(path) {
   if (path && !pathFilters.has(path)) {
     pathFilters.add(path);
     updateFilterDisplay();
+    saveFiltersAndSelectors(); // Save changes
     return true;
   }
   return false;
@@ -160,11 +239,13 @@ function addPathFilter(path) {
 function removePathFilter(path) {
   pathFilters.delete(path);
   updateFilterDisplay();
+  saveFiltersAndSelectors(); // Save changes
 }
 
 function clearAllFilters() {
   pathFilters.clear();
   updateFilterDisplay();
+  saveFiltersAndSelectors(); // Save changes
 }
 
 function updateFilterDisplay() {
@@ -207,6 +288,7 @@ function addCssSelector(selector) {
   if (selector && !cssSelectors.has(selector)) {
     cssSelectors.add(selector);
     updateSelectorDisplay();
+    saveFiltersAndSelectors(); // Save changes
     return true;
   }
   return false;
@@ -215,11 +297,13 @@ function addCssSelector(selector) {
 function removeCssSelector(selector) {
   cssSelectors.delete(selector);
   updateSelectorDisplay();
+  saveFiltersAndSelectors(); // Save changes
 }
 
 function clearAllSelectors() {
   cssSelectors.clear();
   updateSelectorDisplay();
+  saveFiltersAndSelectors(); // Save changes
 }
 
 function updateSelectorDisplay() {
@@ -458,9 +542,12 @@ async function startExtraction() {
     isCrawling = true;
     extractedData = null;
 
+    // Clear stored data when starting new extraction
+    await clearStoredData();
+
     // Disable filter and selector controls
     toggleFilterControls(true);
-    toggleSelectorControls(true); // NEW: Disable selector controls
+    toggleSelectorControls(true);
 
     const results = {};
     
@@ -492,19 +579,23 @@ async function startExtraction() {
 
     isCrawling = false;
     extractedData = results;
+    
+    // Save the extracted data
+    await saveExtractedData(extractedData);
+    
     return results;
   } catch (error) {
     isCrawling = false;
     console.error('Error during extraction:', error);
     // Re-enable filter and selector controls on error
     toggleFilterControls(false);
-    toggleSelectorControls(false); // NEW: Re-enable selector controls
+    toggleSelectorControls(false);
     throw error;
   }
 }
 
 // DOM event handling
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
   const extractButton = document.getElementById('extractButton');
   const cancelButton = document.getElementById('cancelButton');
   const copyButton = document.getElementById('copyButton');
@@ -521,8 +612,27 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
-  changeOutput('Ready to extract data');
+  // Load saved data
+  await loadFiltersAndSelectors();
   
+  const savedData = await loadExtractedData();
+  if (savedData) {
+    extractedData = savedData;
+    
+    // Load saved format
+    currentFormat = await loadCurrentFormat();
+    
+    // Update UI to reflect loaded data
+    formatSection.style.display = 'block';
+    formatButtons.forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`[data-format="${currentFormat}"]`).classList.add('active');
+    
+    updateOutput();
+    changeOutput('Data loaded from previous session');
+  } else {
+    changeOutput('Ready to extract data');
+  }
+
   // Path input handling
   pathInput.addEventListener('keypress', (event) => {
     if (event.key === 'Enter' && !event.shiftKey) {
@@ -536,11 +646,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const path = pathInput.value.trim();
     if (addPathFilter(path)) {
       pathInput.value = '';
+      saveFiltersAndSelectors(); // Save after adding filter
     }
   });
 
   // Clear filters button handling
-  clearFiltersButton.addEventListener('click', clearAllFilters);
+  clearFiltersButton.addEventListener('click', () => {
+    clearAllFilters();
+    saveFiltersAndSelectors(); // Save after clearing filters
+  });
 
   // CSS Selector input handling
   const selectorInput = document.getElementById('selectorInput');
@@ -559,18 +673,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const selector = selectorInput.value.trim();
     if (addCssSelector(selector)) {
       selectorInput.value = '';
+      saveFiltersAndSelectors(); // Save after adding selector
     }
   });
 
   // Clear selectors button handling
-  clearSelectorsButton.addEventListener('click', clearAllSelectors);
+  clearSelectorsButton.addEventListener('click', () => {
+    clearAllSelectors();
+    saveFiltersAndSelectors(); // Save after clearing selectors
+  });
 
   // Format button functionality
   formatButtons.forEach(button => {
-    button.addEventListener('click', () => {
+    button.addEventListener('click', async () => {
       formatButtons.forEach(btn => btn.classList.remove('active'));
       button.classList.add('active');
       currentFormat = button.dataset.format;
+      await saveCurrentFormat(currentFormat); // Save format change
       updateOutput();
     });
   });
@@ -609,7 +728,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Disable filter and selector controls
       toggleFilterControls(true);
-      toggleSelectorControls(true); // NEW: Disable selector controls
+      toggleSelectorControls(true);
       
       const data = await startExtraction();
       console.log('Extracted Data:', data);
@@ -639,7 +758,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Re-enable filter and selector controls
       toggleFilterControls(false);
-      toggleSelectorControls(false); // NEW: Re-enable selector controls
+      toggleSelectorControls(false);
     }
   });
 });
