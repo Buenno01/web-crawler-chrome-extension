@@ -7,7 +7,13 @@
     "default_popup": "index.html",
     "default_icon": "icon.png"
   },
-  "permissions": ["activeTab", "tabs", "scripting", "storage"],
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "scripting",
+    "storage",
+    "unlimitedStorage"
+  ],
   "host_permissions": ["http://*/*", "https://*/*"],
   "web_accessible_resources": [
     {
