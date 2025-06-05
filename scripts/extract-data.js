@@ -333,12 +333,23 @@ async function extractDataFromTab(tabId) {
               const elements = document.querySelectorAll(selector);
               if (elements.length > 0) {
                 // Store all matching elements' text content
-                const textContents = Array.from(elements)
-                  .map(el => el.textContent?.trim())
-                  .filter(text => text && text.length > 0);
+                const elementsContents = Array.from(elements)
+                  .map((el) => {
+                    const text = el.textContent?.trim();
+                    const links = Array.from(el.querySelectorAll('a'))
+                      .map(link => ({ href: link.href, text: link.textContent?.trim() }));
+                    if (text && text.length > 0) {
+                      return {
+                        text,
+                        links
+                      };
+                    }
+                    return null;
+                  })
+                  .filter(content => content && content.text && content.text.length > 0);
                 
-                if (textContents.length > 0) {
-                  customData[selector] = textContents;
+                if (elementsContents.length > 0) {
+                  customData[selector] = elementsContents;
                 }
               }
             } catch (error) {
