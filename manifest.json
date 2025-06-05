@@ -8,5 +8,11 @@
     "default_icon": "icon.png"
   },
   "permissions": ["activeTab", "tabs", "scripting"],
-  "host_permissions": ["http://*/*", "https://*/*"]
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "web_accessible_resources": [
+    {
+      "resources": ["scripts/markdown-formatter.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }

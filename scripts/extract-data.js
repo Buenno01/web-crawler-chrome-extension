@@ -281,6 +281,13 @@ async function getCurrentTabInfo() {
 
 async function extractDataFromTab(tabId) {
   try {
+    // First inject the markdown formatter script
+    await chrome.scripting.executeScript({
+      target: { tabId: tabId },
+      files: ['scripts/markdown-formatter.js']
+    });
+
+    // Then execute the main data extraction script
     const results = await chrome.scripting.executeScript({
       target: { tabId: tabId },
       func: (customSelectors) => {
@@ -335,18 +342,14 @@ async function extractDataFromTab(tabId) {
                 // Store all matching elements' text content
                 const elementsContents = Array.from(elements)
                   .map((el) => {
-                    const text = el.textContent?.trim();
-                    const links = Array.from(el.querySelectorAll('a'))
-                      .map(link => ({ href: link.href, text: link.textContent?.trim() }));
-                    if (text && text.length > 0) {
-                      return {
-                        text,
-                        links
-                      };
+                    // Use our markdown formatter
+                    const markdown = window.formatToMarkdown(el);
+                    if (markdown && markdown.text && markdown.text.length > 0) {
+                      return markdown;
                     }
                     return null;
                   })
-                  .filter(content => content && content.text && content.text.length > 0);
+                  .filter(content => content !== null);
                 
                 if (elementsContents.length > 0) {
                   customData[selector] = elementsContents;
@@ -354,7 +357,6 @@ async function extractDataFromTab(tabId) {
               }
             } catch (error) {
               console.error(`Error with selector "${selector}":`, error);
-              // Store error info instead of failing silently
               customData[selector] = { error: error.message };
             }
           });
