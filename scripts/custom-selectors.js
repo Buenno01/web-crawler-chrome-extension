@@ -1,49 +1,36 @@
-class CustomSelectors {
+class CustomSelectors extends StoragedSet {
   constructor(showUI = false) {
-    this.cssSelectors = new Set();
+    super('cssSelectors');
     this.showUI = showUI;
     this.init(showUI);
   }
 
-  get value() {
-    return this.cssSelectors;
-  }
-
-  async saveSelectors() {
-    await chrome.storage.local.set({
-      'cssSelectors': Array.from(this.cssSelectors)
-    });
-  }
-  
-  async loadSelectors() {
-    const result = await chrome.storage.local.get(['cssSelectors']);
-
-    if (result.cssSelectors) {
-      this.cssSelectors = new Set(result.cssSelectors);
-    }
+  get cssSelectors() {
+    return this.value;
   }
 
   async clearSelectors() {
-    this.cssSelectors.clear();
-    await this.saveSelectors();
+    await this.clear();
     this.updateSelectorDisplay();
   }
 
   async addSelector(selector) {
     selector = selector.trim();
-    if (selector && !this.cssSelectors.has(selector)) {
-      this.cssSelectors.add(selector);
-      await this.saveSelectors();
-      this.updateSelectorDisplay();
-      return true;
+    if (selector) {
+      const added = await this.add(selector);
+      if (added) {
+        this.updateSelectorDisplay();
+      }
+      return added;
     }
     return false;
   }
 
   async removeSelector(selector) {
-    this.cssSelectors.delete(selector);
-    await this.saveSelectors();
-    this.updateSelectorDisplay();
+    const removed = await this.delete(selector);
+    if (removed) {
+      this.updateSelectorDisplay();
+    }
   }
 
   updateSelectorDisplay() {
@@ -68,7 +55,7 @@ class CustomSelectors {
       container.appendChild(tag);
     });
     
-    clearBtn.style.display = this.cssSelectors.size > 0 ? 'block' : 'none';
+    clearBtn.style.display = this.size > 0 ? 'block' : 'none';
   }
 
   toggleSelectorControls(disabled) {
@@ -99,22 +86,20 @@ class CustomSelectors {
       }
     });
     
-    addSelectorButton.addEventListener('click', () => {
+    addSelectorButton.addEventListener('click', async () => {
       const selector = selectorInput.value.trim();
-      if (this.addSelector(selector)) {
+      if (await this.addSelector(selector)) {
         selectorInput.value = '';
-        this.saveSelectors(); // Save after adding selector
       }
     });
 
     clearSelectorsButton.addEventListener('click', () => {
       this.clearSelectors();
-      this.saveSelectors(); // Save after clearing selectors
     });
   }
 
   async init(showUI = false) {
-    await this.loadSelectors();
+    await this.load();
     if (showUI) {
       this.updateUI();
     }
