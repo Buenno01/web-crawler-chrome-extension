@@ -7,7 +7,7 @@ let totalProcessed = 0;
 let extractedData = null; // Store raw data for format conversion
 let currentFormat = 'summary'; // Track current format
 let pathFilters = new Set(); // Store active filters
-let cssSelectors = new Set(); // Store active CSS selectors
+let cssSelectorController = new CustomSelectors(); // Store active CSS selectors
 
 // Storage helper functions
 async function saveExtractedData(data) {
@@ -30,20 +30,15 @@ async function loadCurrentFormat() {
 
 async function saveFiltersAndSelectors() {
   await chrome.storage.local.set({
-    'pathFilters': Array.from(pathFilters),
-    'cssSelectors': Array.from(cssSelectors)
+    'pathFilters': Array.from(pathFilters)
   });
 }
 
 async function loadFiltersAndSelectors() {
-  const result = await chrome.storage.local.get(['pathFilters', 'cssSelectors']);
+  const result = await chrome.storage.local.get(['pathFilters']);
   if (result.pathFilters) {
     pathFilters = new Set(result.pathFilters);
     updateFilterDisplay();
-  }
-  if (result.cssSelectors) {
-    cssSelectors = new Set(result.cssSelectors);
-    updateSelectorDisplay();
   }
 }
 
@@ -330,74 +325,6 @@ function matchesFilter(url) {
   return Array.from(pathFilters).some(filter => lowerUrl.includes(filter));
 }
 
-// CSS Selector management functions
-function addCssSelector(selector) {
-  selector = selector.trim();
-  if (selector && !cssSelectors.has(selector)) {
-    cssSelectors.add(selector);
-    updateSelectorDisplay();
-    saveFiltersAndSelectors(); // Save changes
-    return true;
-  }
-  return false;
-}
-
-function removeCssSelector(selector) {
-  cssSelectors.delete(selector);
-  updateSelectorDisplay();
-  saveFiltersAndSelectors(); // Save changes
-}
-
-function clearAllSelectors() {
-  cssSelectors.clear();
-  updateSelectorDisplay();
-  saveFiltersAndSelectors(); // Save changes
-}
-
-function updateSelectorDisplay() {
-  const container = document.getElementById('activeSelectors');
-  const clearBtn = document.getElementById('clearSelectorsButton');
-  
-  container.innerHTML = '';
-  
-  cssSelectors.forEach(selector => {
-    const tag = document.createElement('div');
-    tag.className = 'selector-tag tag';
-    
-    const selectorText = document.createTextNode(selector);
-    tag.appendChild(selectorText);
-    
-    const button = document.createElement('button');
-    button.className = 'remove-btn';
-    button.innerHTML = '&times;';
-    button.onclick = () => removeCssSelector(selector);
-    
-    tag.appendChild(button);
-    container.appendChild(tag);
-  });
-  
-  clearBtn.style.display = cssSelectors.size > 0 ? 'block' : 'none';
-}
-
-function toggleSelectorControls(disabled) {
-  const selectorSection = document.getElementById('selectorSection');
-  const selectorInput = document.getElementById('selectorInput');
-  const addSelectorButton = document.getElementById('addSelectorButton');
-  const clearSelectorsButton = document.getElementById('clearSelectorsButton');
-  const removeButtons = selectorSection.querySelectorAll('.remove-btn');
-  const selectorTags = selectorSection.querySelectorAll('.selector-tag');
-
-  // Disable/enable all selector controls
-  selectorInput.disabled = disabled;
-  addSelectorButton.disabled = disabled;
-  clearSelectorsButton.disabled = disabled;
-  removeButtons.forEach(btn => btn.disabled = disabled);
-
-  // Add visual feedback
-  selectorSection.classList.toggle('disabled', disabled);
-  selectorTags.forEach(tag => tag.classList.toggle('disabled', disabled));
-}
-
 async function getCurrentTabInfo() {
   return new Promise((resolve) => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -512,7 +439,7 @@ async function extractDataFromTab(tabId) {
           customSelectors: customSelectorsContent // NEW: Add custom selector results
         };
       },
-      args: [Array.from(cssSelectors)] // Pass the selectors as argument
+      args: [Array.from(cssSelectorController.value)] // Pass the selectors as argument
     });
 
     return results[0]?.result;
@@ -595,7 +522,6 @@ async function startExtraction() {
 
     // Disable filter and selector controls
     toggleFilterControls(true);
-    toggleSelectorControls(true);
 
     const results = {};
     
@@ -637,7 +563,6 @@ async function startExtraction() {
     console.error('Error during extraction:', error);
     // Re-enable filter and selector controls on error
     toggleFilterControls(false);
-    toggleSelectorControls(false);
     throw error;
   }
 }
@@ -650,11 +575,10 @@ async function clearAllStorage() {
   extractedData = null;
   currentFormat = 'summary';
   pathFilters.clear();
-  cssSelectors.clear();
+  cssSelectorController.clearSelectors();
   
   // Reset UI
   updateFilterDisplay();
-  updateSelectorDisplay();
   updateDownloadButtonVisibility();
   
   // Hide format section and reset format buttons
@@ -766,7 +690,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   });
 
   // CSS Selector input handling
-  const selectorInput = document.getElementById('selectorInput');
+  /*const selectorInput = document.getElementById('selectorInput');
   const addSelectorButton = document.getElementById('addSelectorButton');
   const clearSelectorsButton = document.getElementById('clearSelectorsButton');
 
@@ -790,7 +714,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   clearSelectorsButton.addEventListener('click', () => {
     clearAllSelectors();
     saveFiltersAndSelectors(); // Save after clearing selectors
-  });
+  });*/
 
   // Format button functionality
   formatButtons.forEach(button => {
@@ -877,7 +801,6 @@ document.addEventListener('DOMContentLoaded', async function() {
       
       // Disable filter and selector controls
       toggleFilterControls(true);
-      toggleSelectorControls(true);
       
       const data = await startExtraction();
       console.log('Extracted Data:', data);
@@ -907,7 +830,6 @@ document.addEventListener('DOMContentLoaded', async function() {
       
       // Re-enable filter and selector controls
       toggleFilterControls(false);
-      toggleSelectorControls(false);
     }
   });
 });
