@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="../styles/main.css">
+  <script src="../scripts/custom-selectors.js"></script>
+  <title>Settings</title>
+</head>
+<body>
+  <a href="../index.html">Back</a>
+  <h1>Web Crawler Extension</h1>
+  <h2>Settings</h2>
+  <p>Configure the extension to your needs.</p>
+
+  <div id="selectorSection" class="selector-section box">
+    <h3>CSS Selectors (Optional):</h3>
+    <div class="input-group">
+      <input 
+        type="text" 
+        id="selectorInput" 
+        class="form-input"
+        placeholder="Enter CSS selector (e.g., .class-name, #id, div > p)" 
+      />
+      <button class="btn fit" id="addSelectorButton">Add Selector</button>
+    </div>
+    <div id="activeSelectors" class="tags-container"></div>
+    <button id="clearSelectorsButton" class="btn small danger">Clear All Selectors</button>
+    <div class="selector-info info-text">
+      Add CSS selectors to target specific elements during crawling.
+      Leave empty to use no selectors.
+    </div>
+  </div>
+  <script src="../scripts/index.js"></script>
+</body>
+</html>
