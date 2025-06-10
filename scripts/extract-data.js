@@ -1,4 +1,6 @@
-// Global state for crawling
+import PathFilters from './path-filters.js';
+import CustomSelectors from './custom-selectors.js';
+
 let isCrawling = false;
 let shouldCancel = false;
 let visitedUrls = new Set();
@@ -6,7 +8,7 @@ let pendingUrls = new Set();
 let totalProcessed = 0;
 let extractedData = null; // Store raw data for format conversion
 let currentFormat = 'summary'; // Track current format
-let pathFilters = new Set(); // Store active filters
+let pathFilters = new PathFilters(); // Store active filters
 let cssSelectorController = new CustomSelectors(); // Store active CSS selectors
 
 // Storage helper functions
@@ -28,42 +30,8 @@ async function loadCurrentFormat() {
   return result.currentFormat || 'summary';
 }
 
-async function saveFiltersAndSelectors() {
-  await chrome.storage.local.set({
-    'pathFilters': Array.from(pathFilters)
-  });
-}
-
-async function loadFiltersAndSelectors() {
-  const result = await chrome.storage.local.get(['pathFilters']);
-  if (result.pathFilters) {
-    pathFilters = new Set(result.pathFilters);
-    updateFilterDisplay();
-  }
-}
-
 async function clearStoredData() {
   await chrome.storage.local.remove(['extractedData', 'currentFormat']);
-}
-
-// Function to toggle filter controls
-function toggleFilterControls(disabled) {
-  const filterSection = document.getElementById('filterSection');
-  const pathInput = document.getElementById('pathInput');
-  const addFilterButton = document.getElementById('addFilterButton');
-  const clearFiltersButton = document.getElementById('clearFiltersButton');
-  const removeButtons = filterSection.querySelectorAll('.remove-btn');
-  const filterTags = filterSection.querySelectorAll('.filter-tag');
-
-  // Disable/enable all filter controls
-  pathInput.disabled = disabled;
-  addFilterButton.disabled = disabled;
-  clearFiltersButton.disabled = disabled;
-  removeButtons.forEach(btn => btn.disabled = disabled);
-
-  // Add visual feedback
-  filterSection.classList.toggle('disabled', disabled);
-  filterTags.forEach(tag => tag.classList.toggle('disabled', disabled));
 }
 
 function changeOutput(text) {
@@ -255,7 +223,7 @@ function updateOutput() {
 
 function updateProgress() {
   const progressInfo = document.getElementById('progressInfo');
-  const filterInfo = pathFilters.size > 0 ? ` | Filtering by: ${Array.from(pathFilters).join(', ')}` : '';
+  const filterInfo = pathFilters.size > 0 ? ` | Filtering by: ${Array.from(pathFilters.value).join(', ')}` : '';
   progressInfo.textContent = `Processed: ${totalProcessed} pages | Pending: ${pendingUrls.size} pages${filterInfo}`;
 }
 
@@ -265,64 +233,6 @@ function showCopySuccess() {
   setTimeout(() => {
     successMessage.classList.remove('show');
   }, 2000);
-}
-
-// Filter management functions
-function addPathFilter(path) {
-  path = path.trim().toLowerCase();
-  if (path && !pathFilters.has(path)) {
-    pathFilters.add(path);
-    updateFilterDisplay();
-    saveFiltersAndSelectors(); // Save changes
-    return true;
-  }
-  return false;
-}
-
-function removePathFilter(path) {
-  pathFilters.delete(path);
-  updateFilterDisplay();
-  saveFiltersAndSelectors(); // Save changes
-}
-
-function clearAllFilters() {
-  pathFilters.clear();
-  updateFilterDisplay();
-  saveFiltersAndSelectors(); // Save changes
-}
-
-function updateFilterDisplay() {
-  const container = document.getElementById('activeFilters');
-  const clearBtn = document.getElementById('clearFiltersButton');
-  
-  container.innerHTML = '';
-  
-  pathFilters.forEach(filter => {
-    const tag = document.createElement('div');
-    tag.className = 'filter-tag tag';
-    
-    // Create text node for the filter
-    const filterText = document.createTextNode(filter);
-    tag.appendChild(filterText);
-    
-    // Create and setup remove button
-    const button = document.createElement('button');
-    button.className = 'remove-btn';
-    button.innerHTML = '&times;';
-    button.onclick = () => removePathFilter(filter);
-    
-    // Append button to tag
-    tag.appendChild(button);
-    container.appendChild(tag);
-  });
-  
-  clearBtn.style.display = pathFilters.size > 0 ? 'block' : 'none';
-}
-
-function matchesFilter(url) {
-  if (pathFilters.size === 0) return true;
-  const lowerUrl = url.toLowerCase();
-  return Array.from(pathFilters).some(filter => lowerUrl.includes(filter));
 }
 
 async function getCurrentTabInfo() {
@@ -455,7 +365,7 @@ async function processUrl(url, results) {
   }
 
   // Apply path filter
-  if (!matchesFilter(url)) {
+  if (!pathFilters.matchesFilter(url)) {
     return;
   }
 
@@ -492,7 +402,7 @@ async function processUrl(url, results) {
 
       // Add new unvisited links to pending
       pageData.links.forEach(link => {
-        if (!visitedUrls.has(link) && !pendingUrls.has(link) && matchesFilter(link)) {
+        if (!visitedUrls.has(link) && !pendingUrls.has(link) && pathFilters.matchesFilter(link)) {
           pendingUrls.add(link);
         }
       });
@@ -537,7 +447,7 @@ async function startExtraction() {
 
     // Add initial links to pending (apply filter)
     initialData.links.forEach(link => {
-      if (matchesFilter(link)) {
+      if (pathFilters.matchesFilter(link)) {
         pendingUrls.add(link);
       }
     });
@@ -574,11 +484,10 @@ async function clearAllStorage() {
   // Reset in-memory state
   extractedData = null;
   currentFormat = 'summary';
-  pathFilters.clear();
+  pathFilters.clearFilters();
   cssSelectorController.clearSelectors();
   
   // Reset UI
-  updateFilterDisplay();
   updateDownloadButtonVisibility();
   
   // Hide format section and reset format buttons
@@ -634,9 +543,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   const copyButton = document.getElementById('copyButton');
   const formatSection = document.getElementById('formatSection');
   const formatButtons = document.querySelectorAll('.format-btn');
-  const pathInput = document.getElementById('pathInput');
-  const addFilterButton = document.getElementById('addFilterButton');
-  const clearFiltersButton = document.getElementById('clearFiltersButton');
+
   const output = document.querySelector('output');
   const progressInfo = document.getElementById('progressInfo');
   
@@ -644,9 +551,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     console.error('Required buttons not found!');
     return;
   }
-
-  // Load saved data
-  await loadFiltersAndSelectors();
   
   const savedData = await loadExtractedData();
   if (savedData) {
@@ -665,56 +569,6 @@ document.addEventListener('DOMContentLoaded', async function() {
   } else {
     changeOutput('Ready to extract data');
   }
-
-  // Path input handling
-  pathInput.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault();
-      addFilterButton.click();
-    }
-  });
-
-  // Add filter button handling
-  addFilterButton.addEventListener('click', () => {
-    const path = pathInput.value.trim();
-    if (addPathFilter(path)) {
-      pathInput.value = '';
-      saveFiltersAndSelectors(); // Save after adding filter
-    }
-  });
-
-  // Clear filters button handling
-  clearFiltersButton.addEventListener('click', () => {
-    clearAllFilters();
-    saveFiltersAndSelectors(); // Save after clearing filters
-  });
-
-  // CSS Selector input handling
-  /*const selectorInput = document.getElementById('selectorInput');
-  const addSelectorButton = document.getElementById('addSelectorButton');
-  const clearSelectorsButton = document.getElementById('clearSelectorsButton');
-
-  selectorInput.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault();
-      addSelectorButton.click();
-    }
-  });
-
-  // Add selector button handling
-  addSelectorButton.addEventListener('click', () => {
-    const selector = selectorInput.value.trim();
-    if (addCssSelector(selector)) {
-      selectorInput.value = '';
-      saveFiltersAndSelectors(); // Save after adding selector
-    }
-  });
-
-  // Clear selectors button handling
-  clearSelectorsButton.addEventListener('click', () => {
-    clearAllSelectors();
-    saveFiltersAndSelectors(); // Save after clearing selectors
-  });*/
 
   // Format button functionality
   formatButtons.forEach(button => {
@@ -766,9 +620,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     const confirmed = confirm(
       'Are you sure you want to clear all stored data?\n\n' +
       'This will permanently delete:\n' +
-      '• All crawled website data\n' +
-      '• Your saved filters and selectors\n' +
-      '• Format preferences\n\n' +
+      '- All crawled website data\n' +
+      '- Your saved filters and selectors\n' +
+      '- Format preferences\n\n' +
       'This action cannot be undone.'
     );
     

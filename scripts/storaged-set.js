@@ -56,24 +56,5 @@ class StoragedSet {
     return this._set.forEach(callback);
   }
 }
-/*
-async saveSelectors() {
-  await chrome.storage.local.set({
-    'cssSelectors': Array.from(this.cssSelectors)
-  });
-}
 
-async loadSelectors() {
-  const result = await chrome.storage.local.get(['cssSelectors']);
-
-  if (result.cssSelectors) {
-    this.cssSelectors = new Set(result.cssSelectors);
-  }
-}
-
-async clearSelectors() {
-  this.cssSelectors.clear();
-  await this.saveSelectors();
-  this.updateSelectorDisplay();
-}
-*/
+export default StoragedSet;

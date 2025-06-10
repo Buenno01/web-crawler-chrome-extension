@@ -1,3 +1,5 @@
+import StoragedSet from './storaged-set.js';
+
 class CustomSelectors extends StoragedSet {
   constructor(showUI = false) {
     super('cssSelectors');
@@ -111,3 +113,5 @@ class CustomSelectors extends StoragedSet {
     this.toggleSelectorControls(false);
   }
 }
+
+export default CustomSelectors;

@@ -13,24 +13,6 @@
   <div id="progressInfo" class="progress-info"></div>
 
   <!-- Path Filter Section -->
-  <div id="filterSection" class="filter-section box">
-    <h3>Path Filters (Optional):</h3>
-    <div class="input-group">
-      <input 
-        type="text" 
-        id="pathInput" 
-        class="form-input"
-        placeholder="Enter path keyword (e.g., 'products', 'blog')" 
-      />
-      <button class="btn fit" id="addFilterButton">Add Filter</button>
-    </div>
-    <div id="activeFilters" class="tags-container"></div>
-    <button id="clearFiltersButton" class="btn small danger">Clear All Filters</button>
-    <div class="filter-info info-text">
-      Only pages containing these keywords in their URLs will be crawled.
-      Leave empty to crawl all pages.
-    </div>
-  </div>
   
   <!-- 
   <div id="selectorSection" class="selector-section box">
@@ -93,7 +75,6 @@
     <div id="storageStatus" class="storage-status"></div>
   </div>
 
-  <script defer src="scripts/custom-selectors.js"></script>
-  <script defer src="scripts/extract-data.js"></script>
+  <script defer src="scripts/extract-data.js" type="module"></script>
 </body>
 </html>
