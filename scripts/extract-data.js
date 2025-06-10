@@ -260,6 +260,7 @@ async function extractDataFromTab(tabId) {
     const results = await chrome.scripting.executeScript({
       target: { tabId: tabId },
       func: (customSelectors) => {
+
         function getHeadingStructure() {
           const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
           return Array.from(headings).map((heading) => ({
@@ -300,7 +301,6 @@ async function extractDataFromTab(tabId) {
           }
         }
 
-        // NEW: Function to extract custom selector content
         function getCustomSelectorContent(selectors) {
           const customData = {};
           
@@ -308,11 +308,9 @@ async function extractDataFromTab(tabId) {
             try {
               const elements = document.querySelectorAll(selector);
               if (elements.length > 0) {
-                // Store all matching elements' text content
                 const elementsContents = Array.from(elements)
                   .map((el) => {
-                    // Use our markdown formatter
-                    const markdown = window.formatToMarkdown(el);
+                    const markdown = window.MarkdownFormatter.format(el);
                     if (markdown && markdown.text && markdown.text.length > 0) {
                       return markdown;
                     }
@@ -338,7 +336,7 @@ async function extractDataFromTab(tabId) {
         const description = document.querySelector('meta[name="description"]')?.content || '';
         const headings = getHeadingStructure();
         const links = getSubLinks(currentUrl);
-        const customSelectorsContent = getCustomSelectorContent(customSelectors); // NEW
+        const customSelectorsContent = getCustomSelectorContent(customSelectors);
 
         return {
           url: currentUrl,
@@ -346,10 +344,10 @@ async function extractDataFromTab(tabId) {
           description,
           headings,
           links,
-          customSelectors: customSelectorsContent // NEW: Add custom selector results
+          customSelectors: customSelectorsContent
         };
       },
-      args: [Array.from(cssSelectorController.value)] // Pass the selectors as argument
+      args: [Array.from(cssSelectorController.value)]
     });
 
     return results[0]?.result;
@@ -430,9 +428,6 @@ async function startExtraction() {
     // Clear stored data when starting new extraction
     await clearStoredData();
 
-    // Disable filter and selector controls
-    toggleFilterControls(true);
-
     const results = {};
     
     // Start with the current page
@@ -471,8 +466,7 @@ async function startExtraction() {
   } catch (error) {
     isCrawling = false;
     console.error('Error during extraction:', error);
-    // Re-enable filter and selector controls on error
-    toggleFilterControls(false);
+
     throw error;
   }
 }
@@ -653,9 +647,6 @@ document.addEventListener('DOMContentLoaded', async function() {
       progressInfo.style.display = 'block';
       formatSection.style.display = 'none';
       
-      // Disable filter and selector controls
-      toggleFilterControls(true);
-      
       const data = await startExtraction();
       console.log('Extracted Data:', data);
       
@@ -681,9 +672,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       progressInfo.style.display = 'none';
       isCrawling = false;
       shouldCancel = false;
-      
-      // Re-enable filter and selector controls
-      toggleFilterControls(false);
+
     }
   });
 });
