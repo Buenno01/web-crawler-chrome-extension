@@ -1,58 +1,46 @@
-export default class StoragedSet {
-    constructor(key) {
-      this.key = key;
-      this._set = new Set();
-    }
+import { useState, useEffect } from 'react';
 
-    async save() {
-      await chrome.storage.local.set({
-        [this.key]: Array.from(this._set)
-      });
-    }
+export default function useStoragedSet(key) {
+  const [ values, setValues ] = useState(new Set());
 
-    async load() {
-      const result = await chrome.storage.local.get([this.key]);
-      if (result[this.key]) {
-        this._set = new Set(result[this.key]);
-      }
-      return this._set;
-    }
+  useEffect(() => {
+    chrome.storage.local.get(key, (result) => {
+      setValues(new Set(result[key]));
+    });
+  }, [key]);
 
-    async clear() {
-      this._set.clear();
-      await this.save();
-    }
+  const save = () => {
+    chrome.storage.local.set({
+      [key]: Array.from(values)
+    });
+  };
 
-    async add(value) {
-      if (!this._set.has(value)) {
-        this._set.add(value);
-        await this.save();
-        return true;
-      }
-      return false;
-    }
+  const clear = () => {
+    setValues(new Set());
+    save();
+  };
 
-    async delete(value) {
-      const deleted = this._set.delete(value);
-      if (deleted) {
-        await this.save();
-      }
-      return deleted;
-    }
+  const add = (value) => {
+    setValues(new Set([...values, value]));
+    save();
+  };
 
-    has(value) {
-      return this._set.has(value);
-    }
+  const remove = (value) => {
+    setValues(new Set([...values].filter((v) => v !== value)));
+    save();
+  };
 
-    get value() {
-      return this._set;
-    }
+  const has = (value) => {
+    return values.has(value);
+  };
 
-    get size() {
-      return this._set.size;
-    }
+  const size = () => {
+    return values.size;
+  };
 
-    forEach(callback) {
-      return this._set.forEach(callback);
-    }
-}
+  const forEach = (callback) => {
+    values.forEach(callback);
+  };
+
+  return { values: Array.from(values), add, remove, clear, has, size, forEach };
+};
