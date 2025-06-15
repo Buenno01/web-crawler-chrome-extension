@@ -60,6 +60,8 @@ body {
   padding: 20px;
   margin: 0;
   font-family: Arial, sans-serif;
+  background-color: var(--color-white);
+  color: var(--color-black);
 }
 
 /* Button Base and Variants */
