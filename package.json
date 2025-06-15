@@ -1,0 +1,38 @@
+{
+  "name": "web-crawler",
+  "version": "1.0.0",
+  "description": "This is a chrome extension that help people extract information from entire websites",
+  "homepage": "https://github.com/Buenno01/web-crawler-chrome-extension#readme",
+  "bugs": {
+    "url": "https://github.com/Buenno01/web-crawler-chrome-extension/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Buenno01/web-crawler-chrome-extension.git"
+  },
+  "license": "ISC",
+  "author": "Vinícius Bueno Costa | buenno01",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.27.4",
+    "@babel/preset-env": "^7.27.2",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.2.1",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/chrome": "^0.0.254",
+    "babel-jest": "^30.0.0",
+    "jest": "^27.5.1",
+    "jest-chrome": "^0.8.0",
+    "jest-environment-jsdom": "^27.5.1"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
