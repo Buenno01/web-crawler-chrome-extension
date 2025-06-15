@@ -1,31 +1,53 @@
 :root {
-  --primary-green: #4CAF50;
-  --primary-blue: #2196F3;
-  --primary-red: #f44336;
-  --primary-gray: #666;
+  /* Core Colors */
+  --color-white: #ffffff;
+  --color-black: #000000;
 
-  --light-green: #81C784;
-  --light-blue: #90CAF9;
-  --light-red: #EF5350;
-  --light-gray: #BDBDBD;
+  /* Primary Colors */
+  --color-green-primary: #4CAF50;
+  --color-blue-primary: #2196F3;
+  --color-red-primary: #f44336;
+  --color-gray-primary: #666666;
 
-  --off-white-green: #e8f5e9;
-  --off-white-blue: #f0f8ff;
-  --off-white-red: #ffebee;
-  --off-white-gray: #f5f5f5;
+  /* Light Colors */
+  --color-green-light: #81C784;
+  --color-blue-light: #90CAF9;
+  --color-red-light: #EF5350;
+  --color-gray-light: #BDBDBD;
 
-  --dark-green: #388E3C;
-  --dark-blue: #1976D2;
-  --dark-red: #D32F2F;
-  --dark-gray: #333;
+  /* Off-White Colors */
+  --color-green-offwhite: #e8f5e9;
+  --color-blue-offwhite: #f0f8ff;
+  --color-red-offwhite: #ffebee;
+  --color-gray-offwhite: #f5f5f5;
 
-  --color-button-background: var(--primary-green);
-  --color-button-background-hover: var(--dark-green);
-  --color-button-text: white;
+  /* Dark Colors */
+  --color-green-dark: #388E3C;
+  --color-blue-dark: #1976D2;
+  --color-red-dark: #D32F2F;
+  --color-gray-dark: #333333;
 
-  --color-box-border: var(--light-gray);
-  --color-box-background: var(--off-white-gray);
-  --color-box-text: var(--dark-gray);
+  /* Hover Colors */
+  --color-green-hover: #45a049;
+  --color-blue-hover: #1976D2;
+  --color-red-hover: #d32f2f;
+
+  /* Disabled Colors */
+  --color-disabled: #cccccc;
+  --color-disabled-border: #cccccc;
+
+  /* Transparent Colors */
+  --color-white-transparent: rgba(255, 255, 255, 0.7);
+  --color-white-hover: rgba(255, 255, 255, 0.2);
+
+  /* Theme Variables */
+  --color-button-background: var(--color-green-primary);
+  --color-button-background-hover: var(--color-green-dark);
+  --color-button-text: var(--color-white);
+
+  --color-box-border: var(--color-gray-light);
+  --color-box-background: var(--color-gray-offwhite);
+  --color-box-text: var(--color-gray-dark);
 }
 
 /* Base Styles */
@@ -63,26 +85,26 @@ body {
   }
 
   &.primary {
-    background-color: var(--primary-green);
+    background-color: var(--color-green-primary);
     
     &:hover {
-      background-color: var(--dark-green);
+      background-color: var(--color-green-dark);
     }
   }
 
   &.secondary {
-    background-color: var(--primary-blue);
+    background-color: var(--color-blue-primary);
     
     &:hover {
-      background-color: var(--dark-blue);
+      background-color: var(--color-blue-dark);
     }
   }
 
   &.danger {
-    background-color: var(--primary-red);
+    background-color: var(--color-red-primary);
     
     &:hover {
-      background-color: var(--dark-red);
+      background-color: var(--color-red-dark);
     }
   }
 
@@ -114,7 +136,7 @@ body {
 /* Info Text */
 .info-text {
   font-size: 12px;
-  color: var(--primary-gray);
+  color: var(--color-gray-primary);
   font-style: italic;
 }
 
@@ -169,7 +191,7 @@ body {
     cursor: pointer;
 
     &:hover {
-      background-color: rgba(255, 255, 255, 0.2);
+      background-color: var(--color-white-hover);
       border-radius: 50%;
     }
 
@@ -185,28 +207,28 @@ body {
 }
 
 #extractButton {
-  background-color: #4CAF50;
-  color: white;
+  background-color: var(--color-green-primary);
+  color: var(--color-white);
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
   width: 100%;
-}
 
-#extractButton:hover {
-  background-color: #45a049;
-}
+  &:hover {
+    background-color: var(--color-green-hover);
+  }
 
-#extractButton:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
+  &:disabled {
+    background-color: var(--color-disabled);
+    cursor: not-allowed;
+  }
 }
 
 #copyButton {
-  background-color: #2196F3;
-  color: white;
+  background-color: var(--color-blue-primary);
+  color: var(--color-white);
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
@@ -217,95 +239,95 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-}
 
-#copyButton:hover {
-  background-color: #1976D2;
-}
+  &:hover {
+    background-color: var(--color-blue-dark);
+  }
 
-#copyButton span {
-  position: relative;
-  width: 16px;
-  height: 20px;
-}
+  span {
+    position: relative;
+    width: 16px;
+    height: 20px;
 
-/* First paper */
-#copyButton span span:first-child {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 14px;
-  height: 18px;
-  background: white;
-  border-radius: 2px;
-  display: block;
-}
+    /* First paper */
+    span:first-child {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 14px;
+      height: 18px;
+      background: var(--color-white);
+      border-radius: 2px;
+      display: block;
+    }
 
-/* Second paper */
-#copyButton span span:last-child {
-  position: absolute;
-  left: 0;
-  top: 2px;
-  width: 14px;
-  height: 18px;
-  background: rgba(255, 255, 255, 0.7);
-  border-radius: 2px;
-  display: block;
+    /* Second paper */
+    span:last-child {
+      position: absolute;
+      left: 0;
+      top: 2px;
+      width: 14px;
+      height: 18px;
+      background: var(--color-white-transparent);
+      border-radius: 2px;
+      display: block;
+    }
+  }
 }
 
 output {
-  --color-background: var(--off-white-gray);
-  --color-text: var(--dark-gray);
+  --color-background: var(--color-gray-offwhite);
+  --color-text: var(--color-gray-dark);
 }
 
 .success-message {
-  color: #4CAF50;
+  color: var(--color-green-primary);
   font-size: 12px;
   text-align: center;
   opacity: 0;
   transition: opacity 0.3s ease;
-}
 
-.success-message.show {
-  opacity: 1;
+  &.show {
+    opacity: 1;
+  }
 }
 
 #cancelButton {
-  background-color: #f44336;
-  color: white;
+  background-color: var(--color-red-primary);
+  color: var(--color-white);
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
   width: 100%;
-  display: none; /* Hidden by default */
-}
+  display: none;
 
-#cancelButton:hover {
-  background-color: #d32f2f;
+  &:hover {
+    background-color: var(--color-red-dark);
+  }
 }
 
 .progress-info {
   font-size: 12px;
-  color: #666;
+  color: var(--color-gray-primary);
   text-align: center;
 }
 
 /* Format Selection Section */
 .format-section {
-  --color-background: var(--off-white-gray);
-  --color-button-background: var(--primary-blue);
-  --color-button-background-hover: var(--dark-blue);
-  --color-button-text: white;
-  --color-box-background: var(--off-white-gray);
+  --color-background: var(--color-gray-offwhite);
+  --color-button-background: var(--color-blue-primary);
+  --color-button-background-hover: var(--color-blue-dark);
+  --color-button-text: var(--color-white);
+  --color-box-background: var(--color-gray-offwhite);
 
-  display: none; /* Hidden until extraction is complete */
-}
+  display: none;
 
-.format-section h3 {
-  font-size: 14px;
-  color: #333;
+  h3 {
+    font-size: 14px;
+    color: var(--color-gray-dark);
+  }
 }
 
 .format-buttons {
@@ -321,11 +343,11 @@ output {
 
 /* Filter Section Styles */
 .filter-section {
-  --color-background: var(--off-white-blue);
-  --color-button-background: var(--primary-blue);
-  --color-button-background-hover: var(--dark-blue);
-  --color-button-text: white;
-  --color-box-background: var(--off-white-blue);
+  --color-background: var(--color-blue-offwhite);
+  --color-button-background: var(--color-blue-primary);
+  --color-button-background-hover: var(--color-blue-dark);
+  --color-button-text: var(--color-white);
+  --color-box-background: var(--color-blue-offwhite);
 }
 
 .filter-input-group {
@@ -336,7 +358,7 @@ output {
 #pathInput {
   flex: 1;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-disabled-border);
   border-radius: 4px;
   font-size: 14px;
 }
@@ -346,11 +368,11 @@ output {
 }
 
 #addFilterButton:hover {
-  background-color: #1976D2;
+  background-color: var(--color-blue-dark);
 }
 
 #addFilterButton:disabled {
-  background-color: #ccc;
+  background-color: var(--color-disabled);
   cursor: not-allowed;
 }
 
@@ -362,23 +384,23 @@ output {
 }
 
 #clearFiltersButton {
-  background-color: #f44336;
-  color: white;
+  background-color: var(--color-red-primary);
+  color: var(--color-white);
   padding: 6px 12px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 12px;
   display: none;
-}
 
-#clearFiltersButton:hover {
-  background-color: #d32f2f;
+  &:hover {
+    background-color: var(--color-red-dark);
+  }
 }
 
 .filter-info {
   font-size: 12px;
-  color: #666;
+  color: var(--color-gray-primary);
   font-style: italic;
 }
 
@@ -396,11 +418,11 @@ output {
 
 /* CSS Selector Section Styles */
 .selector-section {
-  --color-background: var(--off-white-green);
-  --color-button-background: var(--primary-green);
-  --color-button-background-hover: var(--dark-green);
-  --color-button-text: white;
-  --color-box-background: var(--off-white-green);
+  --color-background: var(--color-green-offwhite);
+  --color-button-background: var(--color-green-primary);
+  --color-button-background-hover: var(--color-green-dark);
+  --color-button-text: var(--color-white);
+  --color-box-background: var(--color-green-offwhite);
 }
 
 .selector-input-group {
@@ -411,48 +433,48 @@ output {
 #selectorInput {
   flex: 1;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-disabled-border);
   border-radius: 4px;
   font-size: 14px;
 }
 
 #addSelectorButton {
-  background-color: #4CAF50;
-  color: white;
+  background-color: var(--color-green-primary);
+  color: var(--color-white);
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
-}
 
-#addSelectorButton:hover {
-  background-color: #45a049;
-}
+  &:hover {
+    background-color: var(--color-green-hover);
+  }
 
-#addSelectorButton:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+  &:disabled {
+    background-color: var(--color-disabled);
+    cursor: not-allowed;
+  }
 }
 
 #clearSelectorsButton {
-  background-color: #f44336;
-  color: white;
+  background-color: var(--color-red-primary);
+  color: var(--color-white);
   padding: 6px 12px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 12px;
   display: none;
-}
 
-#clearSelectorsButton:hover {
-  background-color: #d32f2f;
+  &:hover {
+    background-color: var(--color-red-dark);
+  }
 }
 
 .selector-info {
   font-size: 12px;
-  color: #666;
+  color: var(--color-gray-primary);
   font-style: italic;
 }
 
@@ -498,27 +520,53 @@ output {
 
 /* Storage Section */
 .storage-section {
-  border-color: var(--light-red);
-  background-color: var(--off-white-red);
+  border-color: var(--color-red-light);
+  background-color: var(--color-red-offwhite);
   margin-top: 15px;
-}
 
-.storage-section h3 {
-  color: var(--dark-red);
-  margin: 0 0 10px 0;
-  font-size: 14px;
+  h3 {
+    color: var(--color-red-dark);
+    margin: 0 0 10px 0;
+    font-size: 14px;
+  }
 }
 
 .storage-status {
   font-size: 12px;
   margin-top: 8px;
   min-height: 16px;
+
+  &.success {
+    color: var(--color-green-primary);
+  }
+
+  &.info {
+    color: var(--color-blue-primary);
+  }
 }
 
-.storage-status.success {
-  color: var(--primary-green);
+.loading-bar {
+  width: 100%;
+  height: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background-image: linear-gradient(
+    to right,
+    var(--color-green-primary),
+    var(--color-blue-primary),
+    var(--color-green-light),
+    var(--color-blue-light),
+    var(--color-green-primary)
+  );
+  background-size: 200% 100%;
+  animation: moveGradient 5s linear infinite;
 }
 
-.storage-status.info {
-  color: var(--primary-blue);
+@keyframes moveGradient {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
 }
