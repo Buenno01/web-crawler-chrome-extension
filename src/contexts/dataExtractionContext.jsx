@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback } from 'react';
+import { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import { usePathFiltersContext } from './pathFiltersContext';
 import { useCssSelectorsContext } from './cssSelectorsContext';
 import DataExtractionService from '../services/dataExtractionService';
@@ -79,7 +79,7 @@ export function DataExtractionProvider({ children }) {
   }, []);
 
   // Load saved data on mount
-  useState(() => {
+  useEffect(() => {
     chrome.storage.local.get(['extractedData'], (result) => {
       if (result.extractedData) {
         setState(prev => ({ ...prev, extractedData: result.extractedData }));

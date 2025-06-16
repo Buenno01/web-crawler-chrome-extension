@@ -86,5 +86,9 @@
   "extractionCompletedMessage": {
     "message": "A extração de dados foi concluída com sucesso. Você pode agora exportar os dados ou iniciar uma nova extração.",
     "description": "Message shown when extraction is completed"
+  },
+  "errorTitle": {
+    "message": "Erro de Extração",
+    "description": "Title for extraction error messages"
   }
 }

@@ -15,11 +15,5 @@
     "storage",
     "unlimitedStorage"
   ],
-  "host_permissions": ["http://*/*", "https://*/*"],
-  "web_accessible_resources": [
-    {
-      "resources": ["scripts/markdown-formatter.js"],
-      "matches": ["<all_urls>"]
-    }
-  ]
+  "host_permissions": ["http://*/*", "https://*/*"]
 }
