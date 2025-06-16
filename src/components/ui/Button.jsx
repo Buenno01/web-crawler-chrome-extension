@@ -1,11 +1,17 @@
 import React from 'react';
 
-function Button({ children, ...props }) {
+function Button({ children, variant = 'primary', className = '', ...props }) {
+  const baseClasses = 'button';
+  const variantClass = variant ? `button--${variant}` : 'button--primary';
+  
   return (
-    <button className='bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md w-full flex justify-center items-center gap-2 cursor-pointer text-xl' {...props}>
+    <button 
+      className={`${baseClasses} ${variantClass} ${className}`}
+      {...props}
+    >
       {children}
     </button>
-  )
+  );
 }
 
 export default Button;

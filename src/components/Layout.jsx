@@ -23,21 +23,18 @@ function Layout() {
   ];
   
   return (
-    <div className='p-4 bg-gray-50 text-gray-950 min-h-96 w-[500px] dark:bg-gray-900 dark:text-gray-50 text-md'>      
-      <header className='mb-4'>
-        <nav>
-          <ul className='flex gap-0 border font-semibold border-blue-500 w-fit rounded-sm overflow-hidden divide-blue-500 divide-solid divide-x-[1px]'>
+    <div className="layout">      
+      <header className="layout__header">
+        <nav className="nav">
+          <ul className="nav__list">
             {
               links.map((link) => (
                 <li key={link.to}>
                   <Link
                     to={link.to}
-                    className={`
-                      text-gray-950 bg-gray-950/10 flex items-end gap-1
-                      dark:text-gray-50 px-2 py-1
-                      ${location.pathname === link.to ? 'bg-black/20 dark:bg-gray-50/20 font-bold' : ''}`}
+                    className={`nav__link ${location.pathname === link.to ? 'nav__link--active' : ''}`}
                   >
-                    <link.icon className='text-lg' />
+                    <link.icon className="nav__icon" />
                     {link.label}
                   </Link>
                 </li>
@@ -46,7 +43,7 @@ function Layout() {
           </ul>
         </nav>
       </header>
-      <main className=''>
+      <main className="layout__main">
         <Outlet />
       </main>
     </div>

@@ -1,1 +1,118 @@
 @import "tailwindcss";
+
+@layer base {
+  .layout {
+    @apply p-4 bg-gray-50 text-gray-950 min-h-96 w-[500px] dark:bg-gray-900 dark:text-gray-50 text-base;
+  }
+
+  .layout__header {
+    @apply mb-4;
+  }
+
+  .layout__main {
+    @apply w-full;
+  }
+
+  .nav {
+    @apply w-full;
+  }
+
+  .nav__list {
+    @apply flex gap-0 border font-semibold border-blue-500 w-fit rounded-sm overflow-hidden divide-blue-500 divide-solid divide-x-[1px];
+  }
+
+  .nav__link {
+    @apply text-gray-950 bg-gray-950/10 flex items-end gap-1 dark:text-gray-50 px-2 py-1;
+  }
+
+  .nav__link--active {
+    @apply bg-black/20 dark:bg-gray-50/20 font-bold;
+  }
+
+  .nav__icon {
+    @apply text-lg;
+  }
+
+  .form {
+    @apply w-full flex gap-2 items-center;
+  }
+
+  .form__group {
+    @apply relative w-full;
+  }
+
+  .form__button {
+    @apply flex items-center justify-center w-12 h-12 aspect-square rounded-lg;
+  }
+
+  .icon {
+    @apply text-lg;
+  }
+
+  .input {
+    @apply w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-md p-2
+      focus:border-blue-500 focus:dark:border-blue-500 focus:outline-none pt-6 pb-2;
+  }
+
+  .input__label {
+    @apply absolute text-gray-700 dark:text-gray-300 duration-150 transform -translate-y-3 scale-75 top-2 z-10 origin-[0] 
+      left-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-2 pt-1
+      peer-focus:scale-75 peer-focus:-translate-y-3;
+  }
+
+  .button {
+    @apply rounded-md w-full flex justify-center items-center px-2 py-1 gap-2 cursor-pointer transition-colors duration-200;
+  }
+
+  .button--primary {
+    @apply bg-blue-500 hover:bg-blue-600 text-white;
+  }
+
+  .button--success {
+    @apply bg-green-500 hover:bg-green-600 text-white;
+  }
+
+  .button--warning {
+    @apply bg-yellow-500 hover:bg-yellow-600 text-black;
+  }
+
+  .button--danger {
+    @apply bg-red-500 hover:bg-red-600 text-white;
+  }
+
+  .button--icon {
+    @apply hover:bg-white/20 p-1 rounded-full cursor-pointer w-fit aspect-square;
+  }
+
+  .form-box {
+    @apply flex flex-col gap-2 rounded-sm bg-blue-500/10 p-4;
+  }
+
+  .form-list {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .form-item {
+    @apply flex items-center justify-center gap-2 px-2 py-1 rounded-sm bg-blue-500/10 w-fit;
+  }
+
+  .page-title {
+    @apply text-2xl font-bold mb-4;
+  }
+
+  .wrapper {
+    @apply w-full max-w-7xl mx-auto px-4;
+  }
+
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-lg shadow-md p-4;
+  }
+
+  .list {
+    @apply flex flex-col gap-2;
+  }
+
+  .list--horizontal {
+    @apply flex-row flex-wrap;
+  }
+}

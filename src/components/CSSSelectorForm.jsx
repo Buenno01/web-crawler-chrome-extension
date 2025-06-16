@@ -5,6 +5,9 @@ import { useTranslation } from '../hooks/useTranslation';
 import useForm from '../hooks/useForm';
 import Input from './ui/Input';
 import Button from './ui/Button';
+import { FaPlus } from "react-icons/fa";
+import Form from './Form';
+import FormItemsList from './FormItemsList';
 
 function CSSSelectorForm() {
   const { values, add, remove } = useCssSelectorsContext();
@@ -19,26 +22,26 @@ function CSSSelectorForm() {
     resetForm();
   }
 
+  const handleInput = (e) => {
+    e.preventDefault();
+    if (e.key === 'Enter') {
+      handleSubmit(e);
+    } else {
+      handleChange(e);
+    }
+  }
+
   return (
-    <div className='flex flex-col gap-2 rounded-sm bg-blue-500/10 p-4'>
-      <form onSubmit={handleSubmit}>
-        <Input label={t('cssSelectorInputLabel')} name='selector' value={form.selector} onChange={handleChange} />
-        <Button>
-          {t('addCssSelectorButton')}
-        </Button>
-      </form>
-      <ul className='flex flex-wrap gap-2'>
-        {
-            values.map((value) => (
-                <li key={value} className='flex items-center justify-center gap-2 px-2 py-1 rounded-sm bg-blue-500/10 w-fit'>
-                    {value}
-                    <Button className='hover:bg-white/20 p-1 rounded-full cursor-pointer' onClick={() => remove(value)}>
-                        <IoMdTrash />
-                    </Button>
-                </li>
-            ))
-        }
-      </ul>
+    <div className="form-box">
+      <Form
+        handleSubmit={handleSubmit}
+        handleInput={handleInput}
+        inputValue={form.selector}
+        inputName='selector'
+        buttonLabel={t('addCssSelectorButton')}
+        inputLabel={t('cssSelectorInputLabel')}
+      />
+      <FormItemsList values={values} removeFunction={remove} />
     </div>
   )
 }
