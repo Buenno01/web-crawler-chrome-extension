@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import Button from './ui/Button';
 import { IoMdTrash } from 'react-icons/io';
 
@@ -20,4 +20,4 @@ function FormItemsList({ values, removeFunction }) {
   )
 }
 
-export default FormItemsList
+export default FormItemsList;

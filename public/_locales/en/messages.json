@@ -66,5 +66,13 @@
   "addPathFilterButton": {
     "message": "Add",
     "description": "Button text to add a new path filter"
+  },
+  "noPathFiltersTitle": {
+    "message": "No Path Filters",
+    "description": "Title for no path filters message"
+  },
+  "noPathFiltersMessage": {
+    "message": "No path filters set. The extraction will map all internal links it can find within the website and its pages untill it cannot find any more links it didn't already visited.",
+    "description": "Message for no path filters"
   }
 }

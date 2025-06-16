@@ -66,5 +66,13 @@
   "addPathFilterButton": {
     "message": "Adicionar",
     "description": "Button text to add a new path filter"
+  },
+  "noPathFiltersTitle": {
+    "message": "Nenhum Filtro de Caminho",
+    "description": "Title for no path filters message"
+  },
+  "noPathFiltersMessage": {
+    "message": "Nenhum filtro de caminho definido. A extração mapeará todos os links internos que puder encontrar dentro do site e suas páginas até que não consiga encontrar mais links que não tenha visitado ainda.",
+    "description": "Message for no path filters"
   }
 }

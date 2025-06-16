@@ -120,3 +120,41 @@
     @apply flex-row flex-wrap;
   }
 }
+
+/* Message Box */
+.message-box {
+  @apply flex gap-4 p-4 rounded-lg border w-full my-2;
+}
+
+.message-box__icon-wrapper {
+  @apply flex-shrink-0;
+}
+
+.message-box__content {
+  @apply flex-grow;
+}
+
+.message-box__title {
+  @apply font-semibold mb-1;
+}
+
+.message-box__text {
+  @apply text-sm;
+}
+
+/* Message Box Variants */
+.message-box--info {
+  @apply bg-blue-50 border-blue-200 text-blue-900 dark:bg-blue-900/20 dark:border-blue-800 dark:text-blue-100;
+}
+
+.message-box--success {
+  @apply bg-green-50 border-green-200 text-green-900 dark:bg-green-900/20 dark:border-green-800 dark:text-green-100;
+}
+
+.message-box--warning {
+  @apply bg-yellow-50 border-yellow-200 text-yellow-900 dark:bg-yellow-900/20 dark:border-yellow-800 dark:text-yellow-100;
+}
+
+.message-box--critical {
+  @apply bg-red-50 border-red-200 text-red-900 dark:bg-red-900/20 dark:border-red-800 dark:text-red-100;
+}

@@ -66,5 +66,13 @@
   "addPathFilterButton": {
     "message": "Agregar",
     "description": "Button text to add a new path filter"
+  },
+  "noPathFiltersTitle": {
+    "message": "No Filtros de Ruta",
+    "description": "Title for no path filters message"
+  },
+  "noPathFiltersMessage": {
+    "message": "No hay filtros de ruta establecidos. La extracción mapeará todos los enlaces internos que pueda encontrar dentro del sitio web y sus páginas hasta que no pueda encontrar más enlaces que no haya visitado ya.",
+    "description": "Message for no path filters"
   }
 }

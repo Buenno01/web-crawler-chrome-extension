@@ -4,6 +4,7 @@ import { useCssSelectorsContext } from '../contexts/cssSelectorsContext';
 import { usePathFiltersContext } from '../contexts/pathFiltersContext';
 import { useTranslation } from '../hooks/useTranslation';
 import Button from '../components/ui/Button';
+import MessageBox from '../components/ui/MessageBox';
 
 function Home() {
   const { values: cssSelectors } = useCssSelectorsContext();
@@ -39,6 +40,16 @@ function Home() {
           <li className='px-2' key={item.label}>{item.label}: <span className='aspect-square inline-flex w-5 h-5 items-center justify-center rounded-full bg-blue-500 text-white text-center'>{item.value}</span></li>
         ))}
       </ul>
+
+      {
+        pathFilters.length === 0 &&
+        <MessageBox
+          title={t('noPathFiltersTitle')}
+          variant='warning'
+        >
+          <p>{t('noPathFiltersMessage')}</p>
+        </MessageBox>
+      }
     </>
   )
 }
