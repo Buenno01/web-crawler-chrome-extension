@@ -6,6 +6,7 @@ function FormItemsList({ values, removeFunction }) {
   return (
     <ul className="form-list">
       {
+        values && values.length > 0 &&
         values.map((value) => (
           <li key={value} className="form-item">
             {value}

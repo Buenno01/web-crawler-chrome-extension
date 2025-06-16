@@ -50,5 +50,17 @@
   "addCssSelectorButton": {
     "message": "Add",
     "description": "Button text to add a new CSS selector"
+  },
+  "pathFilterFormTitle": {
+    "message": "Path Filters",
+    "description": "Title for path filter form"
+  },
+  "pathFilterInputLabel": {
+    "message": "Add a Path Filter",
+    "description": "Label for path filter input field"
+  },
+  "addPathFilterButton": {
+    "message": "Add",
+    "description": "Button text to add a new path filter"
   }
 }

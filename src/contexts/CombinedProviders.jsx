@@ -1,12 +1,15 @@
 import React from 'react';
 import { CssSelectorsProvider } from './cssSelectorsContext';
+import { PathFiltersProvider } from './pathFiltersContext';
 
 function CombinedProviders({ children }) {
   return (
     <>
-      <CssSelectorsProvider>
-            {children}
-      </CssSelectorsProvider>
+      <PathFiltersProvider>
+        <CssSelectorsProvider>
+          {children}
+        </CssSelectorsProvider>
+      </PathFiltersProvider>
     </>
   )
 }
