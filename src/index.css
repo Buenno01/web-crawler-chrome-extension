@@ -119,6 +119,43 @@
   .list--horizontal {
     @apply flex-row flex-wrap;
   }
+
+  /* Data Extraction Styles */
+  .data-extractor {
+    @apply p-4;
+  }
+
+  .extraction-controls {
+    @apply flex gap-4 mb-4;
+  }
+
+  .progress-indicator {
+    @apply my-4;
+  }
+
+  .progress {
+    @apply h-6 mb-2;
+  }
+
+  .progress-bar {
+    @apply transition-[width] duration-300 ease-in-out;
+  }
+
+  .progress-stats {
+    @apply flex gap-4 text-sm text-gray-600 dark:text-gray-400 mb-2;
+  }
+
+  .current-url {
+    @apply text-sm text-gray-600 dark:text-gray-400 truncate;
+  }
+
+  .error-display {
+    @apply my-4;
+  }
+
+  .error-display strong {
+    @apply block mb-2;
+  }
 }
 
 /* Message Box */
