@@ -3,21 +3,25 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { IoMdSettings } from "react-icons/io";
 import { MdHome } from "react-icons/md";
+import { useTranslation } from '../hooks/useTranslation';
 
 function Layout() {
   const location = useLocation();
+  const { t } = useTranslation();
+  
   const links = [
     {
       to: '/',
-      label: 'Home',
+      label: t('navigationHome'),
       icon: MdHome,
     },
     {
       to: '/settings',
-      label: 'Settings',
+      label: t('navigationSettings'),
       icon: IoMdSettings,
     },
   ];
+  
   return (
     <div className='p-4 bg-gray-50 text-gray-950 min-h-96 w-[500px] dark:bg-gray-900 dark:text-gray-50 text-md'>      
       <header className='mb-4'>

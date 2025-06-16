@@ -1,0 +1,50 @@
+{
+  "extensionName": {
+    "message": "Extract data from website",
+    "description": "The name of the extension"
+  },
+  "extensionDescription": {
+    "message": "Extract data from website",
+    "description": "The description of the extension"
+  },
+  "webCrawlerTitle": {
+    "message": "Web Crawler",
+    "description": "Main title of the application"
+  },
+  "attentionLabel": {
+    "message": "Attention",
+    "description": "Label for attention warning"
+  },
+  "attentionMessage": {
+    "message": "When you start the extraction, if there's no path filters set, the extraction will map all internal links it can find within the website and its pages.",
+    "description": "Warning message about extraction behavior"
+  },
+  "startExtraction": {
+    "message": "Start Extraction",
+    "description": "Button text to start extraction"
+  },
+  "cssSelectors": {
+    "message": "CSS Selectors",
+    "description": "Label for CSS selectors count"
+  },
+  "settingsTitle": {
+    "message": "Settings",
+    "description": "Settings page title"
+  },
+  "navigationHome": {
+    "message": "Home",
+    "description": "Navigation link to home page"
+  },
+  "navigationSettings": {
+    "message": "Settings",
+    "description": "Navigation link to settings page"
+  },
+  "cssSelectorInputLabel": {
+    "message": "CSS Selector",
+    "description": "Label for CSS selector input field"
+  },
+  "addCssSelectorButton": {
+    "message": "Add CSS Selector",
+    "description": "Button text to add a new CSS selector"
+  }
+}

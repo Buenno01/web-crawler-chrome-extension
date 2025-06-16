@@ -1,12 +1,14 @@
 import React from 'react';
 import { IoMdTrash } from "react-icons/io";
 import { useCssSelectorsContext } from '../contexts/cssSelectorsContext';
+import { useTranslation } from '../hooks/useTranslation';
 import useForm from '../hooks/useForm';
 import Input from './ui/Input';
 import Button from './ui/Button';
 
 function CSSSelectorForm() {
   const { values, add, remove } = useCssSelectorsContext();
+  const { t } = useTranslation();
   const [ form, handleChange, resetForm ] = useForm({
     selector: '',
   });
@@ -20,9 +22,9 @@ function CSSSelectorForm() {
   return (
     <div className='flex flex-col gap-2 rounded-sm bg-blue-500/10 p-4'>
       <form onSubmit={handleSubmit}>
-        <Input label='CSS Selector' name='selector' value={form.selector} onChange={handleChange} />
+        <Input label={t('cssSelectorInputLabel')} name='selector' value={form.selector} onChange={handleChange} />
         <Button>
-          Add CSS Selector
+          {t('addCssSelectorButton')}
         </Button>
       </form>
       <ul className='flex flex-wrap gap-2'>

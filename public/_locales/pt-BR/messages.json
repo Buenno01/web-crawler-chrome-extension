@@ -1,0 +1,50 @@
+{
+  "extensionName": {
+    "message": "Extrair dados do site",
+    "description": "The name of the extension"
+  },
+  "extensionDescription": {
+    "message": "Extrair dados do site",
+    "description": "The description of the extension"
+  },
+  "webCrawlerTitle": {
+    "message": "Web Crawler",
+    "description": "Main title of the application"
+  },
+  "attentionLabel": {
+    "message": "Atenção",
+    "description": "Label for attention warning"
+  },
+  "attentionMessage": {
+    "message": "Quando você iniciar a extração, se não houver filtros de caminho definidos, a extração irá mapear todos os links internos que puder encontrar dentro do site e suas páginas.",
+    "description": "Warning message about extraction behavior"
+  },
+  "startExtraction": {
+    "message": "Iniciar Extração",
+    "description": "Button text to start extraction"
+  },
+  "cssSelectors": {
+    "message": "Seletores CSS",
+    "description": "Label for CSS selectors count"
+  },
+  "settingsTitle": {
+    "message": "Configurações",
+    "description": "Settings page title"
+  },
+  "navigationHome": {
+    "message": "Início",
+    "description": "Navigation link to home page"
+  },
+  "navigationSettings": {
+    "message": "Configurações",
+    "description": "Navigation link to settings page"
+  },
+  "cssSelectorInputLabel": {
+    "message": "Seletor CSS",
+    "description": "Label for CSS selector input field"
+  },
+  "addCssSelectorButton": {
+    "message": "Adicionar Seletor CSS",
+    "description": "Button text to add a new CSS selector"
+  }
+}

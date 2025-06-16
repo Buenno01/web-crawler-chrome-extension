@@ -1,30 +1,38 @@
 import React from 'react';
 import { BsBoxArrowRight } from "react-icons/bs";
 import { useCssSelectorsContext } from '../contexts/cssSelectorsContext';
+import { useTranslation } from '../hooks/useTranslation';
 import Button from '../components/ui/Button';
 
 function Home() {
   const { values } = useCssSelectorsContext();
+  const { t } = useTranslation();
+
+  const information = [
+    {
+      label: t('cssSelectors'),
+      value: values.length,
+    }
+  ]
+
   return (
     <>
-      <h1 className='text-2xl font-bold mb-4'>Web Crawler</h1>
+      <h1 className='text-2xl font-bold mb-4'>{t('webCrawlerTitle')}</h1>
       <div className='flex flex-col gap-2 mb-4 text-sm italic text-gray-700 dark:text-gray-300'>
         <p>
-          <strong>Atention:</strong> When you start the extraction, if there's no path filters set, the extraction will
-          map all internal links it can find in the website and pages it can find. It may take a while to complete.
-        </p>
-        <p>
-          If you want to filter the links, you can set the path filters in the settings page.
+          <strong>{t('attentionLabel')}:</strong> {t('attentionMessage')}
         </p>
       </div>
 
       <Button>
         <BsBoxArrowRight className='text-lg' />
-        Start Extraction
+        {t('startExtraction')}
       </Button>
-      <p className='text-sm text-gray-700 dark:text-gray-300 mt-4 flex items-center justify-center gap-2 flex-wrap w-full'>
-        <span>CSS Selectors: <strong className='aspect-square inline-flex w-5 h-5 items-center justify-center rounded-full bg-blue-500 text-white text-center'>{values.length}</strong></span>
-      </p>
+      <ul className='text-sm text-gray-700 dark:text-gray-300 mt-4 flex items-center justify-center flex-wrap w-full divide-x divide-gray-700 dark:divide-gray-300'>
+        {information.map((item) => (
+          <li className='px-2' key={item.label}>{item.label}: <span className='aspect-square inline-flex w-5 h-5 items-center justify-center rounded-full bg-blue-500 text-white text-center'>{item.value}</span></li>
+        ))}
+      </ul>
     </>
   )
 }
