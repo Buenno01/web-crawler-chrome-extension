@@ -23,6 +23,10 @@
     "message": "Iniciar Extracción",
     "description": "Button text to start extraction"
   },
+  "pathFilters": {
+    "message": "Filtros de Ruta",
+    "description": "Label for path filters count"
+  },
   "cssSelectors": {
     "message": "Selectores CSS",
     "description": "Label for CSS selectors count"

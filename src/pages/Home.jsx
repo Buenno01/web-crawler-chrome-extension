@@ -1,18 +1,24 @@
 import React from 'react';
 import { BsBoxArrowRight } from "react-icons/bs";
 import { useCssSelectorsContext } from '../contexts/cssSelectorsContext';
+import { usePathFiltersContext } from '../contexts/pathFiltersContext';
 import { useTranslation } from '../hooks/useTranslation';
 import Button from '../components/ui/Button';
 
 function Home() {
-  const { values } = useCssSelectorsContext();
+  const { values: cssSelectors } = useCssSelectorsContext();
+  const { values: pathFilters } = usePathFiltersContext();
   const { t } = useTranslation();
 
   const information = [
     {
       label: t('cssSelectors'),
-      value: values.length,
-    }
+      value: cssSelectors.length,
+    },
+    {
+      label: t('pathFilters'),
+      value: pathFilters.length,
+    },
   ]
 
   return (

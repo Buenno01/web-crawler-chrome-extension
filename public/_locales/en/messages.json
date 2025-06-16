@@ -27,6 +27,10 @@
     "message": "CSS Selectors",
     "description": "Label for CSS selectors count"
   },
+  "pathFilters": {
+    "message": "Path Filters",
+    "description": "Label for path filters count"
+  },
   "settingsTitle": {
     "message": "Settings",
     "description": "Settings page title"
