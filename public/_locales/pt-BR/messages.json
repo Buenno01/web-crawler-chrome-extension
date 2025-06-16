@@ -39,6 +39,10 @@
     "message": "Configurações",
     "description": "Navigation link to settings page"
   },
+  "cssSelectorFormTitle": {
+    "message": "Seletores CSS",
+    "description": "Title for CSS selector form"
+  },
   "cssSelectorInputLabel": {
     "message": "Adicionar um Seletor CSS",
     "description": "Label for CSS selector input field"
