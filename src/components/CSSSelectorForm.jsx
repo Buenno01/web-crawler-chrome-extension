@@ -1,11 +1,7 @@
 import React from 'react';
-import { IoMdTrash } from "react-icons/io";
 import { useCssSelectorsContext } from '../contexts/cssSelectorsContext';
 import { useTranslation } from '../hooks/useTranslation';
 import useForm from '../hooks/useForm';
-import Input from './ui/Input';
-import Button from './ui/Button';
-import { FaPlus } from "react-icons/fa";
 import Form from './Form';
 import FormItemsList from './FormItemsList';
 
