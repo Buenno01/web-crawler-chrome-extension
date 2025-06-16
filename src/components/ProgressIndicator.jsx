@@ -17,14 +17,13 @@ export default function ProgressIndicator({ progress }) {
     <div className="progress-indicator">
       <div className="progress">
         <div
-          className="progress-bar"
+          className="progress-bar loading-bg"
           role="progressbar"
-          style={{ width: `${percentage}%` }}
           aria-valuenow={percentage}
           aria-valuemin="0"
           aria-valuemax="100"
         >
-          {percentage}%
+          <span className='progress-bar__percentage'>{percentage}%</span>
         </div>
       </div>
       

@@ -42,7 +42,6 @@ export default function DataExtractor() {
         onCancel={cancelExtraction}
         onClear={clearData}
       />
-      <ProgressIndicator progress={progress} />
       
       {isExtracting ? (
         <ProgressIndicator progress={progress} />
