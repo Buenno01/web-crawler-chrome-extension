@@ -40,11 +40,11 @@
     "description": "Navigation link to settings page"
   },
   "cssSelectorInputLabel": {
-    "message": "Selector CSS",
+    "message": "Agregar un Selector CSS",
     "description": "Label for CSS selector input field"
   },
   "addCssSelectorButton": {
-    "message": "Agregar Selector CSS",
+    "message": "Agregar",
     "description": "Button text to add a new CSS selector"
   }
 }
