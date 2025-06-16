@@ -32,21 +32,25 @@ export function DataExtractionProvider({ children }) {
     error: null,
   });
 
-  const extractionService = useCallback(() => {
-    return new DataExtractionService(pathFilters.values, cssSelectors.values);
+  // Store the service instance in state, recreating only when dependencies change
+  const [extractionService, setExtractionService] = useState(() => 
+    new DataExtractionService(pathFilters.values, cssSelectors.values)
+  );
+
+  // Update service instance when dependencies change
+  useEffect(() => {
+    setExtractionService(new DataExtractionService(pathFilters.values, cssSelectors.values));
   }, [pathFilters.values, cssSelectors.values]);
 
   const startExtraction = useCallback(async () => {
     try {
       setState(prev => ({ ...prev, isExtracting: true, error: null }));
       
-      const service = extractionService();
-      
       const onProgress = (progress) => {
         setState(prev => ({ ...prev, progress }));
       };
 
-      const data = await service.startExtraction(onProgress);
+      const data = await extractionService.startExtraction(onProgress);
       
       setState(prev => ({
         ...prev,
@@ -68,8 +72,7 @@ export function DataExtractionProvider({ children }) {
   }, [extractionService]);
 
   const cancelExtraction = useCallback(() => {
-    const service = extractionService();
-    service.shouldCancel = true;
+    extractionService.shouldCancel = true;
     setState(prev => ({ ...prev, isExtracting: false }));
   }, [extractionService]);
 
