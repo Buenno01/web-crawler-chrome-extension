@@ -28,7 +28,7 @@ function PathFilterForm() {
   }
 
   return (
-    <div className="form-box">
+    <div className="box">
       <h2 className="page-title">{t('pathFilterFormTitle')}</h2>
       <Form
         handleSubmit={handleSubmit}

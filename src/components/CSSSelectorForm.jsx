@@ -32,7 +32,7 @@ function CSSSelectorForm() {
   }
 
   return (
-    <div className="form-box">
+    <div className="box">
       <h2 className="page-title">{t('cssSelectorFormTitle')}</h2>
       <Form
         handleSubmit={handleSubmit}

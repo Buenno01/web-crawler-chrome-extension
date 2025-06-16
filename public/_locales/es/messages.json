@@ -74,5 +74,17 @@
   "noPathFiltersMessage": {
     "message": "No hay filtros de ruta establecidos. La extracción mapeará todos los enlaces internos que pueda encontrar dentro del sitio web y sus páginas hasta que no pueda encontrar más enlaces que no haya visitado ya.",
     "description": "Message for no path filters"
+  },
+  "cancelExtraction": {
+    "message": "Cancelar Extracción",
+    "description": "Button text to cancel ongoing extraction"
+  },
+  "extractionCompletedTitle": {
+    "message": "Extracción Completada",
+    "description": "Title for extraction completed message"
+  },
+  "extractionCompletedMessage": {
+    "message": "La extracción de datos se ha completado con éxito. Ahora puede exportar los datos o iniciar una nueva extracción.",
+    "description": "Message shown when extraction is completed"
   }
 }

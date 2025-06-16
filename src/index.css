@@ -84,7 +84,7 @@
     @apply hover:bg-white/20 p-1 rounded-full cursor-pointer w-fit aspect-square;
   }
 
-  .form-box {
+  .box {
     @apply flex flex-col gap-2 rounded-sm bg-blue-500/10 p-4 w-full mb-4;
   }
 

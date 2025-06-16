@@ -74,5 +74,17 @@
   "noPathFiltersMessage": {
     "message": "No path filters set. The extraction will map all internal links it can find within the website and its pages untill it cannot find any more links it didn't already visited.",
     "description": "Message for no path filters"
+  },
+  "cancelExtraction": {
+    "message": "Cancel Extraction",
+    "description": "Button text to cancel ongoing extraction"
+  },
+  "extractionCompletedTitle": {
+    "message": "Extraction Completed",
+    "description": "Title for extraction completed message"
+  },
+  "extractionCompletedMessage": {
+    "message": "The data extraction has been completed successfully. You can now export the data or start a new extraction.",
+    "description": "Message shown when extraction is completed"
   }
 }
