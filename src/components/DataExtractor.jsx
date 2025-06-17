@@ -58,6 +58,7 @@ export default function DataExtractor() {
           <MessageBox
             title={t('noPathFiltersTitle')}
             variant='warning'
+            disclosure={true}
           >
             <p>{t('noPathFiltersMessage')}</p>
           </MessageBox>

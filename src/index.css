@@ -1,5 +1,33 @@
 @import "tailwindcss";
 
+body::-webkit-scrollbar {
+  width: 6px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+  border-radius: 3px;
+  border: 1px solid #f1f5f9;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: #2563eb;
+}
+
+@media (prefers-color-scheme: dark) {
+  body::-webkit-scrollbar-track {
+    background: #1e293b;
+  }
+
+  body::-webkit-scrollbar-thumb {
+    border-color: #1e293b;
+  }
+}
+
 .loading-bg {
   background: linear-gradient(
     to right,
@@ -153,11 +181,6 @@
 
   .list--horizontal {
     @apply flex-row flex-wrap;
-  }
-
-  /* Data Extraction Styles */
-  .data-extractor {
-    @apply p-4;
   }
 
   .extraction-controls {

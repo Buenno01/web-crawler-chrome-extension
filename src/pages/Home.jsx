@@ -24,12 +24,6 @@ function Home() {
   return (
     <>
       <h1 className='text-2xl font-bold mb-4'>{t('webCrawlerTitle')}</h1>
-      <div className='flex flex-col gap-2 mb-4 text-sm italic text-gray-700 dark:text-gray-300'>
-        <p>
-          <strong>{t('attentionLabel')}:</strong> {t('attentionMessage')}
-        </p>
-      </div>
-
       <DataExtractor />
     </>
   )
