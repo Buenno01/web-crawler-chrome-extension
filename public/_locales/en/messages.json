@@ -138,5 +138,9 @@
   "storageCleared": {
     "message": "Storage Cleared",
     "description": "Message shown when storage is cleared"
+  },
+  "storageUsed": {
+    "message": "Storage Used",
+    "description": "Message shown when storage is used"
   }
 }

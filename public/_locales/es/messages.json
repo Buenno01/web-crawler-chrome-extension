@@ -138,5 +138,9 @@
   "storageCleared": {
     "message": "Almacenamiento Limpiado",
     "description": "Message shown when storage is cleared"
+  },
+  "storageUsed": {
+    "message": "Almacenamiento Usado",
+    "description": "Message shown when storage is used"
   }
 }
