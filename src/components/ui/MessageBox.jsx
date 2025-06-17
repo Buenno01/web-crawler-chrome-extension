@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { IoIosInformationCircle, IoMdCheckmarkCircle, IoMdWarning, IoMdAlert, IoIosClose } from "react-icons/io";
+import { RxCaretDown } from "react-icons/rx";
 import Button from './Button';
 
 const variants = {
@@ -32,9 +33,11 @@ function MessageBox({
   className = '',
   onClose,
   closeButton = true,
+  disclosure = false,
   ...props 
 }) {
   const [isVisible, setIsVisible] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(!disclosure);
   const variantConfig = variants[variant] || variants.info;
   const Icon = variantConfig.icon;
   
@@ -48,6 +51,10 @@ function MessageBox({
       onClose();
     }
   };
+
+  const handleToggle = () => {
+    setIsExpanded(!isExpanded);
+  };
   
   return (
     <div 
@@ -59,9 +66,25 @@ function MessageBox({
         <Icon className="icon" />
       </div>
       <div className="message-box__content">
-        <div className="message-box__title">
-          {title || variantConfig.title}
-          {closeButton && (
+        <div
+          className={`message-box__title ${disclosure ? 'message-box__title--disclosure' : ''}`}
+          onClick={disclosure ? handleToggle : undefined}
+        >
+          <div className="message-box__title-content">
+            {title || variantConfig.title}
+          </div>
+          {disclosure && (
+              <Button
+                variant="icon"
+                onClick={handleToggle}
+                aria-expanded={isExpanded}
+                aria-label={isExpanded ? "Collapse message" : "Expand message"}
+                className={`message-box__toggle ${isExpanded ? 'message-box__toggle--expanded' : ''}`}
+              >
+                <RxCaretDown className="icon" />
+              </Button>
+            )}
+          {closeButton && disclosure === false && (
             <Button
               variant="icon"
               onClick={handleClose}
@@ -71,7 +94,7 @@ function MessageBox({
             </Button>
           )}
         </div>
-        <div className="message-box__text">
+        <div className={`message-box__text ${disclosure ? 'message-box__text--disclosure' : ''} ${isExpanded ? 'message-box__text--expanded' : ''}`}>
           {children}
         </div>
       </div>

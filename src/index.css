@@ -244,4 +244,37 @@
   .message-box__close-button .icon {
     @apply text-2xl;
   }
+
+  /* Message Box Disclosure Styles */
+  .message-box__title--disclosure {
+    @apply cursor-pointer;
+  }
+
+  .message-box__title-content {
+    @apply flex items-center gap-2 flex-grow;
+  }
+
+  .message-box__toggle {
+    @apply p-0;
+  }
+
+  .message-box__toggle .icon {
+    @apply transition-transform duration-300 ease-in-out;
+  }
+
+  .message-box__toggle--expanded .icon {
+    @apply rotate-180;
+  }
+
+  .message-box__text--disclosure {
+    @apply grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-in-out;
+  }
+
+  .message-box__text--disclosure > * {
+    @apply overflow-hidden;
+  }
+
+  .message-box__text--expanded {
+    @apply grid-rows-[1fr];
+  }
 }
