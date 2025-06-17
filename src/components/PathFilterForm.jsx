@@ -4,6 +4,7 @@ import { usePathFiltersContext } from '../contexts/pathFiltersContext';
 import useForm from '../hooks/useForm';
 import Form from './Form';
 import FormItemsList from './FormItemsList';
+import MessageBox from './ui/MessageBox';
 
 function PathFilterForm() {
   const { values, add, remove } = usePathFiltersContext();
@@ -39,6 +40,15 @@ function PathFilterForm() {
         inputLabel={t('pathFilterInputLabel')}
       />
       <FormItemsList values={values} removeFunction={remove} />
+      <MessageBox
+        title={t('pathFilterFormDescriptionTitle')}
+        variant="info"
+        disclosure={true}
+      >
+        <p>
+          {t('pathFilterFormDescription')}
+        </p>
+      </MessageBox>
     </div>
   )
 }

@@ -90,5 +90,13 @@
   "errorTitle": {
     "message": "Extraction Error",
     "description": "Title for extraction error messages"
+  },
+  "pathFilterFormDescriptionTitle": {
+    "message": "About Path Filters",
+    "description": "Title for path filter form description"
+  },
+  "pathFilterFormDescription": {
+    "message": "Path filters are used to filter the links that will be extracted, this extension only extracts internal links from the target website. The path filters will set a condition that the link must match to be extracted (e.g. /blog/ will only extract links that contain /blog/ in the path).",
+    "description": "Description for path filter form"
   }
 }

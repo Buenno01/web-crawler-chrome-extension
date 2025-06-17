@@ -90,5 +90,13 @@
   "errorTitle": {
     "message": "Erro de Extração",
     "description": "Title for extraction error messages"
+  },
+  "pathFilterFormDescriptionTitle": {
+    "message": "Sobre Filtros de Caminho",
+    "description": "Title for path filter form description"
+  },
+  "pathFilterFormDescription": {
+    "message": "Filtros de caminho são usados para filtrar os links que serão extraídos, esta extensão só extrai links internos do site alvo. Os filtros de caminho definirão uma condição que o link deve atender para ser extraído (exemplo: /blog/ irá extrair apenas links que contenham /blog/ no caminho).",
+    "description": "Description for path filter form"
   }
 }

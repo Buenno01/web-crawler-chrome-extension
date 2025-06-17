@@ -90,5 +90,13 @@
   "errorTitle": {
     "message": "Error de Extracción",
     "description": "Title for extraction error messages"
+  },
+  "pathFilterFormDescriptionTitle": {
+    "message": "Sobre Filtros de Ruta",
+    "description": "Title for path filter form description"
+  },
+  "pathFilterFormDescription": {
+    "message": "Los filtros de ruta se utilizan para filtrar los enlaces que se extraerán, esta extensión solo extrae enlaces internos del sitio web objetivo. Los filtros de ruta establecerán una condición que el enlace debe cumplir para ser extraído (por ejemplo: /blog/ extraerá solo enlaces que contengan /blog/ en la ruta).",
+    "description": "Description for path filter form"
   }
 }
