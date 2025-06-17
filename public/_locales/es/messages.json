@@ -134,5 +134,9 @@
   "storageClear": {
     "message": "Limpiar Almacenamiento",
     "description": "Button text to clear storage"
+  },
+  "storageCleared": {
+    "message": "Almacenamiento Limpiado",
+    "description": "Message shown when storage is cleared"
   }
 }
