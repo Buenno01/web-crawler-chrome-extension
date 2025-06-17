@@ -43,6 +43,10 @@
     "message": "Configurações",
     "description": "Navigation link to settings page"
   },
+  "navigationReports": {
+    "message": "Relatórios",
+    "description": "Navigation link to reports page"
+  },
   "cssSelectorFormTitle": {
     "message": "Seletores CSS",
     "description": "Title for CSS selector form"
@@ -106,5 +110,17 @@
   "cssSelectorFormDescription": {
     "message": "Seletores CSS são usados para selecionar os elementos que serão extraídos do site. Os seletores CSS são uma estratégia para recuperar elementos específicos do site, esta extensão usará os seletores CSS para extrair dados personalizados do site.",
     "description": "Description for CSS selector form"
+  },
+  "noDataTitle": {
+    "message": "Você ainda não extraiu nenhum dado",
+    "description": "Title for no data message"
+  },
+  "noDataDescription": {
+    "message": "Você ainda não extraiu nenhum dado. Por favor, inicie uma extração para ver os relatórios.",
+    "description": "Description for no data message"
+  },
+  "reportsTitle": {
+    "message": "Relatórios",
+    "description": "Title for reports page"
   }
 }

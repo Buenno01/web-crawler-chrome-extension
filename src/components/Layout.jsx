@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { IoMdSettings } from "react-icons/io";
 import { MdHome } from "react-icons/md";
 import { useTranslation } from '../hooks/useTranslation';
+import { MdAutoGraph } from "react-icons/md";
 
 function Layout() {
   const location = useLocation();
@@ -20,6 +21,11 @@ function Layout() {
       label: t('navigationSettings'),
       icon: IoMdSettings,
     },
+    {
+      to: '/reports',
+      label: t('navigationReports'),
+      icon: MdAutoGraph,
+    }
   ];
   
   return (

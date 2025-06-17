@@ -43,6 +43,10 @@
     "message": "Settings",
     "description": "Navigation link to settings page"
   },
+  "navigationReports": {
+    "message": "Reports",
+    "description": "Navigation link to reports page"
+  },
   "cssSelectorFormTitle": {
     "message": "CSS Selectors",
     "description": "Title for CSS selector form"
@@ -106,5 +110,17 @@
   "cssSelectorFormDescription": {
     "message": "CSS selectors are used to select the elements that will be extracted from the website. The CSS selectors are a strategy to retrieve specific elements from the website, this extension will use the CSS selectors to extract custom data from the website.",
     "description": "Description for CSS selector form"
+  },
+  "noDataTitle": {
+    "message": "You haven't extracted any data yet",
+    "description": "Title for no data message"
+  },
+  "noDataDescription": {
+    "message": "You haven't extracted any data yet. Please start an extraction to see the reports.",
+    "description": "Description for no data message"
+  },
+  "reportsTitle": {
+    "message": "Reports",
+    "description": "Title for reports page"
   }
 }
