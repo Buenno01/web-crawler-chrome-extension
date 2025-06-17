@@ -98,5 +98,13 @@
   "pathFilterFormDescription": {
     "message": "Path filters are used to filter the links that will be extracted, this extension only extracts internal links from the target website. The path filters will set a condition that the link must match to be extracted (e.g. /blog/ will only extract links that contain /blog/ in the path).",
     "description": "Description for path filter form"
+  },
+  "cssSelectorFormDescriptionTitle": {
+    "message": "About CSS Selectors",
+    "description": "Title for CSS selector form description"
+  },
+  "cssSelectorFormDescription": {
+    "message": "CSS selectors are used to select the elements that will be extracted from the website. The CSS selectors are a strategy to retrieve specific elements from the website, this extension will use the CSS selectors to extract custom data from the website.",
+    "description": "Description for CSS selector form"
   }
 }

@@ -98,5 +98,13 @@
   "pathFilterFormDescription": {
     "message": "Los filtros de ruta se utilizan para filtrar los enlaces que se extraerán, esta extensión solo extrae enlaces internos del sitio web objetivo. Los filtros de ruta establecerán una condición que el enlace debe cumplir para ser extraído (por ejemplo: /blog/ extraerá solo enlaces que contengan /blog/ en la ruta).",
     "description": "Description for path filter form"
+  },
+  "cssSelectorFormDescriptionTitle": {
+    "message": "Sobre Selectores CSS",
+    "description": "Title for CSS selector form description"
+  },
+  "cssSelectorFormDescription": {
+    "message": "Los selectores CSS se utilizan para seleccionar los elementos que se extraerán del sitio web. Los selectores CSS son una estrategia para recuperar elementos específicos del sitio web, esta extensión usará los selectores CSS para extraer datos personalizados del sitio web.",
+    "description": "Description for CSS selector form"
   }
 }

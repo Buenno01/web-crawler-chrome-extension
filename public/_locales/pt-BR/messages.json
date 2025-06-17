@@ -98,5 +98,13 @@
   "pathFilterFormDescription": {
     "message": "Filtros de caminho são usados para filtrar os links que serão extraídos, esta extensão só extrai links internos do site alvo. Os filtros de caminho definirão uma condição que o link deve atender para ser extraído (exemplo: /blog/ irá extrair apenas links que contenham /blog/ no caminho).",
     "description": "Description for path filter form"
+  },
+  "cssSelectorFormDescriptionTitle": {
+    "message": "Sobre Seletores CSS",
+    "description": "Title for CSS selector form description"
+  },
+  "cssSelectorFormDescription": {
+    "message": "Seletores CSS são usados para selecionar os elementos que serão extraídos do site. Os seletores CSS são uma estratégia para recuperar elementos específicos do site, esta extensão usará os seletores CSS para extrair dados personalizados do site.",
+    "description": "Description for CSS selector form"
   }
 }
