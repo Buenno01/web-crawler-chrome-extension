@@ -47,6 +47,10 @@
     "message": "Reportes",
     "description": "Navigation link to reports page"
   },
+  "navigationStorage": {
+    "message": "Almacenamiento",
+    "description": "Navigation link to storage page"
+  },
   "cssSelectorFormTitle": {
     "message": "Selectores CSS",
     "description": "Title for CSS selector form"
@@ -122,5 +126,9 @@
   "reportsTitle": {
     "message": "Reportes",
     "description": "Title for reports page"
+  },
+  "storageTitle": {
+    "message": "Almacenamiento",
+    "description": "Title for storage page"
   }
 }

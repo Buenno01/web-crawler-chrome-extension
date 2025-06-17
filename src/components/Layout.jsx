@@ -5,6 +5,7 @@ import { IoMdSettings } from "react-icons/io";
 import { MdHome } from "react-icons/md";
 import { useTranslation } from '../hooks/useTranslation';
 import { MdAutoGraph } from "react-icons/md";
+import { FaDatabase } from "react-icons/fa6";
 
 function Layout() {
   const location = useLocation();
@@ -25,6 +26,11 @@ function Layout() {
       to: '/reports',
       label: t('navigationReports'),
       icon: MdAutoGraph,
+    },
+    {
+      to: '/storage',
+      label: t('navigationStorage'),
+      icon: FaDatabase,
     }
   ];
   
