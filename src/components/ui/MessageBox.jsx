@@ -73,26 +73,23 @@ function MessageBox({
           <div className="message-box__title-content">
             {title || variantConfig.title}
           </div>
-          {disclosure && (
+          {(disclosure || closeButton) && (
               <Button
                 variant="icon"
-                onClick={handleToggle}
-                aria-expanded={isExpanded}
-                aria-label={isExpanded ? "Collapse message" : "Expand message"}
-                className={`message-box__toggle ${isExpanded ? 'message-box__toggle--expanded' : ''}`}
+                onClick={disclosure ? handleToggle : handleClose}
+                aria-expanded={disclosure ? isExpanded : undefined}
+                aria-label={disclosure ? (isExpanded ? "Collapse message" : "Expand message") : "Close message"}
+                className={
+                  disclosure ? `message-box__toggle ${isExpanded ? 'message-box__toggle--expanded' : ''}` : ''
+                }
               >
-                <RxCaretDown className="icon" />
+                {disclosure ? (
+                  <RxCaretDown className="icon" />
+                ) : (
+                  <IoIosClose className="icon" />
+                )}
               </Button>
             )}
-          {closeButton && disclosure === false && (
-            <Button
-              variant="icon"
-              onClick={handleClose}
-              aria-label="Close message"
-            >
-              <IoIosClose className="icon" />
-            </Button>
-          )}
         </div>
         <div className={`message-box__text ${disclosure ? 'message-box__text--disclosure' : ''} ${isExpanded ? 'message-box__text--expanded' : ''}`}>
           {children}
