@@ -24,7 +24,7 @@ function Storage() {
   }, []);
 
   const getUsedStorage = async () => {
-    /* If it is too quick, wait 0.5 seconds */
+    /* If it is too quick, wait 0.5 seconds, so it doesn't flicker */
     try {
       const timer = Date.now();
       setLoading(true);
@@ -49,7 +49,7 @@ function Storage() {
         <div className='flex flex-col gap-2'>
           {
             loading ? (
-              <p>{t('storageLoading')}</p>
+              <p>{t('storageLoading')}...</p>
             ) : (
               <p>{t('storageUsed')}: {formattedUsedStorage}</p>
             )
