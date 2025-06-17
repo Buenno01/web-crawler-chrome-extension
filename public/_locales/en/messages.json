@@ -142,5 +142,9 @@
   "storageUsed": {
     "message": "Storage Used",
     "description": "Message shown when storage is used"
+  },
+  "storageLoading": {
+    "message": "Calculating storage used",
+    "description": "Message shown when storage is loading"
   }
 }
