@@ -1,5 +1,6 @@
-import React from 'react';
-import { IoIosInformationCircle, IoMdCheckmarkCircle, IoMdWarning, IoMdAlert } from "react-icons/io";
+import React, { useState } from 'react';
+import { IoIosInformationCircle, IoMdCheckmarkCircle, IoMdWarning, IoMdAlert, IoIosClose } from "react-icons/io";
+import Button from './Button';
 
 const variants = {
   info: {
@@ -29,10 +30,24 @@ function MessageBox({
   variant = 'info', 
   title,
   className = '',
+  onClose,
+  closeButton = true,
   ...props 
 }) {
+  const [isVisible, setIsVisible] = useState(true);
   const variantConfig = variants[variant] || variants.info;
   const Icon = variantConfig.icon;
+  
+  if (!isVisible) {
+    return null;
+  }
+
+  const handleClose = () => {
+    setIsVisible(false);
+    if (onClose) {
+      onClose();
+    }
+  };
   
   return (
     <div 
@@ -46,6 +61,15 @@ function MessageBox({
       <div className="message-box__content">
         <div className="message-box__title">
           {title || variantConfig.title}
+          {closeButton && (
+            <Button
+              variant="icon"
+              onClick={handleClose}
+              aria-label="Close message"
+            >
+              <IoIosClose className="icon" />
+            </Button>
+          )}
         </div>
         <div className="message-box__text">
           {children}
