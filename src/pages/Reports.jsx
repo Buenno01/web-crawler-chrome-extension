@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from '../hooks/useTranslation';
 import { useDataExtractionContext } from '../contexts/dataExtractionContext';
 import MessageBox from '../components/ui/MessageBox';
+import ReportMenu from '../components/ReportMenu';
 
 function Reports() {
   const { t } = useTranslation();
@@ -20,6 +21,11 @@ function Reports() {
           >
             <p>{t('noDataDescription')}</p>
           </MessageBox>
+        )
+      }
+      {
+        extractedData && (
+          <ReportMenu />
         )
       }
     </>
