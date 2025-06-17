@@ -81,15 +81,19 @@ body::-webkit-scrollbar-thumb:hover {
   }
 
   .nav__list {
-    @apply flex gap-0 border font-semibold border-blue-500 w-fit rounded-sm overflow-hidden divide-blue-500 divide-solid divide-x-[1px];
+    @apply flex gap-0 border font-semibold border-blue-500 rounded-sm overflow-hidden divide-blue-500 divide-solid divide-x-[1px] w-full;
+
+    li {
+      @apply w-full;
+    }
   }
 
   .nav__link {
-    @apply text-gray-950 bg-gray-950/10 flex items-center gap-1 dark:text-gray-50 px-2 py-1 justify-center;
+    @apply text-gray-950 bg-gray-950/10 flex items-center gap-1 dark:text-gray-50 px-2 py-1 justify-center w-full;
   }
 
   .nav__link--active {
-    @apply bg-black/20 dark:bg-gray-50/20 font-bold;
+    @apply bg-black/20 dark:bg-blue-50/20;
   }
 
   .nav__icon {
@@ -128,19 +132,19 @@ body::-webkit-scrollbar-thumb:hover {
   }
 
   .button--primary {
-    @apply bg-blue-500 hover:bg-blue-600 text-white;
+    @apply bg-blue-500 hover:bg-blue-600 text-white font-semibold;
   }
 
   .button--success {
-    @apply bg-green-500 hover:bg-green-600 text-white;
+    @apply bg-green-500 hover:bg-green-600 text-white font-semibold;
   }
 
   .button--warning {
-    @apply bg-yellow-500 hover:bg-yellow-600 text-black;
+    @apply bg-yellow-500 hover:bg-yellow-600 text-black font-semibold;
   }
 
   .button--danger {
-    @apply bg-red-500 hover:bg-red-600 text-white;
+    @apply bg-red-500 hover:bg-red-600 text-white font-semibold;
   }
 
   .button--icon {

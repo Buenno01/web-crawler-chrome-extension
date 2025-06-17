@@ -130,5 +130,9 @@
   "storageTitle": {
     "message": "Armazenamento",
     "description": "Title for storage page"
+  },
+  "storageClear": {
+    "message": "Limpar Armazenamento",
+    "description": "Button text to clear storage"
   }
 }

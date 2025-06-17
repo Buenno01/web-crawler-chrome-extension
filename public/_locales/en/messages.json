@@ -130,5 +130,9 @@
   "storageTitle": {
     "message": "Storage",
     "description": "Title for storage page"
+  },
+  "storageClear": {
+    "message": "Clear Storage",
+    "description": "Button text to clear storage"
   }
 }
