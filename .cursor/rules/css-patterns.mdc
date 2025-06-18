@@ -1,0 +1,81 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# CSS Patterns and Conventions
+
+This project uses Tailwind CSS with custom component classes defined in [src/index.css](mdc:src/index.css).
+
+## Architecture
+
+- **Base Layer**: All custom components are defined within `@layer base` to ensure proper CSS cascade
+- **Tailwind Import**: Uses `@import "tailwindcss"` for Tailwind CSS integration
+- **Custom Properties**: Includes custom scrollbar styling and animations
+
+## Component Patterns
+
+### Layout Components
+- `.layout` - Main container with padding, background, and responsive width (500px)
+- `.layout__header` - Header section with bottom margin
+- `.layout__main` - Main content area with full width
+
+### Navigation
+- `.nav` - Full width navigation wrapper
+- `.nav__list` - Flexbox list with borders and dividers
+- `.nav__link` - Navigation links with hover states
+- `.nav__link--active` - Active state styling
+
+### Form Components
+- `.form` - Flexbox form container with gap and alignment
+- `.form__group` - Relative positioned form group wrapper
+- `.form__button` - Square aspect ratio button (48px)
+- `.input` - Full width input with focus states and floating labels
+- `.input__label` - Floating label with smooth transitions
+
+### Button Variants
+- `.button` - Base button class with transitions
+- `.button--primary` - Blue primary button
+- `.button--secondary` - Semi-transparent secondary button
+- `.button--success` - Green success button
+- `.button--warning` - Yellow warning button
+- `.button--danger` - Red danger button
+- `.button--icon` - Icon-only button with hover effects
+
+### Message Components
+- `.message-box` - Flexible message container with variants
+- `.message-box--info` - Blue info styling
+- `.message-box--success` - Green success styling
+- `.message-box--warning` - Yellow warning styling
+- `.message-box--critical` - Red critical styling
+- Includes disclosure functionality with expandable content
+
+### Utility Classes
+- `.box` - Content box with blue background tint
+- `.form-list` - Flex wrap container for form items
+- `.form-item` - Individual form item styling
+- `.page-title` - Page heading styles
+- `.card` - Card component with shadow
+- `.list` - Vertical list layout
+- `.list--horizontal` - Horizontal list variant
+
+### Progress Indicators
+- `.progress-bar` - Progress bar container
+- `.progress-bar__percentage` - Centered percentage display
+- `.loading-bg` - Animated rainbow gradient background
+- Custom animation: `progress-bar-animation` with hue rotation
+
+## Dark Mode Support
+All components include dark mode variants using `dark:` prefix classes from Tailwind CSS.
+
+## Naming Convention
+- Uses BEM (Block Element Modifier) methodology
+- Blocks: `.component`
+- Elements: `.component__element`
+- Modifiers: `.component--modifier`
+
+## Custom Animations
+- `progress-bar-animation`: 10s linear infinite hue rotation
+- Smooth transitions on interactive elements (200ms duration)
+
+When creating new components, follow these established patterns and maintain consistency with the existing design system.

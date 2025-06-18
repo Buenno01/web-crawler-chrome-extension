@@ -1,0 +1,99 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Internationalization (i18n) System
+
+This web crawler project uses Chrome Extension's i18n API for internationalization. Translation files are located in [public/_locales](mdc:public/_locales) and accessed through the [src/hooks/useTranslation.js](mdc:src/hooks/useTranslation.js) hook.
+
+## Supported Languages
+
+- **English (en)** - Default language
+- **Spanish (es)** - Spanish translations
+- **Portuguese Brazil (pt-BR)** - Brazilian Portuguese translations
+
+## Translation File Structure
+
+Translation files follow the Chrome Extension i18n format located in `public/_locales/{locale}/messages.json`:
+
+```json
+{
+  "translationKey": {
+    "message": "Translated text",
+    "description": "Context description for translators"
+  }
+}
+```
+
+### Key Categories
+
+#### Extension Metadata
+- `extensionName` - Extension name
+- `extensionDescription` - Extension description
+- `webCrawlerTitle` - Main application title
+
+#### Navigation
+- `navigationHome` - Home page link
+- `navigationSettings` - Settings page link
+- `navigationReports` - Reports page link
+- `navigationStorage` - Storage page link
+
+#### Form Labels & Actions
+- `cssSelectorInputLabel` - CSS selector input label
+- `pathFilterInputLabel` - Path filter input label
+- `addCssSelectorButton` - Add CSS selector button
+- `addPathFilterButton` - Add path filter button
+- `startExtraction` - Start extraction button
+- `cancelExtraction` - Cancel extraction button
+
+#### Status Messages
+- `attentionLabel` / `attentionMessage` - Warning messages
+- `extractionCompletedTitle` / `extractionCompletedMessage` - Success messages
+- `errorTitle` - Error message titles
+- `noDataTitle` / `noDataDescription` - Empty state messages
+
+#### Help & Descriptions
+- `pathFilterFormDescriptionTitle` / `pathFilterFormDescription` - Path filter help
+- `cssSelectorFormDescriptionTitle` / `cssSelectorFormDescription` - CSS selector help
+
+## useTranslation Hook Usage
+
+Import and use the translation hook:
+
+```javascript
+import { useTranslation } from '@/hooks/useTranslation';
+
+function MyComponent() {
+  const { t } = useTranslation();
+  
+  return (
+    <div>
+      <h1>{t('webCrawlerTitle')}</h1>
+      <button>{t('startExtraction')}</button>
+    </div>
+  );
+}
+```
+
+## Adding New Translations
+
+1. **Add to English** - Always start with [public/_locales/en/messages.json](mdc:public/_locales/en/messages.json)
+2. **Translate to Other Languages** - Update corresponding files in `es/` and `pt-BR/` folders
+3. **Use Descriptive Keys** - Use camelCase keys that describe the content purpose
+4. **Add Descriptions** - Always include description field for translator context
+5. **Test Fallback** - Ensure the hook works in development environment
+
+## Best Practices
+
+- **Consistent Naming** - Use descriptive, hierarchical key names
+- **Context Descriptions** - Always provide meaningful description fields
+- **Placeholder Preparation** - Structure messages to support future placeholder usage
+- **Key Organization** - Group related translations by feature/component
+- **Fallback Testing** - Test behavior when Chrome Extension API is unavailable
+
+## Chrome Extension Integration
+
+The i18n system is integrated with Chrome Extension manifest. The browser automatically selects the appropriate locale based on user preferences, falling back to English if the preferred locale is not available.
+
+When adding new translation keys, remember to update all three language files to maintain consistency across all supported locales.
