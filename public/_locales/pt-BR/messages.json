@@ -146,5 +146,127 @@
   "storageLoading": {
     "message": "Calculando o armazenamento usado",
     "description": "Message shown when storage is loading"
+  },
+  "summaryOverviewTitle": {
+    "message": "Resumo Geral",
+    "description": "Title for summary overview section"
+  },
+  "totalPagesLabel": {
+    "message": "Total de Páginas",
+    "description": "Label for total pages count"
+  },
+  "successRateLabel": {
+    "message": "Taxa de Sucesso",
+    "description": "Label for extraction success rate"
+  },
+  "totalLinksLabel": {
+    "message": "Total de Links",
+    "description": "Label for total links found"
+  },
+  "totalHeadingsLabel": {
+    "message": "Total de Cabeçalhos",
+    "description": "Label for total headings count"
+  },
+  "headingsAnalysisTitle": {
+    "message": "Análise de Cabeçalhos",
+    "description": "Title for headings analysis section"
+  },
+  "headingDistributionTitle": {
+    "message": "Distribuição de Cabeçalhos",
+    "description": "Title for heading distribution chart"
+  },
+  "averageHeadingsPerPage": {
+    "message": "Média por página: $avg$",
+    "description": "Average headings per page label",
+    "placeholders": {
+      "avg": {
+        "content": "$1",
+        "example": "3.5"
+      }
+    }
+  },
+  "seoIssuesTitle": {
+    "message": "Problemas de SEO",
+    "description": "Title for SEO issues section"
+  },
+  "pagesWithoutH1Label": {
+    "message": "Páginas sem H1",
+    "description": "Label for pages without H1 tag"
+  },
+  "pagesWithMultipleH1Label": {
+    "message": "Páginas com múltiplos H1",
+    "description": "Label for pages with multiple H1 tags"
+  },
+  "linksAnalysisTitle": {
+    "message": "Análise de Links",
+    "description": "Title for links analysis section"
+  },
+  "linksOverviewTitle": {
+    "message": "Links Únicos",
+    "description": "Title for links overview"
+  },
+  "averageLinksPerPage": {
+    "message": "Média por página: $avg$",
+    "description": "Average links per page label",
+    "placeholders": {
+      "avg": {
+        "content": "$1",
+        "example": "15.2"
+      }
+    }
+  },
+  "mostLinkedPagesTitle": {
+    "message": "Páginas Mais Referenciadas",
+    "description": "Title for most linked pages section"
+  },
+  "topLinkedPages": {
+    "message": "Páginas Mais Referenciadas",
+    "description": "Subtitle for top linked pages list"
+  },
+  "noLinkedPagesFound": {
+    "message": "Nenhuma página referenciada encontrada",
+    "description": "Message when no linked pages are found"
+  },
+  "customSelectorsAnalysisTitle": {
+    "message": "Análise de Seletores Personalizados",
+    "description": "Title for custom selectors analysis section"
+  },
+  "customElementsTitle": {
+    "message": "Elementos Personalizados",
+    "description": "Title for custom elements count"
+  },
+  "averageElementsPerPage": {
+    "message": "Média por página: $avg$",
+    "description": "Average elements per page label",
+    "placeholders": {
+      "avg": {
+        "content": "$1",
+        "example": "2.8"
+      }
+    }
+  },
+  "selectorPerformanceTitle": {
+    "message": "Performance dos Seletores",
+    "description": "Title for selector performance section"
+  },
+  "metadataIssuesTitle": {
+    "message": "Problemas de Metadados",
+    "description": "Title for metadata issues section"
+  },
+  "pagesWithoutTitleTitle": {
+    "message": "Páginas Sem Título",
+    "description": "Title for pages without title section"
+  },
+  "pagesWithoutDescriptionTitle": {
+    "message": "Páginas Sem Descrição",
+    "description": "Title for pages without description section"
+  },
+  "affectedPages": {
+    "message": "Páginas Afetadas",
+    "description": "Label for affected pages list"
+  },
+  "reportGeneratedAt": {
+    "message": "Relatório gerado em",
+    "description": "Label for report generation timestamp"
   }
 }

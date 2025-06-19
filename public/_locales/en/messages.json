@@ -146,5 +146,127 @@
   "storageLoading": {
     "message": "Calculating storage used",
     "description": "Message shown when storage is loading"
+  },
+  "summaryOverviewTitle": {
+    "message": "Overview",
+    "description": "Title for summary overview section"
+  },
+  "totalPagesLabel": {
+    "message": "Total Pages",
+    "description": "Label for total pages count"
+  },
+  "successRateLabel": {
+    "message": "Success Rate",
+    "description": "Label for extraction success rate"
+  },
+  "totalLinksLabel": {
+    "message": "Total Links",
+    "description": "Label for total links found"
+  },
+  "totalHeadingsLabel": {
+    "message": "Total Headings",
+    "description": "Label for total headings count"
+  },
+  "headingsAnalysisTitle": {
+    "message": "Headings Analysis",
+    "description": "Title for headings analysis section"
+  },
+  "headingDistributionTitle": {
+    "message": "Heading Distribution",
+    "description": "Title for heading distribution chart"
+  },
+  "averageHeadingsPerPage": {
+    "message": "Avg per page: $avg$",
+    "description": "Average headings per page label",
+    "placeholders": {
+      "avg": {
+        "content": "$1",
+        "example": "3.5"
+      }
+    }
+  },
+  "seoIssuesTitle": {
+    "message": "SEO Issues",
+    "description": "Title for SEO issues section"
+  },
+  "pagesWithoutH1Label": {
+    "message": "Pages without H1",
+    "description": "Label for pages without H1 tag"
+  },
+  "pagesWithMultipleH1Label": {
+    "message": "Pages with multiple H1",
+    "description": "Label for pages with multiple H1 tags"
+  },
+  "linksAnalysisTitle": {
+    "message": "Links Analysis",
+    "description": "Title for links analysis section"
+  },
+  "linksOverviewTitle": {
+    "message": "Unique Links",
+    "description": "Title for links overview"
+  },
+  "averageLinksPerPage": {
+    "message": "Avg per page: $avg$",
+    "description": "Average links per page label",
+    "placeholders": {
+      "avg": {
+        "content": "$1",
+        "example": "15.2"
+      }
+    }
+  },
+  "mostLinkedPagesTitle": {
+    "message": "Most Referenced Pages",
+    "description": "Title for most linked pages section"
+  },
+  "topLinkedPages": {
+    "message": "Top Referenced Pages",
+    "description": "Subtitle for top linked pages list"
+  },
+  "noLinkedPagesFound": {
+    "message": "No referenced pages found",
+    "description": "Message when no linked pages are found"
+  },
+  "customSelectorsAnalysisTitle": {
+    "message": "Custom Selectors Analysis",
+    "description": "Title for custom selectors analysis section"
+  },
+  "customElementsTitle": {
+    "message": "Custom Elements",
+    "description": "Title for custom elements count"
+  },
+  "averageElementsPerPage": {
+    "message": "Avg per page: $avg$",
+    "description": "Average elements per page label",
+    "placeholders": {
+      "avg": {
+        "content": "$1",
+        "example": "2.8"
+      }
+    }
+  },
+  "selectorPerformanceTitle": {
+    "message": "Selector Performance",
+    "description": "Title for selector performance section"
+  },
+  "metadataIssuesTitle": {
+    "message": "Metadata Issues",
+    "description": "Title for metadata issues section"
+  },
+  "pagesWithoutTitleTitle": {
+    "message": "Pages Without Title",
+    "description": "Title for pages without title section"
+  },
+  "pagesWithoutDescriptionTitle": {
+    "message": "Pages Without Description",
+    "description": "Title for pages without description section"
+  },
+  "affectedPages": {
+    "message": "Affected Pages",
+    "description": "Label for affected pages list"
+  },
+  "reportGeneratedAt": {
+    "message": "Report generated at",
+    "description": "Label for report generation timestamp"
   }
 }
