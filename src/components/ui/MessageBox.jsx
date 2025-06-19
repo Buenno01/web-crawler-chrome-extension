@@ -23,7 +23,7 @@ const variants = {
 
 function MessageBox({ 
   children, 
-  variant = 'primary', 
+  variant = 'info', 
   title,
   className = '',
   onClose,

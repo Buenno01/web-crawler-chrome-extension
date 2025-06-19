@@ -7,7 +7,7 @@ function Home() {
 
   return (
     <>
-      <h1 className='text-2xl font-bold mb-4'>{t('webCrawlerTitle')}</h1>
+      <h1 className='text-2xl font-bold mb-4 text-foreground'>{t('webCrawlerTitle')}</h1>
       <DataExtractor />
     </>
   )

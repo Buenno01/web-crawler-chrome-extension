@@ -1,0 +1,9 @@
+@theme {
+  --color-foreground: var(--color-gray-50);
+  --color-foreground-secondary: var(--color-gray-100);
+  --color-background: var(--color-gray-950);
+  --color-surface: --alpha(var(--color-gray-500) / 10%);
+  --color-surface-secondary: --alpha(var(--color-gray-300) / 20%);
+  --color-border: var(--color-blue-500);
+  --color-accent: var(--color-blue-500);
+}

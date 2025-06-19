@@ -1,6 +1,6 @@
 import Box from './Box';
 
-function StatCard({ title, value, icon: Icon, subtitle, variant = 'primary', children }) {
+function StatCard({ title, value, icon: Icon, subtitle, variant = 'info', children }) {
   return (
     <Box.Root variant={variant}>
       <Box.Header className="flex items-center justify-between mb-2">

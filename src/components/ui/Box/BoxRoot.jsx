@@ -6,9 +6,18 @@ function BoxRoot({
   className = '',
   ...props 
 }) {
+  const schemes = {
+    success: 'scheme-success',
+    critical: 'scheme-critical',
+    info: 'scheme-info',
+    warning: 'scheme-warning',
+    primary: 'scheme-primary',
+    highlight: 'scheme-highlight',
+    muted: 'scheme-muted',
+  }
   return (
     <div 
-      className={`box box--${variant} ${className}`}
+      className={`box ${schemes[variant]} ${className}`}
       {...props}
     >
       {children}

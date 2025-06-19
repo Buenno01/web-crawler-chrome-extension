@@ -6,12 +6,12 @@ import Button from '../Button';
 const BUTTON_TYPES = {
   disclosure: {
     type: 'disclosure',
-    icon: <RxCaretDown className="icon" />,
+    icon: RxCaretDown,
     label: 'Collapse message',
   },
   close: {
     type: 'close',
-    icon: <IoIosClose className="icon" />,
+    icon: IoIosClose,
     label: 'Close message',
   },
   none: {
@@ -38,16 +38,12 @@ function BoxHeader({
     }
   }
 
-  const disclosureClass = buttonType === 'disclosure'
-  ? 'box__header--disclosure' 
-  :  '';
-
   return (
     <div
-      className={`box__header ${disclosureClass}`}
-      onClick={buttonType === 'disclosure' ? handleToggle : undefined}
+      className={`font-semibold mb-1 flex items-center justify-between ${mappedButtonType.type === 'disclosure' ? 'cursor-pointer' : ''}`}
+      onClick={mappedButtonType.type === 'disclosure' ? handleToggle : undefined}
     >
-      <div className="box__header-content">
+      <div className="flex items-center gap-2 flex-grow justify-between">
         {children}
       </div>
       {mappedButtonType.type !== 'none' && (
@@ -56,15 +52,9 @@ function BoxHeader({
             onClick={handleButtonClick}
             aria-expanded={mappedButtonType.type === 'disclosure' ? isExpanded : undefined}
             aria-label={mappedButtonType.label}
-            className={
-              mappedButtonType.type === 'disclosure' 
-              ? `box__toggle ${isExpanded 
-                ? 'box__toggle--expanded' 
-                : ''}` 
-              : ''
-            }
+            className="p-0"
           >
-            {mappedButtonType.icon}
+            <mappedButtonType.icon className={`text-lg transition-transform duration-300 ease-in-out ${isExpanded ? 'rotate-180' : ''}`} />
           </Button>
         )}
     </div>

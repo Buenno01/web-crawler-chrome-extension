@@ -110,7 +110,7 @@ function SummaryReport() {
             title={t('totalPagesLabel')}
             value={overview.totalPages}
             icon={RiFileList3Line}
-            variant="rose"
+            variant="highlight"
           />
           <StatCard
             title={t('successRateLabel')}
@@ -128,7 +128,7 @@ function SummaryReport() {
             title={t('totalHeadingsLabel')}
             value={headings.totalHeadings}
             icon={RiFileTextLine}
-            variant="fuchsia"
+            variant="critical"
           />
         </div>
       </SectionHeader>
@@ -158,14 +158,14 @@ function SummaryReport() {
               <div className="mt-4 space-y-2">
                 {headings.seoIssues.pagesWithoutH1 > 0 && (
                   <div className="text-sm">
-                    <span className="font-medium text-yellow-700">
+                    <span className="font-medium text-foreground">
                       {t('pagesWithoutH1Label')}: {headings.seoIssues.pagesWithoutH1}
                     </span>
                   </div>
                 )}
                 {headings.seoIssues.pagesWithMultipleH1 > 0 && (
                   <div className="text-sm">
-                    <span className="font-medium text-yellow-700">
+                    <span className="font-medium text-foreground">
                       {t('pagesWithMultipleH1Label')}: {headings.seoIssues.pagesWithMultipleH1}
                     </span>
                   </div>
@@ -225,7 +225,7 @@ function SummaryReport() {
                     </code>
                     <div className="flex gap-2">
                       <span className="font-medium">{count}</span>
-                      <span className="text-green-600">
+                      <span>
                         {customSelectors.selectorSuccessRates[selector]}%
                       </span>
                     </div>
@@ -277,7 +277,7 @@ function SummaryReport() {
       )}
 
       {/* Generation Info */}
-      <div className="text-xs text-gray-500 text-center pt-4 border-t">
+      <div className="text-xs text-foreground-secondary text-center pt-4 border-t">
         {t('reportGeneratedAt')}: {new Date(summary.generatedAt).toLocaleString()}
       </div>
     </div>
