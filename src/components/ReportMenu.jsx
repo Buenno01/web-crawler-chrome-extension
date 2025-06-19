@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import Button from './ui/Button';
+import SummaryReport from './SummaryReport';
 import { CgNotes } from "react-icons/cg";
 import { RiRobot2Line } from "react-icons/ri";
 import { MdErrorOutline } from "react-icons/md";
 import { LuHeading1 } from "react-icons/lu";
 import { FaLink } from "react-icons/fa6";
 import { DiCssTricks } from "react-icons/di";
+import Box from './ui/Box';
 
 const OPTIONS = [
   {
@@ -53,23 +55,57 @@ function ReportMenu() {
     })));
   }
 
+  const selectedOption = options.find(option => option.selected);
+
   return (
-    <menu className='box grid grid-cols-2 gap-4'>
-        {
-          options.map((option) => (
-            <li key={option.value}>
-              <Button
-                onClick={() => handleOptionClick(option.value)}
-                variant={option.selected ? 'primary' : 'secondary'}
-                className={ !option.selected && 'text-blue-300/60' }
-              >
-                <option.icon className='text-lg' />
-                {option.label}
-              </Button>
-            </li>
-          ))
-        }
-    </menu>
+    <div className="space-y-6">
+      <menu className='box grid grid-cols-2 gap-4'>
+          {
+            options.map((option) => (
+              <li key={option.value}>
+                <Button
+                  onClick={() => handleOptionClick(option.value)}
+                  variant={option.selected ? 'primary' : 'secondary'}
+                  className={ !option.selected && 'text-blue-300/60' }
+                >
+                  <option.icon className='text-lg' />
+                  {option.label}
+                </Button>
+              </li>
+            ))
+          }
+      </menu>
+
+      {/* Render the selected report component */}
+      <Box.Root>  
+        {selectedOption?.value === 'summary' && <SummaryReport />}
+        {selectedOption?.value === 'metadata' && (
+          <div className="text-center text-blue-100/60 py-8">
+            <p>Metadata report coming soon...</p>
+          </div>
+        )}
+        {selectedOption?.value === 'seoErrors' && (
+          <div className="text-center text-blue-100/60 py-8">
+            <p>SEO errors report coming soon...</p>
+          </div>
+        )}
+        {selectedOption?.value === 'headingStructure' && (
+          <div className="text-center text-blue-100/60 py-8">
+            <p>Heading structure report coming soon...</p>
+          </div>
+        )}
+        {selectedOption?.value === 'links' && (
+          <div className="text-center text-blue-100/60 py-8">
+            <p>Links report coming soon...</p>
+          </div>
+        )}
+        {selectedOption?.value === 'cssSelectors' && (
+          <div className="text-center text-blue-100/60 py-8">
+            <p>CSS selectors report coming soon...</p>
+          </div>
+        )}
+      </Box.Root>
+    </div>
   )
 }
 
