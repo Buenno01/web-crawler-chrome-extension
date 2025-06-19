@@ -8,7 +8,10 @@ function FormItemsList({ values, removeFunction }) {
       {
         values && values.length > 0 &&
         values.map((value) => (
-          <li key={value} className="form-item">
+          <li
+            key={value}
+            className="flex items-center gap-2 text-foreground-secondary bg-surface py-1 px-2 rounded-md"
+          >
             {value}
             <Button variant="icon" className="button--icon" onClick={() => removeFunction(value)}>
               <IoMdTrash />
