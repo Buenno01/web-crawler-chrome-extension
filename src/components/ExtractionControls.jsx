@@ -3,6 +3,7 @@ import { BsBoxArrowRight } from "react-icons/bs";
 import { useTranslation } from '../hooks/useTranslation';
 import Button from './ui/Button';
 import MessageBox from './ui/MessageBox';
+import Box from './ui/Box';
 
 export default function ExtractionControls({
   isExtracting,
@@ -13,7 +14,7 @@ export default function ExtractionControls({
   const { t } = useTranslation();
 
   return (
-    <div className="box">
+    <Box.Root>
       <Button
         onClick={isExtracting ? onCancel : onStart}
         variant={isExtracting ? 'danger' : 'primary'}
@@ -30,6 +31,6 @@ export default function ExtractionControls({
           <p>{t('extractionCompletedMessage')}</p>
         </MessageBox>
       )}
-    </div>
+    </Box.Root>
   );
 }

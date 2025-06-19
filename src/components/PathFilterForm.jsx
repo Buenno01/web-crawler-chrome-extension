@@ -5,6 +5,7 @@ import useForm from '../hooks/useForm';
 import Form from './Form';
 import FormItemsList from './FormItemsList';
 import MessageBox from './ui/MessageBox';
+import Box from './ui/Box';
 
 function PathFilterForm() {
   const { values, add, remove } = usePathFiltersContext();
@@ -29,8 +30,8 @@ function PathFilterForm() {
   }
 
   return (
-    <div className="box">
-      <h2 className="page-title">{t('pathFilterFormTitle')}</h2>
+    <Box.Root>
+      <h2>{t('pathFilterFormTitle')}</h2>
       <Form
         handleSubmit={handleSubmit}
         handleInput={handleInput}
@@ -49,7 +50,7 @@ function PathFilterForm() {
           {t('pathFilterFormDescription')}
         </p>
       </MessageBox>
-    </div>
+    </Box.Root>
   )
 }
 

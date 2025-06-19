@@ -59,48 +59,50 @@ function ReportMenu() {
 
   return (
     <div className="space-y-6">
-      <menu className='box grid grid-cols-2 gap-4'>
-          {
-            options.map((option) => (
-              <li key={option.value}>
-                <Button
-                  onClick={() => handleOptionClick(option.value)}
-                  variant={option.selected ? 'primary' : 'secondary'}
-                  className={ !option.selected && 'text-blue-300/60' }
-                >
-                  <option.icon className='text-lg' />
-                  {option.label}
-                </Button>
-              </li>
-            ))
-          }
-      </menu>
+      <Box.Root>
+        <menu className='grid grid-cols-2 gap-4'>
+            {
+              options.map((option) => (
+                <li key={option.value}>
+                  <Button
+                    onClick={() => handleOptionClick(option.value)}
+                    variant={option.selected ? 'primary' : 'secondary'}
+                    className={ !option.selected && 'text-foreground/60' }
+                  >
+                    <option.icon className='text-lg' />
+                    {option.label}
+                  </Button>
+                </li>
+              ))
+            }
+        </menu>
+      </ Box.Root>
 
       {/* Render the selected report component */}
       <Box.Root>  
         {selectedOption?.value === 'summary' && <SummaryReport />}
         {selectedOption?.value === 'metadata' && (
-          <div className="text-center text-blue-100/60 py-8">
+          <div className="text-center text-foreground-secondary/60 py-8">
             <p>Metadata report coming soon...</p>
           </div>
         )}
         {selectedOption?.value === 'seoErrors' && (
-          <div className="text-center text-blue-100/60 py-8">
+          <div className="text-center text-foreground-secondary/60 py-8">
             <p>SEO errors report coming soon...</p>
           </div>
         )}
         {selectedOption?.value === 'headingStructure' && (
-          <div className="text-center text-blue-100/60 py-8">
+          <div className="text-center text-foreground-secondary/60 py-8">
             <p>Heading structure report coming soon...</p>
           </div>
         )}
         {selectedOption?.value === 'links' && (
-          <div className="text-center text-blue-100/60 py-8">
+          <div className="text-center text-foreground-secondary/60 py-8">
             <p>Links report coming soon...</p>
           </div>
         )}
         {selectedOption?.value === 'cssSelectors' && (
-          <div className="text-center text-blue-100/60 py-8">
+          <div className="text-center text-foreground-secondary/60 py-8">
             <p>CSS selectors report coming soon...</p>
           </div>
         )}

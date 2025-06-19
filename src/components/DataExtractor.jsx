@@ -6,6 +6,7 @@ import ExtractionControls from './ExtractionControls';
 import ProgressIndicator from './ProgressIndicator';
 import MessageBox from './ui/MessageBox';
 import { useTranslation } from '../hooks/useTranslation';
+import Box from './ui/Box';
 
 export default function DataExtractor() {
   const { t } = useTranslation();
@@ -34,7 +35,7 @@ export default function DataExtractor() {
   ]
 
   return (
-    <div className="data-extractor">
+    <Box.Root>
       <ExtractionControls 
         isExtracting={isExtracting}
         hasData={!!extractedData}
@@ -72,6 +73,6 @@ export default function DataExtractor() {
           <p>{error}</p>
         </MessageBox>
       )}
-    </div>
+    </Box.Root>
   );
 } 

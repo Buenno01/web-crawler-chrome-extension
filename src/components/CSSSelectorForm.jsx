@@ -5,6 +5,7 @@ import useForm from '../hooks/useForm';
 import Form from './Form';
 import FormItemsList from './FormItemsList';
 import MessageBox from './ui/MessageBox';
+import Box from './ui/Box';
 
 function CSSSelectorForm() {
   const { values, add, remove } = useCssSelectorsContext();
@@ -29,8 +30,8 @@ function CSSSelectorForm() {
   }
 
   return (
-    <div className="box">
-      <h2 className="page-title">{t('cssSelectorFormTitle')}</h2>
+    <Box.Root>
+      <h2>{t('cssSelectorFormTitle')}</h2>
       <Form
         handleSubmit={handleSubmit}
         handleInput={handleInput}
@@ -47,7 +48,7 @@ function CSSSelectorForm() {
       >
         <p>{t('cssSelectorFormDescription')}</p>
       </MessageBox>
-    </div>
+    </Box.Root>
   )
 }
 
