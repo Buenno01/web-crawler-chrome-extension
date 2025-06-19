@@ -155,10 +155,6 @@ body::-webkit-scrollbar-thumb:hover {
     @apply hover:bg-white/20 p-1 rounded-full cursor-pointer w-fit aspect-square;
   }
 
-  .box {
-    @apply flex flex-col gap-2 rounded-sm bg-blue-500/10 p-4 w-full mb-4;
-  }
-
   .form-list {
     @apply flex flex-wrap gap-2;
   }
@@ -226,86 +222,6 @@ body::-webkit-scrollbar-thumb:hover {
   .error-display strong {
     @apply block mb-2;
   }
-
-  .message-box {
-    @apply flex gap-4 p-4 rounded-lg border w-full my-2 relative;
-  }
   
-  .message-box__icon-wrapper {
-    @apply flex-shrink-0;
 
-    .icon {
-      @apply mt-1;
-    }
-  }
-  
-  .message-box__content {
-    @apply flex-grow;
-  }
-  
-  .message-box__title {
-    @apply font-semibold mb-1 flex items-center justify-between;
-  }
-  
-  .message-box__text {
-    @apply text-sm;
-  }
-  
-  /* Message Box Variants */
-  .message-box--info {
-    @apply bg-blue-50 border-blue-200 text-blue-900 dark:bg-blue-900/20 dark:border-blue-800 dark:text-blue-100;
-  }
-  
-  .message-box--success {
-    @apply bg-green-50 border-green-200 text-green-900 dark:bg-green-900/20 dark:border-green-800 dark:text-green-100;
-  }
-  
-  .message-box--warning {
-    @apply bg-yellow-50 border-yellow-200 text-yellow-900 dark:bg-yellow-900/20 dark:border-yellow-800 dark:text-yellow-100;
-  }
-  
-  .message-box--critical {
-    @apply bg-red-50 border-red-200 text-red-900 dark:bg-red-900/20 dark:border-red-800 dark:text-red-100;
-  }
-
-  .message-box__close-button {
-    @apply absolute top-2 right-2 p-1 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors;
-  }
-
-  .message-box__close-button .icon {
-    @apply text-2xl;
-  }
-
-  /* Message Box Disclosure Styles */
-  .message-box__title--disclosure {
-    @apply cursor-pointer;
-  }
-
-  .message-box__title-content {
-    @apply flex items-center gap-2 flex-grow;
-  }
-
-  .message-box__toggle {
-    @apply p-0;
-  }
-
-  .message-box__toggle .icon {
-    @apply transition-transform duration-300 ease-in-out;
-  }
-
-  .message-box__toggle--expanded .icon {
-    @apply rotate-180;
-  }
-
-  .message-box__text--disclosure {
-    @apply grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-in-out;
-  }
-
-  .message-box__text--disclosure > * {
-    @apply overflow-hidden;
-  }
-
-  .message-box__text--expanded {
-    @apply grid-rows-[1fr];
-  }
 }
