@@ -116,4 +116,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Ready to transform your web browsing into powerful data collection?** 🚀
 
-_Built with ❤️ by a dev who understand the value of efficient data extraction_
+_Built with ❤️ by a dev who understands the value of efficient data extraction_
