@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@layer base {
+  .box {
+    @apply flex flex-col gap-2 rounded-sm p-4 w-full mb-4;
+  }
+
+  .box__icon-wrapper {
+    @apply flex-shrink-0;
+  }
+
+  .box__icon-wrapper .icon {
+    @apply mt-1;
+  }
+  
+  .box__content {
+    @apply flex-grow;
+  }
+
+  .box__header {
+    @apply font-semibold mb-1 flex items-center justify-between;
+  }
+
+  .box__header-content {
+    @apply flex items-center gap-2 flex-grow;
+  }
+  
+  .box__text {
+    @apply text-sm;
+  }
+
+  /* TODO: apply dynamic colors to box
+  
+  */
+
+  .box__close-button {
+    @apply absolute top-2 right-2 p-1 rounded-full transition-colors;
+    @apply hover:bg-black/10 dark:hover:bg-white/10;
+  }
+
+  .box__close-button .icon {
+    @apply text-2xl text-box-500;
+  }
+
+  .box__header--disclosure {
+    @apply cursor-pointer;
+  }
+
+  .box__toggle {
+    @apply p-0;
+  }
+
+  .box__toggle .icon {
+    @apply transition-transform duration-300 ease-in-out;
+  }
+
+  .box__toggle--expanded .icon {
+    @apply rotate-180;
+  }
+
+  .box__content--disclosure {
+    @apply grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-in-out;
+  }
+
+  .box__content--disclosure > * {
+    @apply overflow-hidden;
+  }
+
+  .box__content--expanded {
+    @apply grid-rows-[1fr];
+  }
+}

@@ -1,34 +1,29 @@
 import React, { useState } from 'react';
-import { IoIosInformationCircle, IoMdCheckmarkCircle, IoMdWarning, IoMdAlert, IoIosClose } from "react-icons/io";
-import { RxCaretDown } from "react-icons/rx";
-import Button from './Button';
+import { IoIosInformationCircle, IoMdCheckmarkCircle, IoMdWarning, IoMdAlert } from "react-icons/io";
+import Box from './Box';
 
 const variants = {
   info: {
     icon: IoIosInformationCircle,
     title: 'Information',
-    className: 'message-box--info'
   },
   success: {
     icon: IoMdCheckmarkCircle,
     title: 'Success',
-    className: 'message-box--success'
   },
   warning: {
     icon: IoMdWarning,
     title: 'Warning',
-    className: 'message-box--warning'
   },
   critical: {
     icon: IoMdAlert,
     title: 'Critical',
-    className: 'message-box--critical'
   }
 };
 
 function MessageBox({ 
   children, 
-  variant = 'info', 
+  variant = 'primary', 
   title,
   className = '',
   onClose,
@@ -57,45 +52,32 @@ function MessageBox({
   };
   
   return (
-    <div 
-      className={`message-box ${variantConfig.className} ${className}`}
+    <Box.Root 
+      variant={variant}
+      className={`flex-row ${className}`}
       role="alert"
       {...props}
     >
-      <div className="message-box__icon-wrapper">
-        <Icon className="icon" />
-      </div>
-      <div className="message-box__content">
-        <div
-          className={`message-box__title ${disclosure ? 'message-box__title--disclosure' : ''}`}
-          onClick={disclosure ? handleToggle : undefined}
+      <Box.Icon Icon={Icon} />
+      <Box.ContentWrapper>
+        <Box.Header
+          buttonType={disclosure ? 'disclosure' : closeButton ? 'close' : 'none'}
+          handleToggle={handleToggle}
+          handleClose={handleClose}
+          isExpanded={isExpanded}
         >
-          <div className="message-box__title-content">
-            {title || variantConfig.title}
-          </div>
-          {(disclosure || closeButton) && (
-              <Button
-                variant="icon"
-                onClick={disclosure ? handleToggle : handleClose}
-                aria-expanded={disclosure ? isExpanded : undefined}
-                aria-label={disclosure ? (isExpanded ? "Collapse message" : "Expand message") : "Close message"}
-                className={
-                  disclosure ? `message-box__toggle ${isExpanded ? 'message-box__toggle--expanded' : ''}` : ''
-                }
-              >
-                {disclosure ? (
-                  <RxCaretDown className="icon" />
-                ) : (
-                  <IoIosClose className="icon" />
-                )}
-              </Button>
-            )}
-        </div>
-        <div className={`message-box__text ${disclosure ? 'message-box__text--disclosure' : ''} ${isExpanded ? 'message-box__text--expanded' : ''}`}>
+          {title || variantConfig.title}
+        </Box.Header>
+        <Box.Content
+          className={`
+            ${disclosure ? 'box__content--disclosure' : ''}
+            ${isExpanded ? 'box__content--expanded' : ''}
+          `}
+        >
           {children}
-        </div>
-      </div>
-    </div>
+        </Box.Content>
+      </Box.ContentWrapper>
+    </Box.Root>
   );
 }
 
