@@ -4,23 +4,15 @@ import { useDataExtractionContext } from '../contexts/dataExtractionContext';
 import SummaryAnalyticsService from '../services/summaryAnalyticsService';
 import MessageBox from './ui/MessageBox';
 import { FiAlertTriangle } from "react-icons/fi";
-import { 
-  RiBarChartLine, 
-  RiFileList3Line, 
-  RiLinksLine, 
-  RiCodeSSlashLine, 
-  RiFileTextLine,
-  RiCheckboxCircleLine,
-  RiErrorWarningLine
-} from 'react-icons/ri';
 import StatCard from './ui/StatCard';
+import Icons from './ui/Icon';
 
 function SectionHeader({ title, icon: Icon, children }) {
   return (
     <div className="mb-6">
       <div className="flex items-center gap-2 mb-4">
-        {Icon && <Icon className="text-xl text-blue-600" />}
-        <h2 className="text-xl font-semibold text-white">{title}</h2>
+        {Icon && <Icon className="text-xl text-accent" />}
+        <h2 className="text-xl font-semibold text-foreground">{title}</h2>
       </div>
       {children}
     </div>
@@ -35,9 +27,9 @@ function HeadingDistributionChart({ distribution }) {
       {Object.entries(distribution).map(([tag, count]) => (
         <div key={tag} className="flex items-center gap-3">
           <span className="text-sm font-mono uppercase w-8">{tag}</span>
-          <div className="flex-1 bg-blue-500/15 rounded-full h-4 relative">
+          <div className="flex-1 bg-accent/15 rounded-full h-4 relative">
             <div 
-              className="bg-blue-500 h-4 rounded-full transition-all duration-300"
+              className="bg-accent h-4 rounded-full transition-all duration-300"
               style={{ width: max > 0 ? `${(count / max) * 100}%` : '0%' }}
             />
           </div>
@@ -50,7 +42,7 @@ function HeadingDistributionChart({ distribution }) {
 
 function LinksList({ links, title, emptyMessage }) {
   if (links.length === 0) {
-    return <p className="text-blue-500/60 text-sm">{emptyMessage}</p>;
+    return <p className="text-accent/60 text-sm">{emptyMessage}</p>;
   }
 
   return (
@@ -104,37 +96,37 @@ function SummaryReport() {
   return (
     <div className="space-y-8">
       {/* Overview Section */}
-      <SectionHeader title={t('summaryOverviewTitle')} icon={RiBarChartLine}>
+      <SectionHeader title={t('summaryOverviewTitle')} icon={Icons.barChart}>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <StatCard
             title={t('totalPagesLabel')}
             value={overview.totalPages}
-            icon={RiFileList3Line}
+            icon={Icons.scroll}
             variant="highlight"
           />
           <StatCard
             title={t('successRateLabel')}
             value={`${overview.successRate}%`}
-            icon={overview.successRate === 100 ? RiCheckboxCircleLine : RiErrorWarningLine}
+            icon={overview.successRate === 100 ? Icons.success : Icons.critical}
             variant={overview.successRate === 100 ? 'success' : overview.successRate >= 80 ? 'warning' : 'error'}
           />
           <StatCard
             title={t('totalLinksLabel')}
             value={links.totalLinksFound}
-            icon={RiLinksLine}
+            icon={Icons.link}
             variant="info"
           />
           <StatCard
             title={t('totalHeadingsLabel')}
             value={headings.totalHeadings}
-            icon={RiFileTextLine}
+            icon={Icons.file}
             variant="critical"
           />
         </div>
       </SectionHeader>
 
       {/* Headings Analysis */}
-      <SectionHeader title={t('headingsAnalysisTitle')} icon={RiFileTextLine}>
+      <SectionHeader title={t('headingsAnalysisTitle')} icon={Icons.file}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="space-y-4">
             <StatCard
@@ -177,7 +169,7 @@ function SummaryReport() {
       </SectionHeader>
 
       {/* Links Analysis */}
-      <SectionHeader title={t('linksAnalysisTitle')} icon={RiLinksLine}>
+      <SectionHeader title={t('linksAnalysisTitle')} icon={Icons.link}>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <StatCard
             title={t('linksOverviewTitle')}
@@ -204,7 +196,7 @@ function SummaryReport() {
 
       {/* Custom Selectors Analysis */}
       {Object.keys(customSelectors.selectorBreakdown).length > 0 && (
-        <SectionHeader title={t('customSelectorsAnalysisTitle')} icon={RiCodeSSlashLine}>
+        <SectionHeader title={t('customSelectorsAnalysisTitle')} icon={Icons.code}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <StatCard
               title={t('customElementsTitle')}
@@ -239,7 +231,7 @@ function SummaryReport() {
 
       {/* Metadata Issues */}
       {(metadata.pagesWithoutTitle > 0 || metadata.pagesWithoutDescription > 0) && (
-        <SectionHeader title={t('metadataIssuesTitle')} icon={FiAlertTriangle}>
+        <SectionHeader title={t('metadataIssuesTitle')} icon={Icons.warning}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {metadata.pagesWithoutTitle > 0 && (
               <StatCard
