@@ -35,7 +35,7 @@ export default function DataExtractor() {
   ]
 
   return (
-    <Box.Root>
+    <>
       <ExtractionControls 
         isExtracting={isExtracting}
         hasData={!!extractedData}
@@ -47,9 +47,9 @@ export default function DataExtractor() {
       {isExtracting ? (
         <ProgressIndicator progress={progress} />
       ) : (
-        <ul className='text-sm text-gray-700 dark:text-gray-300 mt-4 flex items-center justify-center flex-wrap w-full divide-x divide-gray-700 dark:divide-gray-300'>
+        <ul className='text-sm text-foreground-secondary mt-4 mb-2 flex items-center justify-center flex-wrap w-full divide-x divide-foreground-secondary'>
           {information.map((item) => (
-            <li className='px-2' key={item.label}>{item.label}: <span className='aspect-square inline-flex w-5 h-5 items-center justify-center rounded-full bg-blue-500 text-white text-center'>{item.value}</span></li>
+            <li className='px-2' key={item.label}>{item.label}: <span className='scheme-info aspect-square inline-flex w-5 h-5 items-center justify-center rounded-full bg-surface text-foreground-secondary text-center'>{item.value}</span></li>
           ))}
         </ul>
       )}
@@ -73,6 +73,6 @@ export default function DataExtractor() {
           <p>{error}</p>
         </MessageBox>
       )}
-    </Box.Root>
+    </>
   );
 } 

@@ -4,6 +4,7 @@ import Button from '../components/ui/Button';
 import { useDataExtractionContext } from '../contexts/dataExtractionContext';
 import { AiOutlineClear, AiOutlineCheckCircle } from "react-icons/ai";
 import { formatBytes } from '../utils/formatBytes';
+import Box from '../components/ui/Box';
 
 
 function Storage() {
@@ -44,8 +45,8 @@ function Storage() {
 
   return (
     <>
-      <h1 className='text-2xl font-bold mb-4'>{t('storageTitle')}</h1>
-      <div className='box'>
+      <h1>{t('storageTitle')}</h1>
+      <Box.Root>
         <div className='flex flex-col gap-2'>
           {
             loading ? (
@@ -73,7 +74,7 @@ function Storage() {
             )
           }
         </Button>
-      </div>
+      </Box.Root>
     </>
   )
 }

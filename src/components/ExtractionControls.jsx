@@ -27,6 +27,7 @@ export default function ExtractionControls({
         <MessageBox
           title={t('extractionCompletedTitle')}
           variant='success'
+          className='mt-1'
         >
           <p>{t('extractionCompletedMessage')}</p>
         </MessageBox>
