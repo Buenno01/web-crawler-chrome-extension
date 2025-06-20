@@ -45,6 +45,7 @@ function PathFilterForm() {
         title={t('pathFilterFormDescriptionTitle')}
         variant="info"
         disclosure={true}
+        className='mt-2'
       >
         <p>
           {t('pathFilterFormDescription')}

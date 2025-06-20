@@ -4,7 +4,7 @@ import { IoMdTrash } from 'react-icons/io';
 
 function FormItemsList({ values, removeFunction }) {
   return (
-    <ul className="form-list">
+    <ul className="form-list empty:hidden">
       {
         values && values.length > 0 &&
         values.map((value) => (

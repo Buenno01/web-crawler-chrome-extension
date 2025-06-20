@@ -45,6 +45,7 @@ function CSSSelectorForm() {
         title={t('cssSelectorFormDescriptionTitle')}
         variant="info"
         disclosure={true}
+        className='mt-2'
       >
         <p>{t('cssSelectorFormDescription')}</p>
       </MessageBox>
