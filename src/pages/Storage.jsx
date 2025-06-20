@@ -56,7 +56,7 @@ function Storage() {
           }
         </div>
         <Button
-          variant={ cleared ? 'success' : 'danger'}
+          variant={ cleared ? 'success' : 'critical'}
           onClick={handleClearStorage}
         >
           {

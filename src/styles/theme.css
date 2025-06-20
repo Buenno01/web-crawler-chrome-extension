@@ -1,9 +1,12 @@
 @theme {
   --color-foreground: var(--color-gray-50);
   --color-foreground-secondary: var(--color-gray-100);
+  --color-foreground-muted: --alpha(var(--color-gray-50) / 10%);
   --color-background: var(--color-gray-950);
   --color-surface: --alpha(var(--color-gray-500) / 10%);
   --color-surface-secondary: --alpha(var(--color-gray-300) / 20%);
-  --color-border: var(--color-blue-500);
-  --color-accent: var(--color-blue-500);
+  --color-border: var(--color-gray-500);
+  --color-accent: var(--color-gray-500);
+  --color-accent-hover: var(--color-gray-600);
+  --color-accent-muted: --alpha(var(--color-gray-500) / 10%);
 }

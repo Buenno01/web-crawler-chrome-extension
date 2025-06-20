@@ -7,140 +7,152 @@
 @utility scheme-success {
   --color-foreground: var(--color-green-950);
   --color-foreground-secondary: var(--color-green-800);
+  --color-foreground-muted: --alpha(var(--color-green-950) / 10%);
   --color-background: var(--color-green-50);
   --color-surface: --alpha(var(--color-green-500) / 10%);
   --color-surface-secondary: --alpha(var(--color-green-300) / 20%);
   --color-border: var(--color-green-500);
   --color-accent: var(--color-green-500);
+  --color-accent-hover: var(--color-green-600);
+  --color-accent-muted: --alpha(var(--color-green-500) / 10%);
 
   @variant dark {
     --color-foreground: var(--color-green-50);
     --color-foreground-secondary: var(--color-green-100);
+    --color-foreground-muted: --alpha(var(--color-green-50) / 10%);
     --color-background: var(--color-green-500) / 10%;
     --color-surface: --alpha(var(--color-green-500) / 10%);
     --color-surface-secondary: --alpha(var(--color-green-300) / 20%);
-    --color-border: var(--color-green-500);
-    --color-accent: var(--color-green-500);
   }
 }
 
 @utility scheme-critical {
   --color-foreground: var(--color-red-950);
   --color-foreground-secondary: var(--color-red-800);
+  --color-foreground-muted: --alpha(var(--color-red-950) / 10%);
   --color-background: var(--color-red-50);
   --color-surface: --alpha(var(--color-red-500) / 10%);
   --color-surface-secondary: --alpha(var(--color-red-300) / 20%);
   --color-border: var(--color-red-500);
   --color-accent: var(--color-red-500);
+  --color-accent-hover: var(--color-red-600);
+  --color-accent-muted: --alpha(var(--color-red-500) / 10%);
   
   @variant dark {
     --color-foreground: var(--color-red-50);
     --color-foreground-secondary: var(--color-red-100);
+    --color-foreground-muted: --alpha(var(--color-red-50) / 10%);
     --color-background: var(--color-red-950);
     --color-surface: --alpha(var(--color-red-500) / 10%);
     --color-surface-secondary: --alpha(var(--color-red-300) / 20%);
-    --color-border: var(--color-red-500);
-    --color-accent: var(--color-red-500);
   }
 }
 
 @utility scheme-info {
   --color-foreground: var(--color-blue-950);
   --color-foreground-secondary: var(--color-blue-800);
+  --color-foreground-muted: --alpha(var(--color-blue-950) / 10%);
   --color-background: var(--color-blue-50);
   --color-surface: --alpha(var(--color-blue-500) / 10%);
   --color-surface-secondary: --alpha(var(--color-blue-300) / 20%);
   --color-border: var(--color-blue-500);
   --color-accent: var(--color-blue-500);
+  --color-accent-hover: var(--color-blue-600);
+  --color-accent-muted: --alpha(var(--color-blue-500) / 10%);
   
   @variant dark {
     --color-foreground: var(--color-blue-50);
     --color-foreground-secondary: var(--color-blue-100);
+    --color-foreground-muted: --alpha(var(--color-blue-50) / 10%);
     --color-background: var(--color-blue-950);
     --color-surface: --alpha(var(--color-blue-500) / 10%);
     --color-surface-secondary: --alpha(var(--color-blue-300) / 20%);
-    --color-border: var(--color-blue-500);
-    --color-accent: var(--color-blue-500);
   }
 }
 
 @utility scheme-warning {
   --color-foreground: var(--color-yellow-950);
   --color-foreground-secondary: var(--color-yellow-800);
+  --color-foreground-muted: --alpha(var(--color-yellow-950) / 10%);
   --color-background: var(--color-yellow-50);
   --color-surface: --alpha(var(--color-yellow-500) / 10%);
   --color-surface-secondary: --alpha(var(--color-yellow-300) / 20%);
   --color-border: var(--color-yellow-500);
   --color-accent: var(--color-yellow-500);
+  --color-accent-hover: var(--color-yellow-600);
+  --color-accent-muted: --alpha(var(--color-yellow-500) / 10%);
   
   @variant dark {
     --color-foreground: var(--color-yellow-50);
     --color-foreground-secondary: var(--color-yellow-100);
+    --color-foreground-muted: --alpha(var(--color-yellow-50) / 10%);
     --color-background: var(--color-yellow-950);
     --color-surface: --alpha(var(--color-yellow-500) / 10%);
     --color-surface-secondary: --alpha(var(--color-yellow-300) / 20%);
-    --color-border: var(--color-yellow-500);
-    --color-accent: var(--color-yellow-500);
   }
 }
 
 @utility scheme-primary {
   --color-foreground: var(--color-gray-950);
   --color-foreground-secondary: var(--color-gray-800);
+  --color-foreground-muted: --alpha(var(--color-gray-950) / 10%);
   --color-background: var(--color-gray-50);
   --color-surface: --alpha(var(--color-gray-500) / 10%);
   --color-surface-secondary: --alpha(var(--color-gray-300) / 20%);
   --color-border: var(--color-blue-500);
   --color-accent: var(--color-blue-500);
+  --color-accent-hover: var(--color-blue-600);
+  --color-accent-muted: --alpha(var(--color-blue-500) / 10%);
   
   @variant dark {
     --color-foreground: var(--color-gray-50);
     --color-foreground-secondary: var(--color-gray-100);
+    --color-foreground-muted: --alpha(var(--color-gray-50) / 10%);
     --color-background: var(--color-gray-950);
     --color-surface: --alpha(var(--color-blue-500) / 10%);
     --color-surface-secondary: --alpha(var(--color-blue-300) / 20%);
-    --color-border: var(--color-blue-500);
-    --color-accent: var(--color-blue-500);
   }
 }
 
 @utility scheme-highlight {
   --color-foreground: var(--color-pink-950);
   --color-foreground-secondary: var(--color-pink-800);
+  --color-foreground-muted: --alpha(var(--color-pink-950) / 10%);
   --color-background: var(--color-pink-50);
   --color-surface: --alpha(var(--color-pink-500) / 10%);
   --color-surface-secondary: --alpha(var(--color-pink-300) / 20%);
   --color-border: var(--color-pink-500);
   --color-accent: var(--color-pink-500);
-  
+  --color-accent-hover: var(--color-pink-600);
+  --color-accent-muted: --alpha(var(--color-pink-500) / 10%);
   @variant dark {
     --color-foreground: var(--color-pink-50);
     --color-foreground-secondary: var(--color-pink-100);
+    --color-foreground-muted: --alpha(var(--color-pink-50) / 10%);
     --color-background: var(--color-pink-950);
     --color-surface: --alpha(var(--color-pink-500) / 10%);
     --color-surface-secondary: --alpha(var(--color-pink-300) / 20%);
-    --color-border: var(--color-pink-500);
-    --color-accent: var(--color-pink-500);
   }
 }
 
 @utility scheme-muted {
   --color-foreground: var(--color-gray-800);
   --color-foreground-secondary: var(--color-gray-700);
+  --color-foreground-muted: --alpha(var(--color-gray-950) / 10%);
   --color-background: var(--color-gray-50);
   --color-surface: --alpha(var(--color-gray-500) / 10%);
   --color-surface-secondary: --alpha(var(--color-gray-300) / 20%);
   --color-border: var(--color-gray-500);
   --color-accent: var(--color-gray-500);
-  
+  --color-accent-hover: var(--color-gray-600);
+  --color-accent-muted: --alpha(var(--color-gray-500) / 10%);
   @variant dark {
     --color-foreground: var(--color-gray-200);
     --color-foreground-secondary: var(--color-gray-300);
+    --color-foreground-muted: --alpha(var(--color-gray-50) / 10%);
     --color-background: var(--color-gray-950);
     --color-surface: --alpha(var(--color-gray-500) / 10%);
     --color-surface-secondary: --alpha(var(--color-gray-300) / 20%);
-    --color-border: var(--color-gray-500);
-    --color-accent: var(--color-gray-500);
   }
 }
 
@@ -230,31 +242,11 @@
 }
 
 @utility button {
-  @apply rounded-md w-full flex justify-center items-center px-2 py-1 gap-2 cursor-pointer transition-colors duration-200;
-}
-
-@utility button--primary {
-  @apply bg-blue-500 hover:bg-blue-600 text-white font-semibold;
-}
-
-@utility button--secondary {
-  @apply bg-blue-500/20 hover:bg-blue-500/30 text-white font-semibold;
-}
-
-@utility button--success {
-  @apply bg-green-500 hover:bg-green-600 text-white font-semibold;
-}
-
-@utility button--warning {
-  @apply bg-yellow-500 hover:bg-yellow-600 text-black font-semibold;
-}
-
-@utility button--danger {
-  @apply bg-red-500 hover:bg-red-600 text-white font-semibold;
+  @apply rounded-md w-full flex justify-center items-center px-2 py-1 gap-2 cursor-pointer transition-colors duration-200 bg-accent text-foreground hover:bg-accent-hover disabled:bg-accent-muted disabled:text-foreground-muted;
 }
 
 @utility button--icon {
-  @apply hover:bg-white/20 p-1 rounded-full cursor-pointer w-fit aspect-square;
+  @apply bg-transparent hover:bg-surface p-1 rounded-full cursor-pointer w-fit aspect-square;
 }
 
 @utility form-list {

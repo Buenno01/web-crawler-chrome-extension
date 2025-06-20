@@ -66,8 +66,8 @@ function ReportMenu() {
                 <li key={option.value}>
                   <Button
                     onClick={() => handleOptionClick(option.value)}
-                    variant={option.selected ? 'primary' : 'secondary'}
-                    className={ !option.selected && 'text-foreground/60' }
+                    variant="info"
+                    className={ !option.selected && 'text-foreground/60 bg-accent-muted hover:bg-accent-muted hover:text-foreground' }
                   >
                     <option.icon className='text-lg' />
                     {option.label}

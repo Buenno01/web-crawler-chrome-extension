@@ -1,12 +1,22 @@
 import React from 'react';
 
-function Button({ children, variant = 'primary', className = '', ...props }) {
-  const baseClasses = 'button';
-  const variantClass = variant ? `button--${variant}` : 'button--primary';
+function Button({ children, variant = 'info', className = '', ...props }) {
+  const schemes = {
+    primary: 'scheme-primary',
+    secondary: 'scheme-secondary',
+    success: 'scheme-success',
+    critical: 'scheme-critical',
+    warning: 'scheme-warning',
+    info: 'scheme-info',
+    neutral: 'scheme-neutral',
+    icon: 'button--icon',
+  }
+
+  const variantClass = variant === 'icon' ? `button--icon` : schemes[variant];
   
   return (
     <button 
-      className={`${baseClasses} ${variantClass} ${className}`}
+      className={`button ${variantClass} ${className}`}
       {...props}
     >
       {children}
