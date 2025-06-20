@@ -6,7 +6,7 @@ import ExtractionControls from './ExtractionControls';
 import ProgressIndicator from './ProgressIndicator';
 import MessageBox from './ui/MessageBox';
 import { useTranslation } from '../hooks/useTranslation';
-import Box from './ui/Box';
+import DisclosureBox from './ui/DisclosureBox';
 
 export default function DataExtractor() {
   const { t } = useTranslation();
@@ -56,13 +56,12 @@ export default function DataExtractor() {
 
       {
         !isExtracting && pathFilters.length === 0 &&
-          <MessageBox
+          <DisclosureBox
             title={t('noPathFiltersTitle')}
             variant='warning'
-            disclosure={true}
           >
             <p>{t('noPathFiltersMessage')}</p>
-          </MessageBox>
+          </DisclosureBox>
       }
       
       {error && (

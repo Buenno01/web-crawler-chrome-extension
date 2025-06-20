@@ -4,8 +4,8 @@ import { useTranslation } from '../hooks/useTranslation';
 import useForm from '../hooks/useForm';
 import Form from './Form';
 import FormItemsList from './FormItemsList';
-import MessageBox from './ui/MessageBox';
 import Box from './ui/Box';
+import DisclosureBox from './ui/DisclosureBox';
 
 function CSSSelectorForm() {
   const { values, add, remove } = useCssSelectorsContext();
@@ -41,14 +41,13 @@ function CSSSelectorForm() {
         inputLabel={t('cssSelectorInputLabel')}
       />
       <FormItemsList values={values} removeFunction={remove} />
-      <MessageBox
+      <DisclosureBox
         title={t('cssSelectorFormDescriptionTitle')}
         variant="info"
-        disclosure={true}
         className='mt-2'
       >
         <p>{t('cssSelectorFormDescription')}</p>
-      </MessageBox>
+      </DisclosureBox>
     </Box.Root>
   )
 }
