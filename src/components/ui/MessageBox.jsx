@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Box from './Box';
 import Icon from './Icon';
+import Button from './Button';
 
 const variants = {
   info: {
