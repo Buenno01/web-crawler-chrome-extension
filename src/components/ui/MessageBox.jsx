@@ -28,13 +28,11 @@ function MessageBox({
   className = '',
   onClose,
   closeButton = true,
-  disclosure = false,
   ...props 
 }) {
   const [isVisible, setIsVisible] = useState(true);
-  const [isExpanded, setIsExpanded] = useState(!disclosure);
   const variantConfig = variants[variant] || variants.info;
-  const Icon = variantConfig.icon;
+  const variantIcon = variantConfig.icon;
   
   if (!isVisible) {
     return null;
@@ -47,10 +45,6 @@ function MessageBox({
     }
   };
 
-  const handleToggle = () => {
-    setIsExpanded(!isExpanded);
-  };
-  
   return (
     <Box.Root 
       variant={variant}
@@ -58,22 +52,25 @@ function MessageBox({
       role="alert"
       {...props}
     >
-      <Box.Icon Icon={Icon} />
+      <Box.Icon Icon={variantIcon} />
       <Box.ContentWrapper>
         <Box.Header
-          buttonType={disclosure ? 'disclosure' : closeButton ? 'close' : 'none'}
-          handleToggle={handleToggle}
+          buttonType={closeButton ? 'close' : 'none'}
           handleClose={handleClose}
-          isExpanded={isExpanded}
         >
           {title || variantConfig.title}
+          {closeButton && (
+            <Button
+              variant="icon"
+              onClick={handleClose}
+              aria-label='Close message'
+              className="p-0"
+            >
+              <Icon.close className={`text-lg transition-transform duration-300 ease-in-out`} />
+            </Button>
+          )}
         </Box.Header>
-        <Box.Content
-          className={`
-            ${disclosure ? 'box__content--disclosure' : ''}
-            ${isExpanded ? 'box__content--expanded' : ''}
-          `}
-        >
+        <Box.Content>
           {children}
         </Box.Content>
       </Box.ContentWrapper>

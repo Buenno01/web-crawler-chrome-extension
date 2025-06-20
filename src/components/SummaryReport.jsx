@@ -83,7 +83,6 @@ function SummaryReport() {
       <MessageBox
         title={t('noDataTitle')}
         variant='info'
-        disclosure={false}
         closeButton={false}
       >
         <p>{t('noDataDescription')}</p>
