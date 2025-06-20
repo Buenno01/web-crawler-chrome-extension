@@ -9,6 +9,9 @@ import {
   RiFileTextLine,
 } from "react-icons/ri";
 import { FiAlertTriangle } from "react-icons/fi";
+import { IoHomeOutline, IoSettingsOutline } from "react-icons/io5";
+import { TbDatabaseCog } from "react-icons/tb";
+import { MdAutoGraph } from "react-icons/md";
 
 const Icons = {
   success: RiCheckboxCircleLine,
@@ -20,6 +23,10 @@ const Icons = {
   scroll: RiFileList3Line,
   barChart: RiBarChartLine,
   file: RiFileTextLine,
+  home: IoHomeOutline,
+  settings: IoSettingsOutline,
+  database: TbDatabaseCog,
+  graph: MdAutoGraph,
 };
 
 export default Icons;

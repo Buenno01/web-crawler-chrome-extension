@@ -1,11 +1,8 @@
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { IoMdSettings } from "react-icons/io";
-import { MdHome } from "react-icons/md";
 import { useTranslation } from '../hooks/useTranslation';
-import { MdAutoGraph } from "react-icons/md";
-import { FaDatabase } from "react-icons/fa6";
+import Icon from './ui/Icon';
 
 function Layout() {
   const location = useLocation();
@@ -15,22 +12,22 @@ function Layout() {
     {
       to: '/',
       label: t('navigationHome'),
-      icon: MdHome,
+      icon: Icon.home,
     },
     {
       to: '/settings',
       label: t('navigationSettings'),
-      icon: IoMdSettings,
+      icon: Icon.settings,
     },
     {
       to: '/reports',
       label: t('navigationReports'),
-      icon: MdAutoGraph,
+      icon: Icon.graph,
     },
     {
       to: '/storage',
       label: t('navigationStorage'),
-      icon: FaDatabase,
+      icon: Icon.database,
     }
   ];
   
