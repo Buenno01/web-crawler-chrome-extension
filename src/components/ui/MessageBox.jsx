@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
-import { IoIosInformationCircle, IoMdCheckmarkCircle, IoMdWarning, IoMdAlert } from "react-icons/io";
 import Box from './Box';
+import Icon from './Icon';
 
 const variants = {
   info: {
-    icon: IoIosInformationCircle,
+    icon: Icon.info,
     title: 'Information',
   },
   success: {
-    icon: IoMdCheckmarkCircle,
+    icon: Icon.success,
     title: 'Success',
   },
   warning: {
-    icon: IoMdWarning,
+    icon: Icon.warning,
     title: 'Warning',
   },
   critical: {
-    icon: IoMdAlert,
+    icon: Icon.critical,
     title: 'Critical',
   }
 };
