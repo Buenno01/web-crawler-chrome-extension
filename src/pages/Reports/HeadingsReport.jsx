@@ -25,7 +25,7 @@ function HeadingsReport() {
           <StatCard
             title={t('headingDistributionTitle')}
             value={totalHeadings}
-            subtitle={t('averageHeadingsPerPage', { avg: totalHeadings / totalPages })}
+            subtitle={t('averageHeadingsPerPage', { avg: (totalHeadings / totalPages).toFixed(1) })}
           >
             <div className="mt-4">
               <DistributionChart

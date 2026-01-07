@@ -40,7 +40,7 @@ function DistributionChart({ distribution, calculateAverage }) {
             calculateAverage && (
               <span className="text-sm font-medium text-right">
                 <span className="inline-block text-left">
-                  {value / calculateAverage}
+                  {(value / calculateAverage).toFixed(1)}
                 </span>
               </span>
             )
