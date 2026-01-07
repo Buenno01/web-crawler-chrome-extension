@@ -1,5 +1,3 @@
-import React from 'react'
-
 function Input({ label, className = '', ...props }) {
   return (
     <div className="form__group">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslation } from '../hooks/useTranslation';
 import Button from '../components/ui/Button';
 import { useDataExtractionContext } from '../contexts/dataExtractionContext';
