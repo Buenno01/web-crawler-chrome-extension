@@ -280,5 +280,12 @@
   "notAnalizedPage": {
     "message": "Not analized page",
     "description": "Used when a page information is not found"
+  },
+  "downloadRawData": {
+    "message": "Download raw data",
+    "description": ""
+  },
+  "downloadCsvReports": {
+    "message": "Download csv reports"
   }
 }

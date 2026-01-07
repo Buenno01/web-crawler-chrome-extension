@@ -280,5 +280,12 @@
   "notAnalizedPage": {
     "message": "Página não analisada",
     "description": "Used when a page information is not found"
+  },
+  "downloadRawData": {
+    "message": "Baixar dados sem processar",
+    "description": ""
+  },
+  "downloadCsvReports": {
+    "message": "Baixar dados em csv"
   }
 }
