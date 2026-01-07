@@ -1,5 +1,5 @@
 import useStoragedSet from '../utils/StoragedSet';
-import { useEffect, createContext, useContext } from 'react';
+import { createContext, useContext } from 'react';
 
 const CssSelectorsContext = createContext({
   values: new Set(),
@@ -22,10 +22,6 @@ const useCssSelectorsContext = () => {
 
 function CssSelectorsProvider({ children }) {
   const storagedSet = useStoragedSet('css-selectors');
-
-  useEffect(() => {
-    console.log(storagedSet.values);
-  }, [storagedSet.values]);
 
   const providerValue = { ...storagedSet };
 

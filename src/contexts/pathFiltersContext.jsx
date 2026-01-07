@@ -1,5 +1,5 @@
 import useStoragedSet from '../utils/StoragedSet';
-import { useEffect, createContext, useContext } from 'react';
+import { createContext, useContext } from 'react';
 
 const PathFiltersContext = createContext({
   values: new Set(),
@@ -22,10 +22,6 @@ const usePathFiltersContext = () => {
 
 function PathFiltersProvider({ children }) {
   const storagedSet = useStoragedSet('path-filters');
-
-  useEffect(() => {
-    console.log(storagedSet.values);
-  }, [storagedSet.values]);
 
   const providerValue = { ...storagedSet };
 
