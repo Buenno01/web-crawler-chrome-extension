@@ -13,7 +13,9 @@
     "tabs",
     "scripting",
     "storage",
-    "unlimitedStorage"
+    "unlimitedStorage",
+    "offscreen",
+    "downloads"
   ],
   "host_permissions": ["http://*/*", "https://*/*"]
 }
