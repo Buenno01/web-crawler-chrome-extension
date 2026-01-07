@@ -1,197 +1,332 @@
+/**
+ * @typedef {import('./types/extraction-types').ExtractionResults} ExtractionResults
+ * @typedef {import('./types/extraction-types').PageData} PageData
+ */
+
+/**
+ * @typedef {PageLink} - Representa o resumo sobre um dado link em uma página
+ * @property {string} url - Url apontado pelo link
+ * @property {string} title - Título da página que o link aponta (se houver)
+ * @property {number} count - Número de ocorrencias do mesmo link
+ */
+
+/**
+ * @typedef {LinksReport} - Representa o relatório gerado para os links analisados
+ * @property {number} totalLinks - Representa o total de links encontrados incluindo parâmetros de url e links repetidos
+ * @property {uniqueLinks} uniqueLinks - Representa o total de links únicos encontrados sem parâmetros de url
+ * @property {number} averageLinksPerPage - Representa a média de links encontrados em cada página
+ * @property {PageLink} mostLinkedPages - Representa um resumo dos links que mais aparecem nas páginas analisadas
+ * @property {PageLink} pageLinks - Representa um resumo dos links que mais aparecem nas páginas analisadas
+ */
+
+/**
+ * @typedef {SummaryReport}
+ * @property {LinksReport} links - Relatório da análise de links
+ */
+
+/**
+ * Serviço para análise e geração de relatórios a partir dos dados extraídos
+ */
 export default class SummaryAnalyticsService {
+  /**
+   * @param {ExtractionResults} extractedData - Dados extraídos do crawler
+   */
   constructor(extractedData) {
-    this.data = extractedData || {};
-    this.pages = Object.values(this.data);
-    this.urls = Object.keys(this.data);
+    this.data = extractedData;
+    this.pages = Object.entries(extractedData);
   }
 
-  // Overview Statistics
-  getOverviewStats() {
-    return {
-      totalPages: this.pages.length,
-      totalUrls: this.urls.length,
-      successfulExtractions: this.pages.filter(page => page.title !== undefined).length,
-      failedExtractions: this.urls.length - this.pages.filter(page => page.title !== undefined).length,
-      successRate: this.pages.length > 0 ? 
-        Math.round((this.pages.filter(page => page.title !== undefined).length / this.pages.length) * 100) : 0
-    };
+  /**
+   * Normaliza uma URL removendo query strings e fragmentos
+   * @param {string} url - URL a ser normalizada
+   * @returns {string} URL normalizada
+   */
+  normalizeUrl(url) {
+    try {
+      const urlObj = new URL(url);
+      return urlObj.origin + urlObj.pathname;
+    } catch {
+      return url;
+    }
   }
 
-  // Headings Analysis
-  getHeadingsStats() {
-    const allHeadings = this.pages.flatMap(page => page.headings || []);
-    const headingCounts = {
-      h1: 0, h2: 0, h3: 0, h4: 0, h5: 0, h6: 0
-    };
+  /**
+   * Gera análise completa dos links
+   * @returns {LinksReport} Análise de links
+   */
+  analyzeLinks() {
+    const linkCounts = new Map();
+    const pageLinks = new Map();
+    let totalLinks = 0;
 
-    allHeadings.forEach(heading => {
-      if (headingCounts.hasOwnProperty(heading.tag)) {
-        headingCounts[heading.tag]++;
-      }
+    // Conta todas as ocorrências de cada link
+    this.pages.forEach(([pageUrl, pageData]) => {
+      const linksInPage = pageData.links.length;
+      totalLinks += linksInPage;
+      pageLinks.set(pageUrl, linksInPage);
+
+      pageData.links.forEach(link => {
+        const normalizedUrl = this.normalizeUrl(link.href);
+        linkCounts.set(normalizedUrl, (linkCounts.get(normalizedUrl) || 0) + 1);
+      });
     });
 
-    const pagesWithoutH1 = this.pages.filter(page => 
-      !page.headings || !page.headings.some(h => h.tag === 'h1')
-    );
-
-    const pagesWithMultipleH1 = this.pages.filter(page => 
-      page.headings && page.headings.filter(h => h.tag === 'h1').length > 1
-    );
-
-    return {
-      totalHeadings: allHeadings.length,
-      averageHeadingsPerPage: this.pages.length > 0 ? 
-        Math.round(allHeadings.length / this.pages.length * 10) / 10 : 0,
-      headingDistribution: headingCounts,
-      seoIssues: {
-        pagesWithoutH1: pagesWithoutH1.length,
-        pagesWithMultipleH1: pagesWithMultipleH1.length,
-        pagesWithoutH1List: pagesWithoutH1.map(page => ({
-          url: page.url,
-          title: page.title || 'No title'
-        })),
-        pagesWithMultipleH1List: pagesWithMultipleH1.map(page => ({
-          url: page.url,
-          title: page.title || 'No title',
-          h1Count: page.headings.filter(h => h.tag === 'h1').length
-        }))
-      }
-    };
-  }
-
-  // Links Analysis
-  getLinksStats() {
-    const allLinks = this.pages.flatMap(page => page.links || []);
-    const uniqueLinks = [...new Set(allLinks)];
-    
-    // Count how many times each link is referenced
-    const linkCounts = {};
-    allLinks.forEach(link => {
-      linkCounts[link] = (linkCounts[link] || 0) + 1;
-    });
-
-    const mostLinkedPages = Object.entries(linkCounts)
-      .sort(([,a], [,b]) => b - a)
-      .slice(0, 10)
-      .map(([url, count]) => ({ url, count }));
-
-    const pagesWithNoLinks = this.pages.filter(page => 
-      !page.links || page.links.length === 0
-    );
+    // Encontra as páginas mais linkadas
+    const mostLinkedPages = Array.from(linkCounts.entries())
+      .map(([url, count]) => {
+        // Busca o título da página se ela foi crawleada
+        const pageData = this.data[url];
+        return {
+          url: url,
+          title: pageData?.meta?.title || 'Página não crawleada',
+          count: count
+        };
+      })
+      .sort((a, b) => b.count - a.count);
 
     return {
-      totalLinksFound: allLinks.length,
-      uniqueLinks: uniqueLinks.length,
-      averageLinksPerPage: this.pages.length > 0 ? 
-        Math.round(allLinks.length / this.pages.length * 10) / 10 : 0,
-      mostLinkedPages,
-      pagesWithNoLinks: pagesWithNoLinks.length,
-      pagesWithNoLinksList: pagesWithNoLinks.map(page => ({
-        url: page.url,
-        title: page.title || 'No title'
+      uniqueLinks: linkCounts.size,
+      totalLinks: totalLinks,
+      averageLinksPerPage: Math.round(totalLinks / this.pages.length) || 0,
+      mostLinkedPages: mostLinkedPages,
+      pageLinks: Array.from(pageLinks.entries()).map(([url, count]) => ({
+        url,
+        title: this.data[url]?.meta?.title || url,
+        count
       }))
     };
   }
 
-  // Custom Selectors Analysis
-  getCustomSelectorsStats() {
-    if (this.pages.length === 0) {
-      return {
-        totalElements: 0,
-        selectorBreakdown: {},
-        successRate: 0,
-        failedSelectors: []
-      };
-    }
+  /**
+   * Gera análise de headings
+   * @returns {Object} Análise de headings
+   */
+  analyzeHeadings() {
+    const headingCounts = { h1: 0, h2: 0, h3: 0, h4: 0, h5: 0, h6: 0 };
+    const pagesWithoutH1 = [];
+    const pagesWithMultipleH1 = [];
+    const emptyHeadings = [];
 
-    let totalElements = 0;
-    const selectorBreakdown = {};
-    const selectorSuccessCount = {};
-    const selectorTotalCount = {};
+    this.pages.forEach(([pageUrl, pageData]) => {
+      const h1s = pageData.headings.filter(h => h.tag === 'h1');
+      
+      if (h1s.length === 0) {
+        pagesWithoutH1.push({
+          url: pageUrl,
+          title: pageData.meta.title
+        });
+      } else if (h1s.length > 1) {
+        pagesWithMultipleH1.push({
+          url: pageUrl,
+          title: pageData.meta.title,
+          count: h1s.length
+        });
+      }
 
-    this.pages.forEach(page => {
-      if (page.customSelectors) {
-        Object.entries(page.customSelectors).forEach(([selector, elements]) => {
-          selectorTotalCount[selector] = (selectorTotalCount[selector] || 0) + 1;
-          
-          if (elements.error) {
-            // Selector failed on this page
-            return;
-          }
-          
-          if (Array.isArray(elements) && elements.length > 0) {
-            selectorSuccessCount[selector] = (selectorSuccessCount[selector] || 0) + 1;
-            totalElements += elements.length;
-            selectorBreakdown[selector] = (selectorBreakdown[selector] || 0) + elements.length;
-          }
+      pageData.headings.forEach(heading => {
+        headingCounts[heading.tag]++;
+        if (heading.isEmpty) {
+          emptyHeadings.push({
+            url: pageUrl,
+            tag: heading.tag,
+            position: heading.position
+          });
+        }
+      });
+    });
+
+    return {
+      totalPages: this.pages.length,
+      totalHeadings: Object.values(headingCounts).reduce((a, b) => a + b, 0),
+      byTag: headingCounts,
+      pagesWithoutH1: pagesWithoutH1,
+      pagesWithMultipleH1: pagesWithMultipleH1,
+      emptyHeadings: emptyHeadings
+    };
+  }
+
+  /**
+   * Gera análise de imagens
+   * @returns {Object} Análise de imagens
+   */
+  analyzeImages() {
+    let totalImages = 0;
+    let imagesWithoutAlt = 0;
+    const pageImagesInfo = [];
+
+    this.pages.forEach(([pageUrl, pageData]) => {
+      const pageImages = pageData.images.length;
+      const pageImagesNoAlt = pageData.images.filter(img => !img.hasAlt).length;
+      
+      totalImages += pageImages;
+      imagesWithoutAlt += pageImagesNoAlt;
+
+      if (pageImages > 0) {
+        pageImagesInfo.push({
+          url: pageUrl,
+          title: pageData.meta.title,
+          totalImages: pageImages,
+          imagesWithoutAlt: pageImagesNoAlt,
+          percentage: pageImagesNoAlt > 0 
+            ? Math.round((pageImagesNoAlt / pageImages) * 100) 
+            : 0
         });
       }
     });
 
-    const failedSelectors = Object.keys(selectorTotalCount).filter(selector => 
-      !selectorSuccessCount[selector] || selectorSuccessCount[selector] === 0
-    );
+    return {
+      totalImages,
+      imagesWithoutAlt,
+      imagesWithAlt: totalImages - imagesWithoutAlt,
+      percentageWithoutAlt: totalImages > 0 
+        ? Math.round((imagesWithoutAlt / totalImages) * 100) 
+        : 0,
+      averagePerPage: Math.round(totalImages / this.pages.length) || 0,
+      pageImagesInfo: pageImagesInfo.sort((a, b) => b.imagesWithoutAlt - a.imagesWithoutAlt)
+    };
+  }
 
-    const selectorSuccessRates = {};
-    Object.keys(selectorTotalCount).forEach(selector => {
-      const successCount = selectorSuccessCount[selector] || 0;
-      const totalCount = selectorTotalCount[selector];
-      selectorSuccessRates[selector] = Math.round((successCount / totalCount) * 100);
+  /**
+   * Gera análise de meta tags
+   * @returns {Object} Análise de meta tags
+   */
+  analyzeMeta() {
+    const issues = {
+      missingTitle: [],
+      missingDescription: [],
+      shortTitle: [],
+      longTitle: [],
+      shortDescription: [],
+      longDescription: [],
+      missingOgImage: [],
+      missingCanonical: []
+    };
+
+    this.pages.forEach(([pageUrl, pageData]) => {
+      const { meta } = pageData;
+      const pageInfo = { url: pageUrl, title: meta.title || 'Sem título' };
+
+      if (!meta.title) {
+        issues.missingTitle.push(pageInfo);
+      } else if (meta.title.length < 30) {
+        issues.shortTitle.push({ ...pageInfo, length: meta.title.length });
+      } else if (meta.title.length > 60) {
+        issues.longTitle.push({ ...pageInfo, length: meta.title.length });
+      }
+
+      if (!meta.description) {
+        issues.missingDescription.push(pageInfo);
+      } else if (meta.description.length < 120) {
+        issues.shortDescription.push({ ...pageInfo, length: meta.description.length });
+      } else if (meta.description.length > 160) {
+        issues.longDescription.push({ ...pageInfo, length: meta.description.length });
+      }
+
+      if (!meta.ogImage) {
+        issues.missingOgImage.push(pageInfo);
+      }
+
+      if (!meta.canonical) {
+        issues.missingCanonical.push(pageInfo);
+      }
+    });
+
+    return issues;
+  }
+
+  /**
+   * Gera análise de problemas SEO
+   * @returns {Object} Análise de SEO
+   */
+  analyzeSEO() {
+    const allIssues = [];
+    const issuesByType = { error: 0, warning: 0 };
+    const issuesByPage = [];
+
+    this.pages.forEach(([pageUrl, pageData]) => {
+      const pageIssues = pageData.seoIssues.map(issue => ({
+        ...issue,
+        url: pageUrl,
+        title: pageData.meta.title
+      }));
+
+      allIssues.push(...pageIssues);
+      
+      pageData.seoIssues.forEach(issue => {
+        issuesByType[issue.type]++;
+      });
+
+      if (pageData.seoIssues.length > 0) {
+        issuesByPage.push({
+          url: pageUrl,
+          title: pageData.meta.title,
+          issues: pageData.seoIssues,
+          errorCount: pageData.seoIssues.filter(i => i.type === 'error').length,
+          warningCount: pageData.seoIssues.filter(i => i.type === 'warning').length
+        });
+      }
     });
 
     return {
-      totalElements,
-      selectorBreakdown,
-      selectorSuccessRates,
-      failedSelectors,
-      averageElementsPerPage: this.pages.length > 0 ? 
-        Math.round(totalElements / this.pages.length * 10) / 10 : 0
+      totalIssues: allIssues.length,
+      issuesByType,
+      allIssues,
+      issuesByPage: issuesByPage.sort((a, b) => 
+        (b.errorCount * 2 + b.warningCount) - (a.errorCount * 2 + a.warningCount)
+      )
     };
   }
 
-  // Page Metadata Analysis
-  getMetadataStats() {
-    const pagesWithoutTitle = this.pages.filter(page => !page.title || page.title.trim() === '');
-    const pagesWithoutDescription = this.pages.filter(page => !page.description || page.description.trim() === '');
-    
-    const titleLengths = this.pages
-      .filter(page => page.title && page.title.trim() !== '')
-      .map(page => page.title.length);
-    
-    const descriptionLengths = this.pages
-      .filter(page => page.description && page.description.trim() !== '')
-      .map(page => page.description.length);
+  /**
+   * Gera análise de performance
+   * @returns {Object} Análise de performance
+   */
+  analyzePerformance() {
+    let totalLoadTime = 0;
+    let totalWordCount = 0;
+    const pagePerformance = [];
 
-    const averageTitleLength = titleLengths.length > 0 ? 
-      Math.round(titleLengths.reduce((a, b) => a + b, 0) / titleLengths.length) : 0;
-    
-    const averageDescriptionLength = descriptionLengths.length > 0 ? 
-      Math.round(descriptionLengths.reduce((a, b) => a + b, 0) / descriptionLengths.length) : 0;
+    this.pages.forEach(([pageUrl, pageData]) => {
+      totalLoadTime += pageData.loadTime || 0;
+      totalWordCount += pageData.wordCount || 0;
+
+      pagePerformance.push({
+        url: pageUrl,
+        title: pageData.meta.title,
+        loadTime: pageData.loadTime || 0,
+        wordCount: pageData.wordCount || 0
+      });
+    });
 
     return {
-      pagesWithoutTitle: pagesWithoutTitle.length,
-      pagesWithoutDescription: pagesWithoutDescription.length,
-      averageTitleLength,
-      averageDescriptionLength,
-      pagesWithoutTitleList: pagesWithoutTitle.map(page => ({
-        url: page.url
-      })),
-      pagesWithoutDescriptionList: pagesWithoutDescription.map(page => ({
-        url: page.url,
-        title: page.title || 'No title'
-      }))
+      averageLoadTime: Math.round(totalLoadTime / this.pages.length) || 0,
+      averageWordCount: Math.round(totalWordCount / this.pages.length) || 0,
+      totalWordCount,
+      slowestPages: pagePerformance
+        .sort((a, b) => b.loadTime - a.loadTime)
+        .slice(0, 10),
+      shortestPages: pagePerformance
+        .sort((a, b) => a.wordCount - b.wordCount)
+        .slice(0, 10)
     };
   }
 
-  // Generate Complete Summary
+  /**
+   * Gera relatório completo
+   * @returns {SummaryReport} Relatório completo com todas as análises
+   */
   generateSummary() {
     return {
-      overview: this.getOverviewStats(),
-      headings: this.getHeadingsStats(),
-      links: this.getLinksStats(),
-      customSelectors: this.getCustomSelectorsStats(),
-      metadata: this.getMetadataStats(),
-      generatedAt: new Date().toISOString()
+      overview: {
+        totalPages: this.pages.length,
+        analyzedAt: new Date().toISOString()
+      },
+      links: this.analyzeLinks(),
+      headings: this.analyzeHeadings(),
+      images: this.analyzeImages(),
+      meta: this.analyzeMeta(),
+      seo: this.analyzeSEO(),
+      performance: this.analyzePerformance()
     };
   }
-} 
+}

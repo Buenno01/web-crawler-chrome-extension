@@ -1,11 +1,12 @@
-import React, { useMemo } from 'react';
-import { useTranslation } from '../hooks/useTranslation';
-import { useDataExtractionContext } from '../contexts/dataExtractionContext';
-import SummaryAnalyticsService from '../services/summaryAnalyticsService';
-import MessageBox from './ui/MessageBox';
+import { useMemo } from 'react';
+import { useTranslation } from '../../hooks/useTranslation';
+import { useDataExtractionContext } from '../../contexts/dataExtractionContext';
+import SummaryAnalyticsService from '../../services/summaryAnalyticsService';
+import MessageBox from '../../components/ui/MessageBox';
 import { FiAlertTriangle } from "react-icons/fi";
-import StatCard from './ui/StatCard';
-import Icons from './ui/Icon';
+import StatCard from '../../components/ui/StatCard';
+import Icons from '../../components/ui/Icon';
+import Button from '../../components/ui/Button';
 
 function SectionHeader({ title, icon: Icon, children }) {
   return (
@@ -68,6 +69,34 @@ function LinksList({ links, title, emptyMessage }) {
   );
 }
 
+function DownloadRawButton({ extractedData }) {
+  const onClick = async () => {
+      try {
+        const jsonString = JSON.stringify(extractedData, null, 2);
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        
+        // Usa a API do Chrome para download
+        await chrome.downloads.download({
+          url: url,
+          filename: 'crawler-results.json',
+          saveAs: true // Abre dialog de "Salvar como"
+        });
+        
+        // Limpa a URL após um tempo
+        setTimeout(() => URL.revokeObjectURL(url), 10000);
+        return true;
+      } catch (error) {
+        console.error('Erro ao fazer download do JSON:', error);
+        return false;
+      }
+  };
+
+  return (
+    <Button onClick={onClick} variant='success'>Raw</ Button>
+  )
+}
+
 function SummaryReport() {
   const { t } = useTranslation();
   const { extractedData } = useDataExtractionContext();
@@ -90,10 +119,11 @@ function SummaryReport() {
     );
   }
 
-  const { overview, headings, links, customSelectors, metadata } = summary;
+  const { overview, headings, links } = summary;
 
   return (
     <div className="space-y-8">
+      <DownloadRawButton extractedData={ extractedData } />
       {/* Overview Section */}
       <SectionHeader title={t('summaryOverviewTitle')} icon={Icons.barChart}>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -104,14 +134,8 @@ function SummaryReport() {
             variant="highlight"
           />
           <StatCard
-            title={t('successRateLabel')}
-            value={`${overview.successRate}%`}
-            icon={overview.successRate === 100 ? Icons.success : Icons.critical}
-            variant={overview.successRate === 100 ? 'success' : overview.successRate >= 80 ? 'warning' : 'error'}
-          />
-          <StatCard
             title={t('totalLinksLabel')}
-            value={links.totalLinksFound}
+            value={links.totalLinks}
             icon={Icons.link}
             variant="info"
           />
@@ -124,77 +148,7 @@ function SummaryReport() {
         </div>
       </SectionHeader>
 
-      {/* Headings Analysis */}
-      <SectionHeader title={t('headingsAnalysisTitle')} icon={Icons.file}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="space-y-4">
-            <StatCard
-              title={t('headingDistributionTitle')}
-              value={headings.totalHeadings}
-              subtitle={t('averageHeadingsPerPage', { avg: headings.averageHeadingsPerPage })}
-            >
-              <div className="mt-4">
-                <HeadingDistributionChart distribution={headings.headingDistribution} />
-              </div>
-            </StatCard>
-          </div>
-          
-          <div className="space-y-4">
-            <StatCard
-              title={t('seoIssuesTitle')}
-              value={headings.seoIssues.pagesWithoutH1 + headings.seoIssues.pagesWithMultipleH1}
-              icon={FiAlertTriangle}
-              variant={headings.seoIssues.pagesWithoutH1 + headings.seoIssues.pagesWithMultipleH1 > 0 ? 'warning' : 'success'}
-            >
-              <div className="mt-4 space-y-2">
-                {headings.seoIssues.pagesWithoutH1 > 0 && (
-                  <div className="text-sm">
-                    <span className="font-medium text-foreground">
-                      {t('pagesWithoutH1Label')}: {headings.seoIssues.pagesWithoutH1}
-                    </span>
-                  </div>
-                )}
-                {headings.seoIssues.pagesWithMultipleH1 > 0 && (
-                  <div className="text-sm">
-                    <span className="font-medium text-foreground">
-                      {t('pagesWithMultipleH1Label')}: {headings.seoIssues.pagesWithMultipleH1}
-                    </span>
-                  </div>
-                )}
-              </div>
-            </StatCard>
-          </div>
-        </div>
-      </SectionHeader>
-
-      {/* Links Analysis */}
-      <SectionHeader title={t('linksAnalysisTitle')} icon={Icons.link}>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <StatCard
-            title={t('linksOverviewTitle')}
-            value={links.uniqueLinks}
-            subtitle={t('averageLinksPerPage', { avg: links.averageLinksPerPage })}
-          />
-          
-          <div className="lg:col-span-2">
-            <StatCard
-              title={t('mostLinkedPagesTitle')}
-              value={links.mostLinkedPages.length}
-            >
-              <div className="mt-4">
-                <LinksList
-                  links={links.mostLinkedPages}
-                  title={t('topLinkedPages')}
-                  emptyMessage={t('noLinkedPagesFound')}
-                />
-              </div>
-            </StatCard>
-          </div>
-        </div>
-      </SectionHeader>
-
-      {/* Custom Selectors Analysis */}
-      {Object.keys(customSelectors.selectorBreakdown).length > 0 && (
+      {/* {Object.keys(customSelectors.selectorBreakdown).length > 0 && (
         <SectionHeader title={t('customSelectorsAnalysisTitle')} icon={Icons.code}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <StatCard
@@ -228,7 +182,6 @@ function SummaryReport() {
         </SectionHeader>
       )}
 
-      {/* Metadata Issues */}
       {(metadata.pagesWithoutTitle > 0 || metadata.pagesWithoutDescription > 0) && (
         <SectionHeader title={t('metadataIssuesTitle')} icon={Icons.warning}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -265,12 +218,10 @@ function SummaryReport() {
             )}
           </div>
         </SectionHeader>
-      )}
+      )} */}
 
       {/* Generation Info */}
-      <div className="text-xs text-foreground-secondary text-center pt-4 border-t">
-        {t('reportGeneratedAt')}: {new Date(summary.generatedAt).toLocaleString()}
-      </div>
+  
     </div>
   );
 }
