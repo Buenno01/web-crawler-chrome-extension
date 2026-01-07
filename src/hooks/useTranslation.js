@@ -1,5 +1,13 @@
 import { useCallback } from 'react';
 
+/**
+ * @typedef {Object} TranslationHook
+ * @property {(key: string, placeholders?: Record<string, string>) => string} t
+ */
+
+/**
+ * @returns {TranslationHook}
+ */
 export const useTranslation = () => {
   const t = useCallback((key, placeholders = {}) => {
     if (typeof chrome !== 'undefined' && chrome.i18n) {
