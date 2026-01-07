@@ -268,5 +268,17 @@
   "reportGeneratedAt": {
     "message": "Relatório gerado em",
     "description": "Label for report generation timestamp"
+  },
+  "total": {
+    "message": "total",
+    "description": "Translation for the term \"total\""
+  },
+  "avg": {
+    "message": "media",
+    "description": "Translation for the term \"avg\""
+  },
+  "notAnalizedPage": {
+    "message": "Página não analisada",
+    "description": "Used when a page information is not found"
   }
 }
