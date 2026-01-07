@@ -287,5 +287,8 @@
   },
   "downloadCsvReports": {
     "message": "Descargar informes en CSV"
+  },
+  "generatingCsvReports": {
+    "message": "Generating reports"
   }
 }
